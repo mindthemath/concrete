@@ -6,83 +6,25 @@
 
 body {
   margin: 0;
-  font-family: 'Courier New', Courier, monospace;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  background-color: #1a1a1a; /* Darker background */
-  color: #f3f4f6; /* Light text for dark background */
+  font-family: Arial, Helvetica, sans-serif;
+  background-color: #ffffff;
+  color: #000000;
 }
 
 #root {
   min-height: 100vh;
 }
 
-/* Tailwind v4 discourages overriding built-in utility classes. Remove overrides. */
-
+/* Minimal helper classes for early-web look */
 @layer components {
-  .brutalist-button {
-    @apply relative overflow-hidden bg-white text-black border-4 border-black font-bold px-6 py-3 uppercase tracking-widest cursor-pointer transition-all duration-200 hover:bg-black hover:text-white font-mono;
+  .basic-input {
+    @apply w-full px-2 py-2 border border-gray-400 bg-white text-black text-base focus:outline-none focus:border-blue-600;
   }
-  
-  .brutalist-button:active {
-    @apply -translate-y-0.5;
-  }
-  
-  .brutalist-input {
-    @apply w-full px-4 py-3 border-2 border-gray-300 bg-gray-800 text-gray-100 font-mono text-lg focus:outline-none focus:border-blue-400 focus:ring-2 focus:ring-blue-500/50;
+  .basic-button {
+    @apply px-4 py-2 bg-gray-200 border border-gray-500 text-black hover:bg-gray-300 cursor-pointer;
   }
 }
 
-/* Custom scrollbar */
-::-webkit-scrollbar {
-  width: 8px;
-}
-
-::-webkit-scrollbar-track {
-  background: #2d2d2d;
-}
-
-::-webkit-scrollbar-thumb {
-  background: #555;
-  border-radius: 4px;
-}
-
-::-webkit-scrollbar-thumb:hover {
-  background: #666;
-}
-
-/* Loading animation */
-@keyframes spin {
-  to {
-    transform: rotate(360deg);
-  }
-}
-
-.animate-spin {
-  animation: spin 1s linear infinite;
-}
-
-/* Backdrop blur for glassmorphism effect */
-.backdrop-blur-sm {
-  backdrop-filter: blur(8px);
-}
-
-/* Custom selection color */
-::selection {
-  background-color: #3b82f6;
-  color: white;
-}
-
-@media (max-width: 768px) {
-  .container {
-    @apply px-4;
-  }
-  
-  h1 {
-    @apply text-3xl;
-  }
-  
-  .grid-cols-1 {
-    @apply grid-cols-1;
-  }
-}
+/* Simple spinner (kept for loading state) */
+@keyframes spin { to { transform: rotate(360deg); } }
+.animate-spin { animation: spin 1s linear infinite; }

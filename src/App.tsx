@@ -115,15 +115,15 @@ function App() {
   }
 
   return (
-    <div className="min-h-screen bg-neutral-900 text-gray-100">
-      <div className="container mx-auto px-6 py-10 max-w-[1700px]">
-        <header className="text-center mb-12">
-          <h1 className="text-4xl md:text-6xl font-mono uppercase tracking-widest border-b-4 border-neutral-600 pb-6 inline-block bg-neutral-800 px-8 py-4 rounded-lg shadow-lg shadow-black/25">
+    <div className="min-h-screen bg-white text-black">
+      <div className="mx-auto px-4 py-6 max-w-[1100px]">
+        <header className="mb-6 border-b border-gray-500">
+          <h1 className="text-3xl font-normal tracking-normal pb-3">
             Concrete Strength Analyzer
           </h1>
         </header>
 
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-10 xl:gap-12">
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
           <InputPanel
             mortars={SAMPLE_MORTARS}
             regions={SAMPLE_REGIONS}
@@ -138,11 +138,9 @@ function App() {
           />
         </div>
 
-        <footer className="mt-16 text-center text-neutral-500 text-sm border-t-2 border-neutral-800 pt-8 bg-neutral-900 rounded-lg">
-          <p className="font-mono">Mind the Math, LLC | September 2025</p>
-          <p className="mt-2 text-xs font-mono">
-            For demonstration purposes only | Based on 96 experimental samples
-          </p>
+        <footer className="mt-10 text-center text-gray-700 text-sm border-t border-gray-500 pt-4">
+          <p>Mind the Math, LLC | September 2025</p>
+          <p className="mt-1 text-xs">For demonstration purposes only | Based on 96 experimental samples</p>
         </footer>
       </div>
     </div>
