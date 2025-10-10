@@ -2,14 +2,12 @@ import { useState } from 'react'
 import InputPanel from './components/InputPanel'
 import OutputPanel from './components/OutputPanel'
 import { Region, ApiResponse, CustomMortar } from './types'
+import regionData from '../data/region.json'
 
-const SAMPLE_REGIONS: Region[] = [
-  { id: 'R001', name: 'Rocky Mountain Region' },
-  { id: 'R002', name: 'Pacific Northwest' },
-  { id: 'R003', name: 'Great Plains' },
-  { id: 'R004', name: 'Appalachian Region' },
-  { id: 'R005', name: 'Southwest Desert' },
-]
+const SAMPLE_REGIONS: Region[] = Object.keys(regionData).map((key) => ({
+  id: key,
+  name: (regionData as any)[key].name,
+}))
 
 function App() {
   const [result, setResult] = useState<ApiResponse | null>(null)
