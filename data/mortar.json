@@ -1,0 +1,146 @@
+{
+    "M001": {
+      "name": "Standard Portland Cement",
+      "description": "Standard mix for general construction",
+      "properties": {
+        "splitting_strength_mpa": 3.2,
+        "shrinkage_inches": 0.042,
+        "flexural_strength_mpa": 4.8,
+        "slump_inches": 4.1,
+        "compressive_strength_mpa": 28.5,
+        "poissons_ratio": 0.18
+      },
+      "meta": {
+        "gwp": 0.8,
+        "product_name_long": "Classic All-Purpose Mortar IV",
+        "manufacturer": "ABC Mortar Manufacturer",
+        "cost_per_pound": 0.25
+      }
+    },
+    "M002": {
+        "name": "High Early Strength Cement",
+        "description": "Fast setting cement for early strength",
+        "properties": {
+            "splitting_strength_mpa": 4.1,
+            "shrinkage_inches": 0.038,
+            "flexural_strength_mpa": 6.2,
+            "slump_inches": 3.8,
+            "compressive_strength_mpa": 35.2,
+            "poissons_ratio": 0.20
+        },
+        "meta": {
+            "gwp": 0.9,
+            "product_name_long": "Instant Pro-Build II",
+            "manufacturer": "XYZ Mortar Manufacturer",
+            "cost_per_pound": 0.32
+        }
+    },
+    "M003": {
+        "name": "Sulfate Resistant Cement",
+        "description": "Resistant to sulfate attack",
+        "properties": {
+            "splitting_strength_mpa": 3.8,
+            "shrinkage_inches": 0.035,
+            "flexural_strength_mpa": 5.4,
+            "slump_inches": 3.9,
+            "compressive_strength_mpa": 32.1,
+            "poissons_ratio": 0.17
+        },
+        "meta": {
+            "gwp": 0.75,
+            "product_name_long": "Advanced Eco-Mortar III",
+            "manufacturer": "DEF Mortar Manufacturer",
+            "cost_per_pound": 0.38
+        }
+    },
+    "M004": {
+        "name": "Low Heat Cement",
+        "description": "Low heat of hydration for cold weather construction",
+        "properties": {
+            "splitting_strength_mpa": 2.9,
+            "shrinkage_inches": 0.045,
+            "flexural_strength_mpa": 4.2,
+            "slump_inches": 4.5,
+            "compressive_strength_mpa": 25.8,
+            "poissons_ratio": 0.19
+        },
+        "meta": {
+            "gwp": 0.65,
+            "product_name_long": "Frost-Proof Mortar II",
+            "manufacturer": "XYZ Mortar Manufacturer",
+            "cost_per_pound": 0.42
+        }
+    },
+    "M005": {
+        "name": "Blended Cement",
+        "description": "Blended cement for general construction",
+        "properties": {
+            "splitting_strength_mpa": 3.5,
+            "shrinkage_inches": 0.040,
+            "flexural_strength_mpa": 5.1,
+            "slump_inches": 4.0,
+            "compressive_strength_mpa": 30.3,
+            "poissons_ratio": 0.18
+        },
+        "meta": {
+            "gwp": 0.45,
+            "product_name_long": "Fast-Dry Mortar I",
+            "manufacturer": "XYZ Mortar Manufacturer",
+            "cost_per_pound": 0.47
+        }
+    },
+    "M006": {
+        "name": "White Cement",
+        "description": "White cement for general construction",
+        "properties": {
+            "splitting_strength_mpa": 3.0,
+            "shrinkage_inches": 0.044,
+            "flexural_strength_mpa": 4.5,
+            "slump_inches": 4.2,
+            "compressive_strength_mpa": 27.2,
+            "poissons_ratio": 0.17
+        },
+        "meta": {
+            "gwp": 0.25,
+            "product_name_long": "White Mortar I",
+            "manufacturer": "ABC Mortar Manufacturer",
+            "cost_per_pound": 0.52
+        }
+    },
+    "M007": {
+        "name": "Rapid Hardening Cement",
+        "description": "Rapid hardening cement for early strength",
+        "properties": {
+            "splitting_strength_mpa": 4.3,
+            "shrinkage_inches": 0.036,
+            "flexural_strength_mpa": 6.5,
+            "slump_inches": 3.6,
+            "compressive_strength_mpa": 38.7,
+            "poissons_ratio": 0.21
+        },
+        "meta": {
+            "gwp": 0.35,
+            "product_name_long": "Super Hard Mortar II",
+            "manufacturer": "DEF Mortar Manufacturer",
+            "cost_per_pound": 0.58
+        }
+    },
+    "M008": {
+        "name": "Expansive Cement",
+        "description": "Expansive cement for general construction",
+        "properties": {
+            "splitting_strength_mpa": 2.7,
+            "shrinkage_inches": 0.048,
+            "flexural_strength_mpa": 4.0,
+            "slump_inches": 4.6,
+            "compressive_strength_mpa": 24.1,
+            "poissons_ratio": 0.16
+        },
+        "meta": {
+            "gwp": 0.15,
+            "product_name_long": "Expansive Mortar I",
+            "manufacturer": "XYZ Mortar Manufacturer",
+            "cost_per_pound": 0.63
+        }
+    }
+}

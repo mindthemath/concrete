@@ -1,0 +1,37 @@
+{
+    "R001": {
+      "name": "Northeast Region",
+      "description": "New England and Mid-Atlantic states with abundant granite",
+      "available_rocks": ["RK001", "RK002", "RK004"],
+      "primary_rock": "RK001",
+      "climate": "Cold winters, moderate summers"
+    },
+    "R002": {
+      "name": "Midwest Region",
+      "description": "Central states with limestone and quartzite deposits",
+      "available_rocks": ["RK002", "RK004"],
+      "primary_rock": "RK002",
+      "climate": "Cold winters, hot summers"
+    },
+    "R003": {
+      "name": "Southeast Region",
+      "description": "Southern states with limestone and granite availability",
+      "available_rocks": ["RK001", "RK002"],
+      "primary_rock": "RK002",
+      "climate": "Mild winters, hot humid summers"
+    },
+    "R004": {
+      "name": "Pacific Northwest Region",
+      "description": "Washington and Oregon with volcanic basalt deposits",
+      "available_rocks": ["RK001", "RK003"],
+      "primary_rock": "RK003",
+      "climate": "Mild temperatures, high precipitation"
+    },
+    "R005": {
+      "name": "Southwest Region",
+      "description": "Arid states with granite and basalt availability",
+      "available_rocks": ["RK001", "RK003", "RK004"],
+      "primary_rock": "RK001",
+      "climate": "Hot summers, mild winters, low precipitation"
+    }
+}

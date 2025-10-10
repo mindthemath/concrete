@@ -1,0 +1,62 @@
+{
+    "RK001": {
+        "name": "Granite Coarse Aggregate",
+        "description": "High-strength igneous rock with excellent durability",
+        "properties": {
+            "compressive_strength_mpa": 200.0,
+            "size_inches": 0.75,
+            "density_lb_ft3": 168.0,
+            "specific_gravity": 2.65
+        },
+        "meta": {
+            "source": "Barre Granite Quarry, Vermont",
+            "type": "Igneous - Granite",
+            "common_uses": ["Highway construction", "Bridge decks", "Heavy-duty pavements"]
+        }
+    },
+    "RK002": {
+        "name": "Limestone Coarse Aggregate",
+        "description": "Sedimentary rock with good workability and availability",
+        "properties": {
+            "compressive_strength_mpa": 120.0,
+            "size_inches": 0.5,
+            "density_lb_ft3": 145.0,
+            "specific_gravity": 2.70
+        },
+        "meta": {
+            "source": "Indiana Limestone Quarry, Indiana",
+            "type": "Sedimentary - Limestone",
+            "common_uses": ["General construction", "Residential concrete", "Decorative applications"]
+        }
+    },
+    "RK003": {
+        "name": "Basalt Coarse Aggregate",
+        "description": "Dense volcanic rock with high strength and durability",
+        "properties": {
+            "compressive_strength_mpa": 250.0,
+            "size_inches": 0.625,
+            "density_lb_ft3": 185.0,
+            "specific_gravity": 2.90
+        },
+        "meta": {
+            "source": "Columbia River Basalt Quarry, Washington",
+            "type": "Igneous - Basalt",
+            "common_uses": ["Airport runways", "Heavy industrial floors", "Marine construction"]
+        }
+    },
+    "RK004": {
+        "name": "Quartzite Coarse Aggregate",
+        "description": "Hard metamorphic rock with excellent abrasion resistance",
+        "properties": {
+            "compressive_strength_mpa": 180.0,
+            "size_inches": 0.375,
+            "density_lb_ft3": 165.0,
+            "specific_gravity": 2.68
+        },
+        "meta": {
+            "source": "Baraboo Quartzite Quarry, Wisconsin",
+            "type": "Metamorphic - Quartzite",
+            "common_uses": ["Railroad ballast", "Heavy-duty pavements", "Decorative concrete"]
+        }
+    }
+}
