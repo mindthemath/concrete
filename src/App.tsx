@@ -119,7 +119,7 @@ function App() {
       <div className="mx-auto px-4 py-6 max-w-[1100px]">
         <header className="mb-6 border-b border-gray-500">
           <h1 className="text-3xl font-normal tracking-normal pb-3">
-            Concrete Strength Analyzer
+            Concrete Strength Predictor
           </h1>
         </header>
 
