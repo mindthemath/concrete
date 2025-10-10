@@ -103,7 +103,8 @@ const OutputPanel: React.FC<OutputPanelProps> = ({ result, loading, error }) => 
           </div>
         </div>
         <p className="text-xs mt-2 text-center">
-          Model evaluated {displayResult.total_rocks_in_region} rock types against {displayResult.predictions[0].mortar_id} mortar
+          Model evaluated {displayResult.total_rocks_in_region} rock types against{' '}
+          {displayResult.predictions[0].mortar_id} mortar
           {displayResult.mocked && ' | Mocked Results'}
         </p>
       </div>
@@ -144,9 +145,7 @@ const OutputPanel: React.FC<OutputPanelProps> = ({ result, loading, error }) => 
 
             <div className="border-l-4 border-green-600 pl-3 py-2">
               <p className="text-sm leading-relaxed">
-                RECOMMENDED: This mixture design meets the {prediction.predicted_compressive_strength_mpa.toFixed(1)} MPa
-                compressive strength requirement using {Math.round(prediction.recommended_rock_ratio * 100)}% {prediction.rock_id}
-                {' '}aggregate with the {prediction.mortar_id} mortar formulation.
+                RECOMMENDED: This mixture design meets the {prediction.predicted_compressive_strength_mpa.toFixed(1)} MPa compressive strength requirement using {Math.round(prediction.recommended_rock_ratio * 100)}% {prediction.rock_id} aggregate with the {prediction.mortar_id} mortar formulation.
               </p>
             </div>
           </div>
