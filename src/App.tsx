@@ -3,6 +3,7 @@ import InputPanel from './components/InputPanel'
 import OutputPanel from './components/OutputPanel'
 import { Region, ApiResponse, CustomMortar } from './types'
 import regionData from '../data/region.json'
+import concreteDb from '../data/concrete.json'
 
 const SAMPLE_REGIONS: Region[] = Object.keys(regionData).map((key) => ({
   id: key,
@@ -85,31 +86,35 @@ function App() {
     mortarMode: 'default' | 'custom',
     customMortars: CustomMortar[]
   ): ApiResponse {
-    const within = (v: number) => Math.abs(v - target) <= tol
-    const randomRock = (i: number) => `RK${(i + 1).toString().padStart(3, '0')}`
-    const strengths = [target - tol * 0.6, target + tol * 0.2, target + tol * 0.9].map((v) =>
-      Number(v.toFixed(1))
-    )
-    const mortarLabel =
-      mortarMode === 'default'
-        ? 'DB_MORTAR'
-        : (customMortars[0]?.name || 'CUSTOM_MORTAR').replace(/\s+/g, '_').toUpperCase()
-    const randomRatio = () => {
-      const val = 0.4 + Math.random() * 0.2 // 0.4 - 0.6
-      return Math.round(val * 100) / 100
-    }
-    const predictions = strengths.map((s, i) => ({
-      rock_id: randomRock(i),
-      predicted_compressive_strength_mpa: s,
-      recommended_rock_ratio: randomRatio(),
-      mortar_id: mortarLabel,
+    const minStrength = target - tol
+    const availableRocks: string[] = (regionData as any)[regionId]?.available_rocks || []
+    const entries = Object.values(concreteDb as any) as Array<{
+      mortar_id: string
+      rock_id: string
+      rock_ratio: number
+      concrete_compressive_strength_mpa: number
+    }>
+
+    const filtered = entries
+      .filter(
+        (e) =>
+          e.concrete_compressive_strength_mpa >= minStrength &&
+          (availableRocks.length === 0 || availableRocks.includes(e.rock_id))
+      )
+      .sort((a, b) => a.concrete_compressive_strength_mpa - b.concrete_compressive_strength_mpa)
+
+    const predictions = filtered.map((e) => ({
+      rock_id: e.rock_id,
+      predicted_compressive_strength_mpa: Number(e.concrete_compressive_strength_mpa.toFixed(1)),
+      recommended_rock_ratio: e.rock_ratio,
+      mortar_id: e.mortar_id,
       region_id: regionId,
     }))
-    const eligible = predictions.filter((p) => within(p.predicted_compressive_strength_mpa)).length
+
     return {
       predictions,
-      eligible_rocks: eligible,
-      total_rocks_in_region: 6,
+      eligible_rocks: predictions.length,
+      total_rocks_in_region: availableRocks.length || predictions.length,
       status: 'success',
       target_strength_mpa: target,
       tolerance_mpa: tol,

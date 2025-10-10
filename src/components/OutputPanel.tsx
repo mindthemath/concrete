@@ -1,5 +1,8 @@
 import React from 'react'
 import { ApiResponse } from '../types'
+import mortarDb from '../../data/mortar.json'
+import rockDb from '../../data/rock.json'
+import regionDb from '../../data/region.json'
 
 interface OutputPanelProps {
   result: ApiResponse | null
@@ -87,25 +90,16 @@ const OutputPanel: React.FC<OutputPanelProps> = ({ result, loading, error }) => 
       <h2 className="text-xl mb-4">{displayResult?.mocked ? 'Predicted Mix Designs (Mocked)' : 'Predicted Mix Designs'}</h2>
 
       <div className="border border-gray-500 p-3 mb-4">
-        <div className="flex flex-col md:flex-row justify-between items-center text-sm">
-          <div className="flex items-center gap-6">
-            <span>Eligible Rocks: {displayResult.eligible_rocks}</span>
-            <span>Total Available: {displayResult.total_rocks_in_region}</span>
-          </div>
-          <div className="flex items-center gap-2 w-full md:w-1/2">
-            <div className="w-full bg-gray-300 h-3">
-              <div
-                className="bg-green-600 h-3"
-                style={{ width: `${(displayResult.eligible_rocks / displayResult.total_rocks_in_region) * 100}%` }}
-              ></div>
-            </div>
-            <span className="text-sm">{Math.round((displayResult.eligible_rocks / displayResult.total_rocks_in_region) * 100)}%</span>
-          </div>
+        <div className="text-sm text-center">
+          <span>Results: {displayResult.predictions.length}</span>
         </div>
         <p className="text-xs mt-2 text-center">
-          Model evaluated {displayResult.total_rocks_in_region} rock types against{' '}
-          {displayResult.predictions[0].mortar_id} mortar
-          {displayResult.mocked && ' | Mocked Results'}
+          {(() => {
+            const regionId = displayResult.predictions[0].region_id
+            const available = (regionDb as any)[regionId]?.available_rocks || []
+            const k = Array.isArray(available) ? available.length : 0
+            return `Model evaluated ${k} rock types against various mortars` + (displayResult.mocked ? ' | Mocked Results' : '')
+          })()}
         </p>
       </div>
 
@@ -117,12 +111,22 @@ const OutputPanel: React.FC<OutputPanelProps> = ({ result, loading, error }) => 
           >
             <div className="flex flex-col md:flex-row justify-between items-start mb-3 pb-2 border-b border-gray-400">
               <div className="mb-2 md:mb-0">
-                <h3 className="text-lg">Rock {prediction.rock_id}</h3>
-                <div className="flex items-center gap-3 text-sm text-gray-800 mt-1">
-                  <span>{prediction.mortar_id}</span>
-                  <span>•</span>
-                  <span>{prediction.region_id}</span>
-                </div>
+                {(() => {
+                  const rockName = (rockDb as any)[prediction.rock_id]?.name || `Rock ${prediction.rock_id}`
+                  const mortarName = (mortarDb as any)[prediction.mortar_id]?.name || prediction.mortar_id
+                  return (
+                    <>
+                      <h3 className="text-lg">{mortarName} + {rockName}</h3>
+                      <div className="flex items-center gap-3 text-sm text-gray-800 mt-1">
+                        <span>{prediction.mortar_id}</span>
+                        <span>•</span>
+                        <span>{prediction.rock_id}</span>
+                        <span>•</span>
+                        <span>{prediction.region_id}</span>
+                      </div>
+                    </>
+                  )
+                })()}
               </div>
               <div className="text-right">
                 <div className="inline-block border border-gray-600 px-3 py-2">
@@ -144,9 +148,64 @@ const OutputPanel: React.FC<OutputPanelProps> = ({ result, loading, error }) => 
             </div>
 
             <div className="border-l-4 border-green-600 pl-3 py-2">
-              <p className="text-sm leading-relaxed">
-                RECOMMENDED: This mixture design meets the {prediction.predicted_compressive_strength_mpa.toFixed(1)} MPa compressive strength requirement using {Math.round(prediction.recommended_rock_ratio * 100)}% {prediction.rock_id} aggregate with the {prediction.mortar_id} mortar formulation.
-              </p>
+              <div className="mb-2">
+                <div className="text-sm font-medium">Prediction Summary</div>
+              </div>
+
+              {/* Mortar meta table */}
+              {(() => {
+                const mortarIdRaw = String(prediction.mortar_id)
+                // If mortar id is an integer index and custom mortars present, use that
+                let mortarMeta: any = null
+                let mortarName: string | null = null
+
+                if (displayResult?.mortar_mode === 'custom' && Array.isArray(displayResult.custom_mortars)) {
+                  const idx = Number(mortarIdRaw)
+                  if (!Number.isNaN(idx) && displayResult.custom_mortars[idx]) {
+                    mortarMeta = displayResult.custom_mortars[idx].meta
+                    mortarName = displayResult.custom_mortars[idx].name
+                  }
+                }
+
+                // Fallback to database lookup
+                if (!mortarMeta && (mortarDb as any)[mortarIdRaw]) {
+                  const db = (mortarDb as any)[mortarIdRaw]
+                  mortarMeta = db.meta
+                  mortarName = db.meta?.product_name_long || db.name
+                }
+
+                if (!mortarMeta) {
+                  return (
+                    <div className="text-xs text-gray-700">Mortar information not available</div>
+                  )
+                }
+
+                return (
+                  <div className="mt-3">
+                    <div className="text-sm font-medium mb-2">Mortar</div>
+                    <table className="w-full text-xs">
+                      <tbody>
+                        <tr>
+                          <td className="font-medium pr-3 py-1">Name</td>
+                          <td className="text-gray-800 py-1">{mortarName}</td>
+                        </tr>
+                        <tr className="border-t">
+                          <td className="font-medium pr-3 py-1">Manufacturer</td>
+                          <td className="text-gray-800 py-1">{mortarMeta.manufacturer}</td>
+                        </tr>
+                        <tr className="border-t">
+                          <td className="font-medium pr-3 py-1">GWP</td>
+                          <td className="text-gray-800 py-1">{mortarMeta.gwp}</td>
+                        </tr>
+                        <tr className="border-t">
+                          <td className="font-medium pr-3 py-1">Cost / lb</td>
+                          <td className="text-gray-800 py-1">{mortarMeta.cost_per_pound}</td>
+                        </tr>
+                      </tbody>
+                    </table>
+                  </div>
+                )
+              })()}
             </div>
           </div>
         ))}
