@@ -534,7 +534,7 @@ const InputPanel: React.FC<InputPanelProps> = ({ regions, onSubmit, loading }) =
             )}
           </button>
           <div className="text-center text-xs text-gray-700 pt-2 border-t border-gray-400">
-            <p>Model will evaluate available rocks against strength requirements</p>
+            <p>Model will evaluate rocks available in the region against strength requirements</p>
           </div>
         </div>
       </form>

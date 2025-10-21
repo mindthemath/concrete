@@ -106,21 +106,14 @@ function App() {
     const predictions = filtered.map((e) => ({
       rock_id: e.rock_id,
       predicted_compressive_strength_mpa: Number(e.concrete_compressive_strength_mpa.toFixed(1)),
-      recommended_rock_ratio: e.rock_ratio,
+      rock_ratio: e.rock_ratio,
       mortar_id: e.mortar_id,
-      region_id: regionId,
     }))
 
     return {
       predictions,
-      eligible_rocks: predictions.length,
-      total_rocks_in_region: availableRocks.length || predictions.length,
       status: 'success',
-      target_strength_mpa: target,
-      tolerance_mpa: tol,
       mocked: true,
-      mortar_mode: mortarMode,
-      custom_mortars: customMortars,
     }
   }
 

@@ -17,20 +17,17 @@ const OutputPanel: React.FC<OutputPanelProps> = ({ result, loading, error }) => 
       {
         rock_id: 'RK001',
         predicted_compressive_strength_mpa: 35.2,
-        recommended_rock_ratio: 0.4,
+        rock_ratio: 0.4,
         mortar_id: 'M001',
-        region_id: 'R001'
       },
       {
         rock_id: 'RK003',
         predicted_compressive_strength_mpa: 42.8,
-        recommended_rock_ratio: 0.3,
+        rock_ratio: 0.3,
         mortar_id: 'M001',
-        region_id: 'R001'
       }
     ],
     eligible_rocks: 2,
-    total_rocks_in_region: 4,
     status: 'success'
   }
 
@@ -77,8 +74,7 @@ const OutputPanel: React.FC<OutputPanelProps> = ({ result, loading, error }) => 
           <p className="text-base mb-2">No Viable Mixtures Found</p>
           <div className="text-sm max-w-md mx-auto text-gray-800">
             <p>• No rocks in the selected region meet strength requirements</p>
-            <p>• Consider increasing target strength or selecting different parameters</p>
-            <p>• 0/{displayResult?.total_rocks_in_region || 0} rocks eligible</p>
+            <p>• Consider changing target strength or selecting different parameters</p>
           </div>
         </div>
       </section>
@@ -87,21 +83,10 @@ const OutputPanel: React.FC<OutputPanelProps> = ({ result, loading, error }) => 
 
   return (
     <section className="border border-gray-600 p-4 bg-white text-black">
-      <h2 className="text-xl mb-4">{displayResult?.mocked ? 'Predicted Mix Designs (Mocked)' : 'Predicted Mix Designs'}</h2>
-
-      <div className="border border-gray-500 p-3 mb-4">
-        <div className="text-sm text-center">
-          <span>Results: {displayResult.predictions.length}</span>
-        </div>
-        <p className="text-xs mt-2 text-center">
-          {(() => {
-            const regionId = displayResult.predictions[0].region_id
-            const available = (regionDb as any)[regionId]?.available_rocks || []
-            const k = Array.isArray(available) ? available.length : 0
-            return `Model evaluated ${k} rock types against various mortars` + (displayResult.mocked ? ' | Mocked Results' : '')
-          })()}
-        </p>
-      </div>
+      <h2 className="text-xl mb-4">
+      Predicted Mix Designs 
+      {displayResult?.mocked ? ' (Mocked)' : ''}
+      </h2>
 
       <div className="space-y-4">
         {displayResult.predictions.map((prediction, index) => (
@@ -116,41 +101,24 @@ const OutputPanel: React.FC<OutputPanelProps> = ({ result, loading, error }) => 
                   const mortarName = (mortarDb as any)[prediction.mortar_id]?.name || prediction.mortar_id
                   return (
                     <>
-                      <h3 className="text-lg">{mortarName} + {rockName}</h3>
-                      <div className="flex items-center gap-3 text-sm text-gray-800 mt-1">
-                        <span>{prediction.mortar_id}</span>
-                        <span>•</span>
-                        <span>{prediction.rock_id}</span>
-                        <span>•</span>
-                        <span>{prediction.region_id}</span>
-                      </div>
+                      <h3 className="text-lg">
+                          {mortarName} + {Math.round(prediction.rock_ratio * 100)}% {rockName}  
+                      </h3>
                     </>
                   )
                 })()}
               </div>
-              <div className="text-right">
+              <div className="text-right mb-1">
                 <div className="inline-block border border-gray-600 px-3 py-2">
                   <span className="block text-2xl">
                     {prediction.predicted_compressive_strength_mpa.toFixed(1)}
                   </span>
-                  <span className="text-xs">MPa Predicted</span>
+                  <span className="text-xs">MPa</span>
                 </div>
               </div>
             </div>
 
-            <div className="grid grid-cols-1 gap-2 mb-3">
-              <div className="p-3 border border-gray-400">
-                <div className="text-xl mb-1">
-                  {Math.round(prediction.recommended_rock_ratio * 100)}%
-                </div>
-                <div className="text-xs">Optimal Rock Ratio</div>
-              </div>
-            </div>
-
-            <div className="border-l-4 border-green-600 pl-3 py-2">
-              <div className="mb-2">
-                <div className="text-sm font-medium">Prediction Summary</div>
-              </div>
+            <div className="border-l-4 border-green-600 pl-3 my-2">
 
               {/* Mortar meta table */}
               {(() => {
@@ -182,23 +150,22 @@ const OutputPanel: React.FC<OutputPanelProps> = ({ result, loading, error }) => 
 
                 return (
                   <div className="mt-3">
-                    <div className="text-sm font-medium mb-2">Mortar</div>
-                    <table className="w-full text-xs">
+                    <table className="w-full text-sm">
                       <tbody>
                         <tr>
-                          <td className="font-medium pr-3 py-1">Name</td>
+                          <td className="text-xs font-bold pr-3 py-1">Name</td>
                           <td className="text-gray-800 py-1">{mortarName}</td>
                         </tr>
                         <tr className="border-t">
-                          <td className="font-medium pr-3 py-1">Manufacturer</td>
+                          <td className="text-xs font-bold pr-3 py-1">Manufacturer</td>
                           <td className="text-gray-800 py-1">{mortarMeta.manufacturer}</td>
                         </tr>
                         <tr className="border-t">
-                          <td className="font-medium pr-3 py-1">GWP</td>
+                          <td className="text-xs font-bold pr-3 py-1">GWP</td>
                           <td className="text-gray-800 py-1">{mortarMeta.gwp}</td>
                         </tr>
                         <tr className="border-t">
-                          <td className="font-medium pr-3 py-1">Cost / lb</td>
+                          <td className="text-xs font-bold pr-3 py-1">Cost / lb</td>
                           <td className="text-gray-800 py-1">{mortarMeta.cost_per_pound}</td>
                         </tr>
                       </tbody>
