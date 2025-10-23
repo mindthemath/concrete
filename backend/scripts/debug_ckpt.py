@@ -79,3 +79,40 @@ plt.title("True vs Predicted Strength")
 # plt.gca().set_aspect(0.5, adjustable='box')
 plt.savefig("true_vs_predicted.png")
 plt.show()
+
+import gpytorch
+
+# Print kernel hyperparameters
+if hasattr(model.gp.covar_module, "base_kernel"):
+    # Check if lengthscale is there (typical for ARD kernels)
+    if hasattr(model.gp.covar_module.base_kernel, "lengthscale"):
+        print("Lengthscale:", model.gp.covar_module.base_kernel.lengthscale)
+    print("Kernel parameters:", model.gp.covar_module.base_kernel.hyperparameters())
+
+# Complete model state
+print("Model state dict:")
+for name, param in model.named_parameters():
+    print(f"{name}: {param}")
+
+# Explanation to the user
+print("Explanation:")
+print(
+    "- If the model was trained with synthetic data using the Hirsch model, we expect feature importances \n"
+    "  to show little variance since irrelevant features were not contributing."
+)
+print(
+    "- The lengthscale values should be roughly similar across features, indicating no particular \n"
+    "  feature is overly dominant. This means the model isn't wrongfully attributing significance\n"
+    "  to any irrelevant synthetics."
+)
+print(
+    "- Low noise and consistent parameters are good indications, showing the model fits well to the \n"
+    "  baseline predictions. Any significant deviation might suggest strong influences on the model \n"
+    "  from noise or artifacts not present."
+)
+
+print(
+    "the GPR is acting as a 'residual tuner.' If the initial physics-based prediction is close, it works beautifully."
+    "If the initial prediction is far off, the GPR doesn't have enough information or capacity to learn the "
+    "correction from scratch, and the training process fails."
+)

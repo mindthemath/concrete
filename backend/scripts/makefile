@@ -1,5 +1,5 @@
 dev:
-	uv run python -i run_gp.py
+	uv run python run_gp.py
 
 debug:
 	uv run python -i debug_ckpt.py
