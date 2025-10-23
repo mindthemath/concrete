@@ -1,0 +1,60 @@
+[project]
+name = "concrete-strong"
+version = "0.0.1"
+description = "Concrete Strength Simulation"
+readme = "README.md"
+requires-python = ">=3.9"
+dependencies = [
+    "numpy>=2.0.2",
+]
+
+[dependency-groups]
+dev = [
+    "lightning>=2.5.5",
+    "matplotlib>=3.9.4",
+    "pandas>=2.3.3",
+]
+
+
+[project.optional-dependencies]
+cpu = [
+    "torch>=2.7.0",
+]
+cu128 = [
+    "torch>=2.7.0",
+]
+api = [
+    "litserve>=0.2.16",
+]
+train = [
+    "gpytorch>=1.13",
+    "pytorch-lightning>=2.5.5",
+]
+
+[tool.uv]
+python-preference = "only-managed"
+conflicts = [
+  [
+    { extra = "cpu" },
+    { extra = "cu128" },
+  ],
+]
+
+
+[tool.uv.sources]
+torch = [
+  { index = "pytorch-cpu", extra = "cpu" },
+  { index = "pytorch-cu128", extra = "cu128" },
+]
+
+[[tool.uv.index]]
+name = "pytorch-cpu"
+url = "https://download.pytorch.org/whl/cpu"
+explicit = true
+
+[[tool.uv.index]]
+name = "pytorch-cu128"
+url = "https://download.pytorch.org/whl/cu128"
+explicit = true
+
+
