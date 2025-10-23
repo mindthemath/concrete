@@ -5,13 +5,17 @@
         "properties": {
             "compressive_strength_mpa": 200.0,
             "size_inches": 0.75,
-            "density_lb_ft3": 168.0,
+            "density_lb_ft3": 165.4,
             "specific_gravity": 2.65
         },
         "meta": {
             "source": "Barre Granite Quarry, Vermont",
             "type": "Igneous - Granite",
-            "common_uses": ["Highway construction", "Bridge decks", "Heavy-duty pavements"]
+            "common_uses": [
+                "Highway construction",
+                "Bridge decks",
+                "Heavy-duty pavements"
+            ]
         }
     },
     "RK002": {
@@ -20,13 +24,17 @@
         "properties": {
             "compressive_strength_mpa": 120.0,
             "size_inches": 0.5,
-            "density_lb_ft3": 145.0,
+            "density_lb_ft3": 168.5,
             "specific_gravity": 2.70
         },
         "meta": {
             "source": "Indiana Limestone Quarry, Indiana",
             "type": "Sedimentary - Limestone",
-            "common_uses": ["General construction", "Residential concrete", "Decorative applications"]
+            "common_uses": [
+                "General construction",
+                "Residential concrete",
+                "Decorative applications"
+            ]
         }
     },
     "RK003": {
@@ -35,13 +43,17 @@
         "properties": {
             "compressive_strength_mpa": 250.0,
             "size_inches": 0.625,
-            "density_lb_ft3": 185.0,
+            "density_lb_ft3": 181.0,
             "specific_gravity": 2.90
         },
         "meta": {
             "source": "Columbia River Basalt Quarry, Washington",
             "type": "Igneous - Basalt",
-            "common_uses": ["Airport runways", "Heavy industrial floors", "Marine construction"]
+            "common_uses": [
+                "Airport runways",
+                "Heavy industrial floors",
+                "Marine construction"
+            ]
         }
     },
     "RK004": {
@@ -50,13 +62,17 @@
         "properties": {
             "compressive_strength_mpa": 180.0,
             "size_inches": 0.375,
-            "density_lb_ft3": 165.0,
+            "density_lb_ft3": 167.2,
             "specific_gravity": 2.68
         },
         "meta": {
             "source": "Baraboo Quartzite Quarry, Wisconsin",
             "type": "Metamorphic - Quartzite",
-            "common_uses": ["Railroad ballast", "Heavy-duty pavements", "Decorative concrete"]
+            "common_uses": [
+                "Railroad ballast",
+                "Heavy-duty pavements",
+                "Decorative concrete"
+            ]
         }
     }
 }
