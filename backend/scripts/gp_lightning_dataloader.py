@@ -3,6 +3,7 @@ import json
 from pathlib import Path
 
 import gpytorch
+import joblib
 import lightning as L
 import numpy as np
 import pandas as pd
@@ -26,7 +27,9 @@ FEATURE_COLS = [
 ]
 
 
-def make_dataloaders_with_split(df: pd.DataFrame, val_size=0.2, seed=42):
+def make_dataloaders_with_split(
+    df: pd.DataFrame, val_size=0.2, seed=42, scalers_path="./scalers"
+):
     df_proc = df.copy()
     df_proc["hirsch"] = df_proc.apply(hirsch_row, axis=1)
     df_proc["residual"] = df_proc["y_strength_mpa"] - df_proc["hirsch"]
@@ -41,6 +44,11 @@ def make_dataloaders_with_split(df: pd.DataFrame, val_size=0.2, seed=42):
     scaler_x = StandardScaler().fit(X[idx_train])
     scaler_y = StandardScaler().fit(y[idx_train].reshape(-1, 1))
 
+    p_scalers = Path(scalers_path)
+    p_scalers.mkdir(exist_ok=True)
+    joblib.dump(scaler_x, p_scalers / "scaler_x.joblib")
+    joblib.dump(scaler_y, p_scalers / "scaler_y.joblib")
+
     Xs = torch.tensor(scaler_x.transform(X), dtype=torch.float32)
     ys = torch.tensor(scaler_y.transform(y.reshape(-1, 1)).ravel(), dtype=torch.float32)
 
@@ -53,6 +61,13 @@ def make_dataloaders_with_split(df: pd.DataFrame, val_size=0.2, seed=42):
 
     # Keep the split for later inference with original scaling
     return dl_train, dl_val, df_proc, scaler_x, scaler_y, idx_train, idx_val
+
+
+def load_scalers(scalers_path="./scalers"):
+    p_scalers = Path(scalers_path)
+    scaler_x = joblib.load(p_scalers / "scaler_x.joblib")
+    scaler_y = joblib.load(p_scalers / "scaler_y.joblib")
+    return scaler_x, scaler_y
 
 
 def load_df(data_dir="data"):

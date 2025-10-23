@@ -12,7 +12,7 @@ def calculate_hirsch_with_noise(mortar_id, rock_id, rock_ratio, eta=0.3, noise_s
     mortar = mortar_data[mortar_id]["properties"]
     rock = rock_data[rock_id]["properties"]
     fm = mortar["compressive_strength_mpa"]
-    fr = rock["compressive_strength_mpa"] # / 4
+    fr = rock["compressive_strength_mpa"]  # / 4
     r = rock_ratio
     # Hirsch model calculation
     # add some noise to eta to make it more realistic

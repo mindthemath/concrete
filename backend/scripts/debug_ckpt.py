@@ -1,5 +1,6 @@
 import time
 
+import joblib
 import pandas as pd
 import torch
 
@@ -8,6 +9,7 @@ from gp_lightning_dataloader import (
     PhysicsGPR,
     combine_hirsch_with_residual,
     load_df,
+    load_scalers,
     make_dataloaders_with_split,
 )
 
@@ -15,9 +17,12 @@ with open("best_ckpt_path.txt", "r") as f:
     ckpt_path = f.read()
 
 df = load_df("../../data")
-dl_train, dl_val, df_proc, sx, sy, idx_train, idx_val = make_dataloaders_with_split(
+dl_train, dl_val, df_proc, _, _, idx_train, idx_val = make_dataloaders_with_split(
     df, val_size=0.2, seed=42
 )
+
+# Load the scalers that were created during training
+sx, sy = load_scalers()
 
 model = PhysicsGPR.load_from_checkpoint(ckpt_path, scaler_x=sx, scaler_y=sy)
 model.eval()
@@ -78,7 +83,7 @@ plt.title("True vs Predicted Strength")
 # aspect ratio 1:1
 # plt.gca().set_aspect(0.5, adjustable='box')
 plt.savefig("true_vs_predicted.png")
-plt.show()
+# plt.show()
 
 import gpytorch
 
