@@ -7,6 +7,7 @@ import torch
 from gp_lightning_dataloader import (
     FEATURE_COLS,
     PhysicsGPR,
+    PhysicsNN,
     combine_hirsch_with_residual,
     load_df,
     load_scalers,
@@ -24,7 +25,19 @@ dl_train, dl_val, df_proc, _, _, idx_train, idx_val = make_dataloaders_with_spli
 # Load the scalers that were created during training
 sx, sy = load_scalers()
 
-model = PhysicsGPR.load_from_checkpoint(ckpt_path, scaler_x=sx, scaler_y=sy)
+# Determine which model to load by inspecting the checkpoint
+ckpt = torch.load(ckpt_path, map_location=torch.device("cpu"), weights_only=False)
+is_gp = any(k.startswith("gp.") for k in ckpt["state_dict"].keys())
+
+if is_gp:
+    model_class = PhysicsGPR
+    print("Loading GP model")
+else:
+    model_class = PhysicsNN
+    print("Loading NN model")
+
+model = model_class.load_from_checkpoint(ckpt_path, scaler_x=sx, scaler_y=sy)
+
 model.eval()
 # get validation samples: dl_val is a DataLoader
 start_time = time.time()
@@ -88,11 +101,12 @@ plt.savefig("true_vs_predicted.png")
 import gpytorch
 
 # Print kernel hyperparameters
-if hasattr(model.gp.covar_module, "base_kernel"):
-    # Check if lengthscale is there (typical for ARD kernels)
-    if hasattr(model.gp.covar_module.base_kernel, "lengthscale"):
-        print("Lengthscale:", model.gp.covar_module.base_kernel.lengthscale)
-    print("Kernel parameters:", model.gp.covar_module.base_kernel.hyperparameters())
+if hasattr(model, "gp"):
+    if hasattr(model.gp.covar_module, "base_kernel"):
+        # Check if lengthscale is there (typical for ARD kernels)
+        if hasattr(model.gp.covar_module.base_kernel, "lengthscale"):
+            print("Lengthscale:", model.gp.covar_module.base_kernel.lengthscale)
+        print("Kernel parameters:", model.gp.covar_module.base_kernel.hyperparameters())
 
 # Complete model state
 print("Model state dict:")
