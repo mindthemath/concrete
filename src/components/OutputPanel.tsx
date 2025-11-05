@@ -23,7 +23,7 @@ const OutputPanel: React.FC<OutputPanelProps> = ({ result, loading, error }) => 
       {
         rock_id: 'RK003',
         predicted_compressive_strength_mpa: 42.8,
-        rock_ratio: 0.3,
+        rock_ratio: 0.5,
         mortar_id: 'M001',
       }
     ],
