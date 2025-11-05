@@ -1,146 +1,155 @@
 {
-    "M001": {
-      "name": "Standard Portland Cement",
-      "description": "Standard mix for general construction",
-      "properties": {
-        "splitting_strength_mpa": 3.2,
-        "shrinkage_inches": 0.042,
-        "flexural_strength_mpa": 4.8,
-        "slump_inches": 4.1,
-        "compressive_strength_mpa": 28.5,
-        "poissons_ratio": 0.18
-      },
-      "meta": {
-        "gwp": 0.8,
-        "product_name_long": "Classic All-Purpose Mortar IV",
-        "manufacturer": "ABC Mortar Manufacturer",
-        "cost_per_pound": 0.25
-      }
+  "M001": {
+    "name": "Ordinary Portland Cement",
+    "description": "Baseline Portland cement binder for general construction.",
+    "properties": {
+      "splitting_strength_mpa": 3.2,
+      "shrinkage_inches": 0.042,
+      "flexural_strength_mpa": 4.8,
+      "slump_inches": 4.1,
+      "compressive_strength_mpa": 28.5,
+      "poissons_ratio": 0.18
     },
-    "M002": {
-        "name": "High Early Strength Cement",
-        "description": "Fast setting cement for early strength",
-        "properties": {
-            "splitting_strength_mpa": 4.1,
-            "shrinkage_inches": 0.038,
-            "flexural_strength_mpa": 6.2,
-            "slump_inches": 3.8,
-            "compressive_strength_mpa": 35.2,
-            "poissons_ratio": 0.20
-        },
-        "meta": {
-            "gwp": 0.9,
-            "product_name_long": "Instant Pro-Build II",
-            "manufacturer": "XYZ Mortar Manufacturer",
-            "cost_per_pound": 0.32
-        }
-    },
-    "M003": {
-        "name": "Sulfate Resistant Cement",
-        "description": "Resistant to sulfate attack",
-        "properties": {
-            "splitting_strength_mpa": 3.8,
-            "shrinkage_inches": 0.035,
-            "flexural_strength_mpa": 5.4,
-            "slump_inches": 3.9,
-            "compressive_strength_mpa": 32.1,
-            "poissons_ratio": 0.17
-        },
-        "meta": {
-            "gwp": 0.75,
-            "product_name_long": "Advanced Eco-Mortar III",
-            "manufacturer": "DEF Mortar Manufacturer",
-            "cost_per_pound": 0.38
-        }
-    },
-    "M004": {
-        "name": "Low Heat Cement",
-        "description": "Low heat of hydration for cold weather construction",
-        "properties": {
-            "splitting_strength_mpa": 2.9,
-            "shrinkage_inches": 0.045,
-            "flexural_strength_mpa": 4.2,
-            "slump_inches": 4.5,
-            "compressive_strength_mpa": 25.8,
-            "poissons_ratio": 0.19
-        },
-        "meta": {
-            "gwp": 0.65,
-            "product_name_long": "Frost-Proof Mortar II",
-            "manufacturer": "XYZ Mortar Manufacturer",
-            "cost_per_pound": 0.42
-        }
-    },
-    "M005": {
-        "name": "Blended Cement",
-        "description": "Blended cement for general construction",
-        "properties": {
-            "splitting_strength_mpa": 3.5,
-            "shrinkage_inches": 0.040,
-            "flexural_strength_mpa": 5.1,
-            "slump_inches": 4.0,
-            "compressive_strength_mpa": 30.3,
-            "poissons_ratio": 0.18
-        },
-        "meta": {
-            "gwp": 0.45,
-            "product_name_long": "Fast-Dry Mortar I",
-            "manufacturer": "XYZ Mortar Manufacturer",
-            "cost_per_pound": 0.47
-        }
-    },
-    "M006": {
-        "name": "White Cement",
-        "description": "White cement for general construction",
-        "properties": {
-            "splitting_strength_mpa": 3.0,
-            "shrinkage_inches": 0.044,
-            "flexural_strength_mpa": 4.5,
-            "slump_inches": 4.2,
-            "compressive_strength_mpa": 27.2,
-            "poissons_ratio": 0.17
-        },
-        "meta": {
-            "gwp": 0.25,
-            "product_name_long": "White Mortar I",
-            "manufacturer": "ABC Mortar Manufacturer",
-            "cost_per_pound": 0.52
-        }
-    },
-    "M007": {
-        "name": "Rapid Hardening Cement",
-        "description": "Rapid hardening cement for early strength",
-        "properties": {
-            "splitting_strength_mpa": 4.3,
-            "shrinkage_inches": 0.036,
-            "flexural_strength_mpa": 6.5,
-            "slump_inches": 3.6,
-            "compressive_strength_mpa": 38.7,
-            "poissons_ratio": 0.21
-        },
-        "meta": {
-            "gwp": 0.35,
-            "product_name_long": "Super Hard Mortar II",
-            "manufacturer": "DEF Mortar Manufacturer",
-            "cost_per_pound": 0.58
-        }
-    },
-    "M008": {
-        "name": "Expansive Cement",
-        "description": "Expansive cement for general construction",
-        "properties": {
-            "splitting_strength_mpa": 2.7,
-            "shrinkage_inches": 0.048,
-            "flexural_strength_mpa": 4.0,
-            "slump_inches": 4.6,
-            "compressive_strength_mpa": 24.1,
-            "poissons_ratio": 0.16
-        },
-        "meta": {
-            "gwp": 0.15,
-            "product_name_long": "Expansive Mortar I",
-            "manufacturer": "XYZ Mortar Manufacturer",
-            "cost_per_pound": 0.63
-        }
+    "meta": {
+      "gwp": 0.90,
+      "product_name_long": "OPC Standard Mix I",
+      "manufacturer": "Mock Manufacturer A",
+      "cost_per_pound": 0.25
     }
+  },
+
+  "M002": {
+    "name": "Portland-Limestone Cement (Type IL)",
+    "description": "Lower-carbon cement with up to 15% limestone addition.",
+    "properties": {
+      "splitting_strength_mpa": 3.0,
+      "shrinkage_inches": 0.044,
+      "flexural_strength_mpa": 4.6,
+      "slump_inches": 4.0,
+      "compressive_strength_mpa": 27.0,
+      "poissons_ratio": 0.18
+    },
+    "meta": {
+      "gwp": 0.75,
+      "product_name_long": "EcoBlend Type IL Cement",
+      "manufacturer": "Mock Manufacturer A",
+      "cost_per_pound": 0.26
+    }
+  },
+
+  "M003": {
+    "name": "40% Slag + 60% Type IL Blend",
+    "description": "Moderate slag substitution of Type IL binder for reduced emissions.",
+    "properties": {
+      "splitting_strength_mpa": 2.9,
+      "shrinkage_inches": 0.046,
+      "flexural_strength_mpa": 4.5,
+      "slump_inches": 4.2,
+      "compressive_strength_mpa": 26.2,
+      "poissons_ratio": 0.17
+    },
+    "meta": {
+      "gwp": 0.55,
+      "product_name_long": "GreenMix SL40-IL60",
+      "manufacturer": "Mock Manufacturer B",
+      "cost_per_pound": 0.23
+    }
+  },
+
+  "M004": {
+    "name": "20% Slag + 80% Type IL Blend",
+    "description": "Low-level slag substitution maintaining good early strength.",
+    "properties": {
+      "splitting_strength_mpa": 3.1,
+      "shrinkage_inches": 0.045,
+      "flexural_strength_mpa": 4.7,
+      "slump_inches": 4.1,
+      "compressive_strength_mpa": 27.5,
+      "poissons_ratio": 0.18
+    },
+    "meta": {
+      "gwp": 0.62,
+      "product_name_long": "EcoBlend SL20-IL80",
+      "manufacturer": "Mock Manufacturer B",
+      "cost_per_pound": 0.24
+    }
+  },
+
+  "M005": {
+    "name": "40% Fly Ash + 60% Type IL Blend",
+    "description": "High fly ash content for enhanced workability and sustainability.",
+    "properties": {
+      "splitting_strength_mpa": 2.8,
+      "shrinkage_inches": 0.047,
+      "flexural_strength_mpa": 4.4,
+      "slump_inches": 4.4,
+      "compressive_strength_mpa": 25.8,
+      "poissons_ratio": 0.17
+    },
+    "meta": {
+      "gwp": 0.50,
+      "product_name_long": "EcoBlend FA40-IL60",
+      "manufacturer": "Mock Manufacturer C",
+      "cost_per_pound": 0.22
+    }
+  },
+
+  "M006": {
+    "name": "20% Fly Ash + 80% Type IL Blend",
+    "description": "Partial fly ash substitution offering balance of strength and sustainability.",
+    "properties": {
+      "splitting_strength_mpa": 3.0,
+      "shrinkage_inches": 0.045,
+      "flexural_strength_mpa": 4.6,
+      "slump_inches": 4.3,
+      "compressive_strength_mpa": 26.9,
+      "poissons_ratio": 0.18
+    },
+    "meta": {
+      "gwp": 0.58,
+      "product_name_long": "EcoBlend FA20-IL80",
+      "manufacturer": "Mock Manufacturer C",
+      "cost_per_pound": 0.23
+    }
+  },
+
+  "M007": {
+    "name": "100% Slag Binder",
+    "description": "Pure ground granulated blast furnace slag used as sole binder.",
+    "properties": {
+      "splitting_strength_mpa": 2.5,
+      "shrinkage_inches": 0.049,
+      "flexural_strength_mpa": 4.1,
+      "slump_inches": 4.5,
+      "compressive_strength_mpa": 23.4,
+      "poissons_ratio": 0.17
+    },
+    "meta": {
+      "gwp": 0.30,
+      "product_name_long": "GreenMix SL100",
+      "manufacturer": "Mock Manufacturer D",
+      "cost_per_pound": 0.21
+    }
+  },
+
+  "M008": {
+    "name": "TBD Experimental Binder",
+    "description": "Reserved slot for potential 8th binder (e.g., 100% Fly Ash or replicate control).",
+    "properties": {
+      "splitting_strength_mpa": null,
+      "shrinkage_inches": null,
+      "flexural_strength_mpa": null,
+      "slump_inches": null,
+      "compressive_strength_mpa": null,
+      "poissons_ratio": null
+    },
+    "meta": {
+      "gwp": null,
+      "product_name_long": "Unassigned Binder Slot",
+      "manufacturer": null,
+      "cost_per_pound": null,
+      "status": "unconfirmed"
+    }
+  }
 }
+
