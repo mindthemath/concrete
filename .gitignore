@@ -1,1 +1,4 @@
 node_modules/
+*.sw[opqr]
+*.vscode
+**.DS_Store

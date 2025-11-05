@@ -1,0 +1,67 @@
+# concrete.json
+# changes: outer key is id, no longer using list
+# note: outer-key can be any unique experiment id, I just used a combination of the properties (effectively redundant info)
+{
+    "M001-RK001-30": {
+      "mortar_id": "M001",
+      "rock_id": "RK001",
+      "rock_ratio": 0.3,
+      "concrete_compressive_strength_mpa": 34.8
+    }
+}
+
+
+# region.json
+# changes: key name and attributes, no primary_rock
+{
+    "R001": {
+      "name": "Northeast Region",
+      "description": "New England and Mid-Atlantic states with abundant granite",
+      "available_rocks": ["RK001", "RK002", "RK004"],
+    }
+}
+
+
+# mortar.json
+# changes: nested properties. outer keys are now name/description/properties/meta. included manufacturer/product name, gwp, cost
+{
+    "M001": {
+      "name": "Standard Portland Cement",
+      "description": "Standard mix for general construction",
+      "properties": {
+        "splitting_strength_mpa": 3.2,
+        "shrinkage_inches": 0.042,
+        "flexural_strength_mpa": 4.8,
+        "slump_inches": 4.1,
+        "compressive_strength_mpa": 28.5,
+        "poissons_ratio": 0.18
+      },
+      "meta": {
+        "gwp": 0.8,
+        "product_name_long": "Classic All-Purpose Mortar IV",
+        "manufacturer": "ABC Mortar Manufacturer",
+        "cost_per_pound": 0.25
+      }
+    },
+}
+
+
+# rock.json
+# changes: using similar structure to mortar for consistency. added source field
+
+{
+    "RK001": {
+        "name": "Granite Coarse Aggregate",
+        "description": "High-strength igneous rock with excellent durability",
+        "properties": {
+            "compressive_strength_mpa": 200.0,
+            "size_inches": 0.75,
+            "density_lb_ft3": 168.0,
+            "specific_gravity": 2.65
+        },
+        "meta": {
+            "source": "Barre Granite Quarry, Vermont",
+            "type": "Igneous - Granite",
+        }
+    }
+}

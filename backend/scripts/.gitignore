@@ -1,0 +1,7 @@
+hparams.yaml
+checkpoints/
+lightning_logs/
+
+*.png
+*.txt
+*.joblib
