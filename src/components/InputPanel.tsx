@@ -35,7 +35,6 @@ interface InputPanelProps {
   regions: Region[]
   onSubmit: (data: {
     desiredStrength: number
-    threshold: number
     regionId: string
     mortarMode: MortarMode
     customMortars: CustomMortar[]
@@ -44,8 +43,7 @@ interface InputPanelProps {
 }
 
 const InputPanel: React.FC<InputPanelProps> = ({ regions, onSubmit, loading }) => {
-  const [desiredStrength, setDesiredStrength] = useState<number>(30)
-  const [threshold, setThreshold] = useState<number>(5)
+  const [desiredStrength, setDesiredStrength] = useState<string>('30')
   const [regionId, setRegionId] = useState<string>(regions[0]?.id || '')
   const [mortarMode, setMortarMode] = useState<MortarMode>('default')
   const [customMortars, setCustomMortars] = useState<CustomMortarForm[]>([])
@@ -71,6 +69,12 @@ const InputPanel: React.FC<InputPanelProps> = ({ regions, onSubmit, loading }) =
 
     if (!regionId) {
       setValidationError('Select a region to continue.')
+      return
+    }
+
+    const parsedDesiredStrength = Number(desiredStrength)
+    if (!Number.isFinite(parsedDesiredStrength) || parsedDesiredStrength <= 0) {
+      setValidationError('Desired compressive strength must be a valid positive number.')
       return
     }
 
@@ -156,8 +160,7 @@ const InputPanel: React.FC<InputPanelProps> = ({ regions, onSubmit, loading }) =
     }
 
     onSubmit({
-      desiredStrength,
-      threshold,
+      desiredStrength: parsedDesiredStrength,
       regionId,
       mortarMode,
       customMortars: formattedCustomMortars,
@@ -225,7 +228,7 @@ const InputPanel: React.FC<InputPanelProps> = ({ regions, onSubmit, loading }) =
           <input
             type="number"
             value={desiredStrength}
-            onChange={(e) => setDesiredStrength(Number(e.target.value))}
+            onChange={(e) => setDesiredStrength(e.target.value)}
             min="10"
             max="100"
             step="0.1"
@@ -234,21 +237,6 @@ const InputPanel: React.FC<InputPanelProps> = ({ regions, onSubmit, loading }) =
             required
             disabled={loading}
           />
-          <div className="space-y-2">
-            <label className="block text-sm">Target Tolerance (± MPa)</label>
-            <input
-              type="number"
-              value={threshold}
-              onChange={(e) => setThreshold(Number(e.target.value))}
-              min="0"
-              max="30"
-              step="0.1"
-              className="basic-input"
-              placeholder="Acceptable deviation in MPa"
-              required
-              disabled={loading}
-            />
-          </div>
           <div className="text-xs text-gray-700">
             Typical range: 20-60 MPa for structural concrete applications
           </div>

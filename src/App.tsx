@@ -37,7 +37,6 @@ function App() {
 
   const handleSubmit = async (formData: {
     desiredStrength: number
-    threshold: number
     regionId: string
     mortarMode: 'default' | 'custom'
     customMortars: CustomMortar[]
@@ -57,7 +56,6 @@ function App() {
         },
         body: JSON.stringify({
           desired_compressive_strength_mpa: formData.desiredStrength,
-          tolerance_mpa: formData.threshold,
           region_id: formData.regionId,
           mortar_mode: formData.mortarMode,
           custom_mortars: formData.customMortars,
@@ -68,7 +66,6 @@ function App() {
         // If API not available, produce a clearly-marked mock result
         const mocked: ApiResponse = mockResults(
           formData.desiredStrength,
-          formData.threshold,
           formData.regionId,
           formData.mortarMode,
           formData.customMortars
@@ -86,7 +83,6 @@ function App() {
       // Network/404: show a mock so we can see the flow
       const mocked: ApiResponse = mockResults(
         formData.desiredStrength,
-        formData.threshold,
         formData.regionId,
         formData.mortarMode,
         formData.customMortars
@@ -100,7 +96,6 @@ function App() {
 
   function mockResults(
     target: number,
-    tol: number,
     regionId: string,
     mortarMode: 'default' | 'custom',
     customMortars: CustomMortar[]
@@ -108,14 +103,13 @@ function App() {
     // Parameters kept for API compatibility, not used in mock filtering
     void mortarMode
     void customMortars
-    const minStrength = target - tol
     const availableRocks: string[] = (regionData as RegionData)[regionId]?.available_rocks || []
     const entries = Object.values(concreteDb as ConcreteDb) as ConcreteDbEntry[]
 
     const filtered = entries
       .filter(
         (e) =>
-          e.concrete_compressive_strength_mpa >= minStrength &&
+          e.concrete_compressive_strength_mpa >= target &&
           (availableRocks.length === 0 || availableRocks.includes(e.rock_id))
       )
       .sort((a, b) => a.concrete_compressive_strength_mpa - b.concrete_compressive_strength_mpa)

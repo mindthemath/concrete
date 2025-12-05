@@ -43,6 +43,5 @@ export interface ApiResponse {
 export interface ApiRequest {
   region_id: string
   desired_compressive_strength_mpa: number
-  tolerance_mpa: number
   custom_mortars: CustomMortar[]
 }
