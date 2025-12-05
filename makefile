@@ -12,3 +12,9 @@ build:
 
 lint:
 	./bin/bun run lint
+
+docker-build:
+	docker build -t mindthemath/concrete-app .
+
+docker-run:
+	docker run --rm -p 3030:3000 mindthemath/concrete-app
