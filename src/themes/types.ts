@@ -5,7 +5,7 @@
  * including colors, typography, spacing, and component styles.
  */
 
-export type ThemeId = 'simple-light' | 'simple-dark' | 'neutral' | 'construction'
+export type ThemeId = 'simple-light' | 'simple-dark' | 'neutral' | 'notebook'
 
 export interface Theme {
   id: ThemeId

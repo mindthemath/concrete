@@ -14,29 +14,31 @@ body {
 }
 
 /* Theme-specific background classes */
-.theme-bg-construction {
-  background-color: #f9f6e8;
+.theme-bg-notebook {
+  background-color: #1a1a1a;
   background-image: 
-    /* Vertical grid lines */
-    repeating-linear-gradient(
-      90deg,
-      transparent,
-      transparent 19px,
-      rgba(173, 216, 230, 0.3) 19px,
-      rgba(173, 216, 230, 0.3) 20px
-    ),
-    /* Horizontal grid lines */
-    repeating-linear-gradient(
-      0deg,
-      transparent,
-      transparent 19px,
-      rgba(173, 216, 230, 0.3) 19px,
-      rgba(173, 216, 230, 0.3) 20px
-    );
+    /* White speckles - bigger sizes for visibility */
+    radial-gradient(circle at 15% 25%, rgba(255, 255, 255, 0.9) 2.5px, transparent 2.5px),
+    radial-gradient(circle at 45% 15%, rgba(255, 255, 255, 0.8) 2px, transparent 2px),
+    radial-gradient(circle at 75% 30%, rgba(255, 255, 255, 0.9) 3px, transparent 3px),
+    radial-gradient(circle at 25% 50%, rgba(255, 255, 255, 0.7) 2.2px, transparent 2.2px),
+    radial-gradient(circle at 60% 45%, rgba(255, 255, 255, 0.9) 2.5px, transparent 2.5px),
+    radial-gradient(circle at 85% 60%, rgba(255, 255, 255, 0.8) 2.8px, transparent 2.8px),
+    radial-gradient(circle at 35% 70%, rgba(255, 255, 255, 0.9) 2px, transparent 2px),
+    radial-gradient(circle at 70% 80%, rgba(255, 255, 255, 0.7) 2.5px, transparent 2.5px),
+    radial-gradient(circle at 20% 85%, rgba(255, 255, 255, 0.8) 2.3px, transparent 2.3px),
+    radial-gradient(circle at 55% 90%, rgba(255, 255, 255, 0.9) 3px, transparent 3px),
+    radial-gradient(circle at 90% 15%, rgba(255, 255, 255, 0.8) 2.4px, transparent 2.4px),
+    radial-gradient(circle at 10% 60%, rgba(255, 255, 255, 0.7) 2.6px, transparent 2.6px),
+    radial-gradient(circle at 50% 25%, rgba(255, 255, 255, 0.9) 2px, transparent 2px),
+    radial-gradient(circle at 80% 45%, rgba(255, 255, 255, 0.8) 3px, transparent 3px),
+    radial-gradient(circle at 30% 35%, rgba(255, 255, 255, 0.7) 2.2px, transparent 2.2px),
+    radial-gradient(circle at 65% 65%, rgba(255, 255, 255, 0.9) 2.5px, transparent 2.5px);
+  background-size: 200px 200px, 180px 180px, 220px 220px, 190px 190px, 210px 210px, 200px 200px, 185px 185px, 215px 215px, 195px 195px, 205px 205px, 180px 180px, 220px 220px, 200px 200px, 210px 210px, 190px 190px, 200px 200px;
 }
 
-/* Notebook paper style panels for Construction theme */
-.theme-panel-construction {
+/* Notebook paper style panels for Notebook theme */
+.theme-panel-notebook {
   background-color: #ffffff !important;
   background-image: 
     /* Red margin line aligned with green metadata line */

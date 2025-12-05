@@ -145,7 +145,7 @@ function App() {
                 value={themeId}
                 onChange={(e) => {
                   const newTheme = e.target.value as ThemeId
-                  if (newTheme === 'simple-light' || newTheme === 'simple-dark' || newTheme === 'neutral' || newTheme === 'construction') {
+                  if (newTheme === 'simple-light' || newTheme === 'simple-dark' || newTheme === 'neutral' || newTheme === 'notebook') {
                     setTheme(newTheme)
                   }
                 }}
@@ -153,7 +153,7 @@ function App() {
                 <option value="simple-light">SimpleLight</option>
                 <option value="simple-dark">SimpleDark</option>
                 <option value="neutral">Neutral</option>
-                <option value="construction">Construction</option>
+                <option value="notebook">Notebook</option>
               </select>
               <div className="absolute right-2 top-1/2 -translate-y-1/2 pointer-events-none" style={{ color: 'var(--theme-input-text)' }}>
                 <svg

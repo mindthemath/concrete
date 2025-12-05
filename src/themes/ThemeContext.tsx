@@ -25,7 +25,7 @@ export function ThemeProvider({ children }: ThemeProviderProps) {
   const [themeId, setThemeIdState] = useState<ThemeId>(() => {
     // Load from localStorage or use default
     const saved = localStorage.getItem('theme')
-    if (saved && (saved === 'simple-light' || saved === 'simple-dark' || saved === 'neutral' || saved === 'construction')) {
+    if (saved && (saved === 'simple-light' || saved === 'simple-dark' || saved === 'neutral' || saved === 'notebook')) {
       return saved as ThemeId
     }
     return defaultThemeId
@@ -50,9 +50,9 @@ export function ThemeProvider({ children }: ThemeProviderProps) {
     root.style.setProperty('--theme-font', rootStyles.fontFamily || 'Arial, Helvetica, sans-serif')
 
     // Apply theme-specific classes to body
-    document.body.classList.remove('theme-bg-construction')
-    if (theme.id === 'construction') {
-      document.body.classList.add('theme-bg-construction')
+    document.body.classList.remove('theme-bg-notebook')
+    if (theme.id === 'notebook') {
+      document.body.classList.add('theme-bg-notebook')
     }
 
     // Apply component styles

@@ -52,11 +52,11 @@ interface OutputPanelProps {
 
 const OutputPanel: React.FC<OutputPanelProps> = ({ result, loading, error, mortarMode, customMortars }) => {
   const { themeId } = useTheme()
-  const isConstruction = themeId === 'construction'
+  const isNotebook = themeId === 'notebook'
   
   // Get the appropriate accent color for the metadata border based on theme
   const getMetadataAccentColor = () => {
-    if (isConstruction) {
+    if (isNotebook) {
       return 'linear-gradient(to right, rgba(255, 255, 0, 0.7) 0%, rgba(255, 255, 0, 0.7) 6px, transparent 6px)'
     }
     switch (themeId) {
@@ -144,7 +144,7 @@ const OutputPanel: React.FC<OutputPanelProps> = ({ result, loading, error, morta
     <section className="border p-4" style={{ borderColor: 'var(--theme-panel-border)', backgroundColor: 'var(--theme-panel-bg)', color: 'var(--theme-panel-text)' }}>
       <h2 className="text-xl mb-4 relative inline-block">
         <span className="relative z-10">Predicted Mix Designs{displayResult?.mocked ? ' (Mocked)' : ''}</span>
-        {isConstruction && (
+        {isNotebook && (
           <span 
             className="absolute left-0 top-0 bottom-0 pointer-events-none"
             style={{
@@ -161,7 +161,7 @@ const OutputPanel: React.FC<OutputPanelProps> = ({ result, loading, error, morta
         {displayResult.predictions.map((prediction, index) => (
           <div
             key={`${prediction.rock_id}-${index}`}
-            className={`border p-3 ${isConstruction ? 'theme-panel-construction' : ''}`}
+            className={`border p-3 ${isNotebook ? 'theme-panel-notebook' : ''}`}
             style={{ borderColor: 'var(--theme-panel-border)' }}
           >
             <div className="flex justify-between items-start mb-3 pb-2 border-b gap-4" style={{ borderColor: 'var(--theme-panel-border)' }}>

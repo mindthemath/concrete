@@ -9,13 +9,13 @@ import { Theme, ThemeId } from './types'
 import { simpleLightTheme } from './simpleLight'
 import { simpleDarkTheme } from './simpleDark'
 import { neutralTheme } from './neutral'
-import { constructionTheme } from './construction'
+import { notebookTheme } from './notebook'
 
 export const themes: Record<ThemeId, Theme> = {
   'simple-light': simpleLightTheme,
   'simple-dark': simpleDarkTheme,
   'neutral': neutralTheme,
-  'construction': constructionTheme,
+  'notebook': notebookTheme,
 }
 
 export const defaultThemeId: ThemeId = 'neutral'

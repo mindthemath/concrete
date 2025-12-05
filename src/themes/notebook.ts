@@ -1,28 +1,28 @@
 import { Theme } from './types'
 
 /**
- * Construction Theme
+ * Notebook Theme
  * 
- * Industrial construction-themed design with early 00's vibes.
- * Features high contrast, safety yellow/orange, and skeuomorphic elements.
+ * Classic composition notebook design with black speckled background,
+ * ruled paper panels, and handwritten font.
  */
-export const constructionTheme: Theme = {
-  id: 'construction',
-  name: 'Construction',
-  description: 'Industrial construction-themed design (Early 00s Style)',
+export const notebookTheme: Theme = {
+  id: 'notebook',
+  name: 'Notebook',
+  description: 'Classic composition notebook design',
   
   root: {
-    backgroundColor: '#f9f6e8', // Creamier paper color
-    // Background image handled via CSS class .theme-bg-construction
-    color: '#1a1a1a',
+    backgroundColor: '#1a1a1a', // Black background like composition notebook
+    // Background image handled via CSS class .theme-bg-notebook
+    color: '#ffffff',
     fontFamily: '"Comic Sans MS", "Bradley Hand", cursive', // Handwritten feel
   },
   
   components: {
     header: {
-      borderColor: '#000000',
-      titleColor: '#000000',
-      borderWidth: '0 0 3px 0',
+      borderColor: '#ffffff',
+      titleColor: '#ffffff',
+      borderWidth: '0 0 2px 0',
       borderStyle: 'solid',
     },
     input: {
@@ -30,8 +30,8 @@ export const constructionTheme: Theme = {
       borderColor: '#8c8c8c',
       textColor: '#000000',
       focusBorderColor: '#ff9900', // Safety orange
-      borderStyle: 'inset',
-      borderWidth: '2px',
+      borderStyle: 'solid',
+      borderWidth: '1px',
     },
     button: {
       backgroundColor: 'linear-gradient(to bottom, #ffd700 0%, #e6c200 100%)', // Safety yellow gradient
@@ -54,8 +54,9 @@ export const constructionTheme: Theme = {
       shadow: '2px 2px 4px rgba(0,0,0,0.15)',
     },
     footer: {
-      borderColor: '#555555',
-      textColor: '#444444',
+      borderColor: '#ffffff',
+      textColor: '#ffffff',
     },
   },
 }
+
