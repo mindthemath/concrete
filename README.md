@@ -8,6 +8,13 @@ This project uses [Bun](https://bun.sh) as the package manager and runtime. The 
 
 ## Installation
 
+*The steps below are meant to be run from the `frontend/` directory.*
+
+```bash
+cd frontend
+```
+
+
 Install project dependencies:
 
 ```bash
@@ -100,7 +107,7 @@ This deletes the `dist/` directory.
 ## Project Structure
 
 ```
-concrete/
+frontend/
 ├── bin/              # Bundled Bun binary
 ├── src/              # Source code
 │   ├── components/   # React components
@@ -111,3 +118,8 @@ concrete/
 └── makefile          # Build commands
 ```
 
+## Backend
+
+[To be added]
+- [ ] add `uv` and `uvx` binaries to the `bin/` directory inside of `backend/`
+- [ ] document litserve and slowapi usage, building docker container, etc.

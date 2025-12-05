@@ -1,0 +1,19 @@
+dev:
+	./bin/bun run dev
+
+install:
+	./bin/bun install --frozen-lockfile
+
+update:
+	./bin/bun update
+
+build:
+	./bin/bun run build
+
+lint:
+	./bin/bun run format
+	./bin/bun run lint
+
+clean:
+	rm -rf dist/
+

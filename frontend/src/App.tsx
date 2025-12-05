@@ -32,7 +32,7 @@ const SAMPLE_REGIONS: Region[] = Object.keys(regionData).map(key => ({
 
 // Environment variables with Vite prefix
 // Note: API_KEY is not used in production - backend is protected via CORS restrictions
-const API_ENDPOINT = import.meta.env.VITE_API_ENDPOINT || 'http://localhost:9600/predict'
+const API_ENDPOINT = import.meta.env.VITE_API_ENDPOINT || 'http://0.0.0.0:9600/predict'
 const API_TIMEOUT = Number(import.meta.env.VITE_API_TIMEOUT) || 5000 // Default 5 seconds
 
 function App() {

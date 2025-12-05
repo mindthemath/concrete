@@ -22,9 +22,11 @@ jobs:
         uses: actions/checkout@v4
 
       - name: Install Dependencies
+        working-directory: frontend
         run: ./bin/bun install --frozen-lockfile
 
       - name: Build Static Site
+        working-directory: frontend
         run: |
           REPO_NAME=${GITHUB_REPOSITORY##*/}
           ./bin/bun run build -- --base /${REPO_NAME}/
@@ -33,12 +35,12 @@ jobs:
           GITHUB_REPOSITORY: ${{ github.repository }}
 
       - name: Add .nojekyll file
-        run: touch dist/.nojekyll
+        run: touch frontend/dist/.nojekyll
 
       - name: Deploy to GitHub Pages
         uses: JamesIves/github-pages-deploy-action@v4
         with:
-          folder: dist
+          folder: frontend/dist
           branch: gh-pages
           clean: true
           single-commit: true

@@ -7,14 +7,14 @@ WORKDIR /usr/src/app
 # this will cache them and speed up future builds
 FROM base AS install
 RUN mkdir -p /temp/dev
-COPY package.json bun.lock /temp/dev/
+COPY frontend/package.json frontend/bun.lock /temp/dev/
 RUN cd /temp/dev && bun install --frozen-lockfile
 
 # copy node_modules from temp directory
 # then copy all (non-ignored) project files into the image
 FROM base AS build
 COPY --from=install /temp/dev/node_modules node_modules
-COPY . .
+COPY frontend .
 
 # build the static site
 ENV NODE_ENV=production
