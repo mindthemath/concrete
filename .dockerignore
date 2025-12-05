@@ -1,0 +1,5 @@
+makefile
+dist/
+node_modules/
+bin/
+
