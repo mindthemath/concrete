@@ -221,18 +221,21 @@ if __name__ == "__main__":
             logger.info("CORS disabled")
             pass
         else:
+            allowed_origins = (
+                ["*"]
+                if os.environ.get("ENVIRONMENT") == "dev"
+                else ["https://mindthemath.github.io", "https://concrete.math.computer"]
+            )
             app.add_middleware(
                 CORSMiddleware,
-                allow_origins=(
-                    ["*"]
-                    if os.environ.get("ENVIRONMENT") == "dev"
-                    else ["https://mindthemath.github.io"]
-                ),
+                allow_origins=allowed_origins,
                 allow_credentials=True,
                 allow_methods=["*"],
                 allow_headers=["*"],
             )
-            logger.info("CORS middleware added successfully")
+            logger.info(
+                f"CORS middleware added successfully with origins: {allowed_origins}"
+            )
     except AttributeError:
         logger.warning(
             "Could not access FastAPI app directly. CORS/RateLimit may not work properly."
