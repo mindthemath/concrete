@@ -10,10 +10,10 @@ dev:
 	ENVIRONMENT=dev uv run --extra api --extra cpu python server.py
 
 build:
-	docker build -t mindthemath/concrete-api .
+	docker build -f Dockerfile -t mindthemath/concrete-api ../..
 
 run: build
-	docker run --rm -p 9600:9600 --name concrete-api mindthemath/concrete-api
+	docker run --rm -p 9600:9600 --name concrete-api -e ENVIRONMENT=dev mindthemath/concrete-api
 
 artifacts.tar.gz:
 	cd ../scripts && tar -czvf ../api/artifacts.tar.gz \
