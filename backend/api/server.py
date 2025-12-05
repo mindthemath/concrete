@@ -206,29 +206,37 @@ if __name__ == "__main__":
     # litserve uses FastAPI under the hood, so we can access the app
     try:
         app = server.app  # Access the underlying FastAPI app
+        YES_VALUES = ["true", "1", "yes", "y"]
+        if os.environ.get("DISABLE_RATE_LIMIT", "false").lower() in YES_VALUES:
+            logger.info("Rate limiting disabled")
+            pass
+        else:
+            # Rate limiting setup
+            # We use default_limits and SlowAPIMiddleware to enforce limits globally
+            # without needing to decorate specific routes (since litserve hides them)
+            limiter = Limiter(key_func=get_remote_address, default_limits=["20/minute"])
+            app.state.limiter = limiter
+            app.add_exception_handler(RateLimitExceeded, _rate_limit_exceeded_handler)
+            app.add_middleware(SlowAPIMiddleware)
 
-        # Rate limiting setup
-        # We use default_limits and SlowAPIMiddleware to enforce limits globally
-        # without needing to decorate specific routes (since litserve hides them)
-        limiter = Limiter(key_func=get_remote_address, default_limits=["20/minute"])
-        app.state.limiter = limiter
-        app.add_exception_handler(RateLimitExceeded, _rate_limit_exceeded_handler)
-        app.add_middleware(SlowAPIMiddleware)
+            logger.info("Rate limiter added: 20 requests/minute per IP")
 
-        logger.info("Rate limiter added: 20 requests/minute per IP")
-
-        app.add_middleware(
-            CORSMiddleware,
-            allow_origins=(
-                ["*"]
-                if os.environ.get("ENVIRONMENT") == "dev"
-                else ["https://mindthemath.github.io"]
-            ),
-            allow_credentials=True,
-            allow_methods=["*"],
-            allow_headers=["*"],
-        )
-        logger.info("CORS middleware added successfully")
+        if os.environ.get("DISABLE_CORS", "false").lower() in YES_VALUES:
+            logger.info("CORS disabled")
+            pass
+        else:
+            app.add_middleware(
+                CORSMiddleware,
+                allow_origins=(
+                    ["*"]
+                    if os.environ.get("ENVIRONMENT") == "dev"
+                    else ["https://mindthemath.github.io"]
+                ),
+                allow_credentials=True,
+                allow_methods=["*"],
+                allow_headers=["*"],
+            )
+            logger.info("CORS middleware added successfully")
     except AttributeError:
         logger.warning(
             "Could not access FastAPI app directly. CORS/RateLimit may not work properly."
