@@ -6,22 +6,145 @@
 
 body {
   margin: 0;
-  font-family: Arial, Helvetica, sans-serif;
-  background-color: #ffffff;
-  color: #000000;
+  font-family: var(--theme-font, Arial, Helvetica, sans-serif);
+  background-color: var(--theme-bg, #ffffff);
+  /* background-image is now handled via specific theme classes for complex patterns */
+  color: var(--theme-text, #000000);
+  transition: background-color 0.2s ease, color 0.2s ease;
+}
+
+/* Theme-specific background classes */
+.theme-bg-notebook {
+  background-color: #0a0a0a;
+  background-image: 
+    /* Randomly distributed speckles with varied sizes */
+    radial-gradient(circle at 3% 7%, white 2.5px, transparent 2.5px),
+    radial-gradient(circle at 17% 23%, white 3px, transparent 3px),
+    radial-gradient(circle at 9% 41%, white 1.8px, transparent 1.8px),
+    radial-gradient(circle at 26% 13%, white 2px, transparent 2px),
+    radial-gradient(circle at 34% 52%, white 3.5px, transparent 3.5px),
+    radial-gradient(circle at 19% 68%, white 2.2px, transparent 2.2px),
+    radial-gradient(circle at 41% 9%, white 1.5px, transparent 1.5px),
+    radial-gradient(circle at 53% 31%, white 3px, transparent 3px),
+    radial-gradient(circle at 47% 76%, white 2.5px, transparent 2.5px),
+    radial-gradient(circle at 38% 89%, white 2px, transparent 2px),
+    radial-gradient(circle at 61% 16%, white 2.8px, transparent 2.8px),
+    radial-gradient(circle at 74% 44%, white 1.5px, transparent 1.5px),
+    radial-gradient(circle at 68% 62%, white 3.2px, transparent 3.2px),
+    radial-gradient(circle at 59% 85%, white 2px, transparent 2px),
+    radial-gradient(circle at 83% 21%, white 2.5px, transparent 2.5px),
+    radial-gradient(circle at 91% 39%, white 3px, transparent 3px),
+    radial-gradient(circle at 87% 71%, white 1.8px, transparent 1.8px),
+    radial-gradient(circle at 79% 93%, white 2.5px, transparent 2.5px),
+    radial-gradient(circle at 96% 8%, white 2px, transparent 2px),
+    radial-gradient(circle at 93% 57%, white 3px, transparent 3px),
+    radial-gradient(circle at 6% 28%, white 2.2px, transparent 2.2px),
+    radial-gradient(circle at 11% 83%, white 2.8px, transparent 2.8px),
+    radial-gradient(circle at 29% 36%, white 1.5px, transparent 1.5px),
+    radial-gradient(circle at 44% 59%, white 2.5px, transparent 2.5px),
+    radial-gradient(circle at 51% 4%, white 3px, transparent 3px);
+  background-size: 73px 67px, 89px 81px, 61px 71px, 97px 59px, 53px 93px, 79px 77px, 103px 87px, 67px 101px, 91px 63px, 77px 97px, 107px 73px, 83px 109px, 59px 79px, 101px 61px, 71px 89px, 93px 83px, 87px 107px, 63px 71px, 97px 53px, 81px 103px, 73px 91px, 109px 67px, 61px 97px, 89px 79px, 103px 59px;
+}
+
+/* Notebook paper style panels for Notebook theme */
+.theme-panel-notebook {
+  background-color: #ffffff !important;
+  background-image: 
+    /* Red margin line aligned with green metadata line */
+    linear-gradient(
+      90deg,
+      transparent 0,
+      transparent 10px,
+      #d6787d 10px,
+      #d6787d 12px,
+      transparent 12px
+    ),
+    /* Horizontal ruled lines - aligned with table rows */
+    repeating-linear-gradient(
+      0deg,
+      transparent,
+      transparent 28px,
+      rgba(173, 216, 230, 0.5) 28px,
+      rgba(173, 216, 230, 0.5) 29px
+    );
+  background-position: 0 0, 0 9px;
+  box-shadow: 
+    2px 2px 4px rgba(0,0,0,0.15),
+    inset 0 0 0 1px rgba(0,0,0,0.05) !important;
+  border: 1px solid #e0e0e0 !important;
+  border-style: solid !important;
+  position: relative;
 }
 
 #root {
   min-height: 100vh;
 }
 
-/* Minimal helper classes for early-web look */
+/* Minimal helper classes for early-web look - now theme-aware */
 @layer components {
   .basic-input {
-    @apply w-full px-2 py-2 border border-gray-400 bg-white text-black text-base focus:outline-none focus:border-blue-600;
+    @apply w-full px-2 py-2 border text-base focus:outline-none;
+    background-color: var(--theme-input-bg);
+    border-color: var(--theme-input-border);
+    color: var(--theme-input-text);
+    border-width: var(--theme-input-border-width, 1px);
+    border-style: var(--theme-input-border-style, solid);
+    box-shadow: var(--theme-input-shadow, none);
+  }
+  .basic-input:focus {
+    border-color: var(--theme-input-focus);
+  }
+  .basic-input::placeholder {
+    color: var(--theme-input-text);
+    opacity: 0.6;
   }
   .basic-button {
-    @apply px-4 py-2 bg-gray-200 border border-gray-500 text-black hover:bg-gray-300 cursor-pointer;
+    @apply px-4 py-2 border cursor-pointer;
+    background: var(--theme-button-bg);
+    border-color: var(--theme-button-border);
+    color: var(--theme-button-text);
+    border-width: var(--theme-button-border-width, 1px);
+    border-style: var(--theme-button-border-style, solid);
+    box-shadow: var(--theme-button-shadow, none);
+    text-transform: var(--theme-button-transform, none);
+    font-weight: var(--theme-button-weight, normal);
+    transition: background-color 0.2s ease, box-shadow 0.1s ease;
+  }
+  .basic-button:hover:not(:disabled) {
+    background: var(--theme-button-hover);
+  }
+  .basic-button:active:not(:disabled) {
+    box-shadow: var(--theme-button-active-shadow, none);
+  }
+  .basic-button:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+  }
+  .theme-select {
+    @apply border;
+    background-color: var(--theme-input-bg);
+    border-color: var(--theme-input-border);
+    color: var(--theme-input-text);
+    border-width: var(--theme-input-border-width, 1px);
+    border-style: var(--theme-input-border-style, solid);
+    box-shadow: var(--theme-input-shadow, none);
+  }
+  .theme-select:hover {
+    border-color: var(--theme-input-focus);
+  }
+  .theme-select:focus {
+    outline: none;
+    border-color: var(--theme-input-focus);
+  }
+  
+  /* Common panel/section style helper */
+  .theme-panel {
+    background-color: var(--theme-panel-bg);
+    border-color: var(--theme-panel-border);
+    color: var(--theme-panel-text);
+    border-width: var(--theme-panel-border-width, 1px);
+    border-style: var(--theme-panel-border-style, solid);
+    box-shadow: var(--theme-panel-shadow, none);
   }
 }
 

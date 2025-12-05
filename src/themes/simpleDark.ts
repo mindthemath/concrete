@@ -4,7 +4,7 @@ import { Theme } from './types'
  * SimpleDark Theme
  * 
  * Dark mode version of SimpleLight - same clean, minimal aesthetic
- * but with inverted colors for dark mode.
+ * with true black background and white text, maintaining simplicity.
  */
 export const simpleDarkTheme: Theme = {
   id: 'simple-dark',
@@ -12,36 +12,36 @@ export const simpleDarkTheme: Theme = {
   description: 'Dark mode version of SimpleLight theme',
   
   root: {
-    backgroundColor: '#1f2937', // gray-800
-    color: '#f9fafb', // gray-50
+    backgroundColor: '#000000', // true black
+    color: '#ffffff', // white
     fontFamily: 'Arial, Helvetica, sans-serif',
   },
   
   components: {
     header: {
-      borderColor: '#4b5563', // gray-600
-      titleColor: '#f9fafb', // gray-50
+      borderColor: '#6b7280', // gray-500 (same as light mode)
+      titleColor: '#ffffff', // white
     },
     input: {
-      backgroundColor: '#374151', // gray-700
-      borderColor: '#4b5563', // gray-600
-      textColor: '#f9fafb', // gray-50
-      focusBorderColor: '#3b82f6', // blue-500
+      backgroundColor: '#000000', // black
+      borderColor: '#6b7280', // gray-500 (same as light mode)
+      textColor: '#ffffff', // white
+      focusBorderColor: '#2563eb', // blue-600 (same as light mode)
     },
     button: {
-      backgroundColor: '#4b5563', // gray-600
-      borderColor: '#6b7280', // gray-500
-      textColor: '#f9fafb', // gray-50
-      hoverBackgroundColor: '#6b7280', // gray-500
+      backgroundColor: '#1f1f1f', // very dark gray (slightly lighter than black)
+      borderColor: '#6b7280', // gray-500 (same as light mode)
+      textColor: '#ffffff', // white
+      hoverBackgroundColor: '#2f2f2f', // slightly lighter dark gray
     },
     panel: {
-      backgroundColor: '#374151', // gray-700
-      borderColor: '#4b5563', // gray-600
-      textColor: '#f9fafb', // gray-50
+      backgroundColor: '#000000', // black
+      borderColor: '#6b7280', // gray-500 (same as light mode)
+      textColor: '#ffffff', // white
     },
     footer: {
-      borderColor: '#4b5563', // gray-600
-      textColor: '#9ca3af', // gray-400
+      borderColor: '#6b7280', // gray-500 (same as light mode)
+      textColor: '#9ca3af', // gray-400 (same as light mode for subtle text)
     },
   },
 }

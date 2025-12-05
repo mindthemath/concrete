@@ -5,7 +5,7 @@
  * including colors, typography, spacing, and component styles.
  */
 
-export type ThemeId = 'simple-light' | 'simple-dark' | 'construction'
+export type ThemeId = 'simple-light' | 'simple-dark' | 'neutral' | 'notebook'
 
 export interface Theme {
   id: ThemeId
@@ -15,6 +15,7 @@ export interface Theme {
   // Root-level styles
   root: {
     backgroundColor: string
+    backgroundImage?: string
     color: string
     fontFamily?: string
   }
@@ -24,6 +25,9 @@ export interface Theme {
     header: {
       borderColor: string
       titleColor: string
+      borderWidth?: string
+      borderStyle?: string
+      backgroundColor?: string
     }
     input: {
       backgroundColor: string
@@ -31,17 +35,29 @@ export interface Theme {
       textColor: string
       focusBorderColor: string
       placeholderColor?: string
+      borderWidth?: string
+      borderStyle?: string
+      shadow?: string
     }
     button: {
-      backgroundColor: string
+      backgroundColor: string // Can be a color or gradient
       borderColor: string
       textColor: string
       hoverBackgroundColor: string
+      borderWidth?: string
+      borderStyle?: string
+      shadow?: string
+      activeShadow?: string
+      transform?: string // uppercase, etc
+      fontWeight?: string
     }
     panel: {
       backgroundColor: string
       borderColor: string
       textColor: string
+      borderWidth?: string
+      borderStyle?: string
+      shadow?: string
     }
     footer: {
       borderColor: string
@@ -52,4 +68,3 @@ export interface Theme {
   // Utility classes that will be applied via CSS variables or classes
   classes?: Record<string, string>
 }
-
