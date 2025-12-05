@@ -25,6 +25,12 @@ jobs:
         working-directory: frontend
         run: ./bin/bun install --frozen-lockfile
 
+      - name: Create .env file
+        working-directory: frontend
+        run: |
+          echo "VITE_API_ENDPOINT=https://concrete-api.clfx.cc/predict" > .env
+          echo "VITE_API_TIMEOUT=3000" >> .env
+
       - name: Build Static Site
         working-directory: frontend
         run: |

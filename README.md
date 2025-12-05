@@ -123,3 +123,5 @@ frontend/
 [To be added]
 - [ ] add `uv` and `uvx` binaries to the `bin/` directory inside of `backend/`
 - [ ] document litserve and slowapi usage, building docker container, etc.
+- [ ] `VITE_API_ENDPOINT` needs to be updated in GHA when hosted endpoint changes. Same idea for the domain of the site.
+- [ ] note that the endpoint will be publicly exposed on the frontend, so it's not sensitive info (no sensitivity of secrets in GHA def nor the .env file).
