@@ -25,9 +25,12 @@ jobs:
         run: ./bin/bun install --frozen-lockfile
 
       - name: Build Static Site
-        run: ./bin/bun run build -- --base /concrete/
+        run: |
+          REPO_NAME=${GITHUB_REPOSITORY##*/}
+          ./bin/bun run build -- --base /${REPO_NAME}/
         env:
           STATIC_BUILD: true
+          GITHUB_REPOSITORY: ${{ github.repository }}
 
       - name: Add .nojekyll file
         run: touch dist/.nojekyll
