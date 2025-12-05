@@ -21,7 +21,6 @@ jobs:
       - name: Build Static Site
         run: ./bin/bun run build -- --base /concrete/
         env:
-          BASE_PATH: /concrete/
           STATIC_BUILD: true
 
       - name: Add .nojekyll file
