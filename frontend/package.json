@@ -6,7 +6,7 @@
   "scripts": {
     "dev": "bunx vite",
     "build": "bunx tsc && bunx vite build",
-    "lint": "bunx eslint . --ext ts,tsx --report-unused-disable-directives --max-warnings 0 --fix",
+    "lint": "eslint . --report-unused-disable-directives --max-warnings 0 --fix",
     "format": "bunx prettier --write \"src/**/*.{ts,tsx,json}\"",
     "format:check": "bunx prettier --check \"src/**/*.{ts,tsx,json}\"",
     "preview": "bunx vite preview"
