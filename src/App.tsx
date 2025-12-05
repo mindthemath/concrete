@@ -136,7 +136,14 @@ function App() {
       <div className="mx-auto px-4 py-6 max-w-[1100px]" style={{ color: 'var(--theme-text)' }}>
         <header className="mb-6 pb-3" style={{ borderBottom: '1px solid var(--theme-header-border)' }}>
           <div className="flex items-center justify-between">
-            <h1 className="text-3xl font-normal tracking-normal" style={{ color: 'var(--theme-header-title)' }}>
+            <h1 
+              className="text-3xl font-normal tracking-normal relative inline-block px-4 py-2" 
+              style={{ 
+                color: 'var(--theme-header-title)',
+                backgroundColor: themeId === 'notebook' ? '#000000' : 'transparent',
+                border: themeId === 'notebook' ? '1px solid #ffffff' : 'none'
+              }}
+            >
               Concrete Strength Predictor
             </h1>
             <div className="relative">
@@ -192,8 +199,16 @@ function App() {
         </div>
 
         <footer className="mt-10 text-center text-sm pt-4" style={{ borderTop: '1px solid var(--theme-footer-border)', color: 'var(--theme-footer-text)' }}>
-          <p>Mind the Math, LLC | November 2025</p>
-          <p className="mt-1 text-xs">For demonstration purposes only | Based on 96 experimental samples</p>
+          <div 
+            className="inline-block px-4 py-2"
+            style={{
+              backgroundColor: themeId === 'notebook' ? '#000000' : 'transparent',
+              border: themeId === 'notebook' ? '1px solid #ffffff' : 'none'
+            }}
+          >
+            <p>Mind the Math, LLC | November 2025</p>
+            <p className="mt-1 text-xs">For demonstration purposes only | Based on 96 experimental samples</p>
+          </div>
         </footer>
       </div>
     </div>
