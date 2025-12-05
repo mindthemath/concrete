@@ -161,7 +161,9 @@ const OutputPanel: React.FC<OutputPanelProps> = ({ result, loading, error, morta
               </div>
             </div>
 
-            <div className="border-l-4 pl-3 my-2" style={{ borderColor: '#16a34a' }}>
+            <div className="pl-3 my-2 relative" style={{ 
+              background: 'linear-gradient(to right, rgba(255, 255, 0, 0.7) 0%, rgba(255, 255, 0, 0.7) 6px, transparent 6px)'
+            }}>
 
               {/* Mortar meta table */}
               {(() => {
