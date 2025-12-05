@@ -6,6 +6,7 @@ from pathlib import Path
 from typing import Any, Dict, List
 
 import litserve as ls
+from fastapi.middleware.cors import CORSMiddleware
 from pydantic import BaseModel, Field
 
 # Environment configurations
@@ -138,7 +139,7 @@ class ConcretePredictionAPI(ls.LitAPI):
     def decode_request(self, request: InputRequest) -> Dict[str, Any]:
         return request.model_dump()
 
-    def predict(self, request_data: InputRequest) -> Dict[str, Any]:
+    def predict(self, request_data) -> Dict[str, Any]:
         """Generate predictions for concrete strength."""
         region_id = request_data["region_id"]
         desired_strength = request_data["desired_compressive_strength_mpa"]
@@ -189,12 +190,31 @@ class ConcretePredictionAPI(ls.LitAPI):
 
 
 if __name__ == "__main__":
+    api = ConcretePredictionAPI(max_batch_size=1, api_path="/predict")
     server = ls.LitServer(
-        ConcretePredictionAPI(max_batch_size=1, api_path="/predict"),
+        api,
         accelerator="cpu",
         track_requests=True,
         workers_per_device=WORKERS_PER_DEVICE,
     )
+    
+    # Add CORS middleware to handle OPTIONS preflight requests
+    # litserve uses FastAPI under the hood, so we can access the app
+    try:
+        app = server.app  # Access the underlying FastAPI app
+        app.add_middleware(
+            CORSMiddleware,
+            allow_origins=["*"] if os.environ.get("ENVIRONMENT") == "dev" else ["https://mindthemath.github.io/concrete/"],  # In production, specify actual origins
+            allow_credentials=True,
+            allow_methods=["*"],
+            allow_headers=["*"],
+        )
+        logger.info("CORS middleware added successfully")
+    except AttributeError:
+        logger.warning("Could not access FastAPI app directly. CORS may not work properly.")
+        # Alternative: Try to add middleware after server is created but before run
+        # This might require checking litserve's internal structure
+    
     server.run(
         port=PORT,
         host="0.0.0.0",

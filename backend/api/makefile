@@ -7,7 +7,7 @@ requirements.txt: ../pyproject.toml
 	uv pip compile ../pyproject.toml --extra api -o requirements.txt
 
 dev:
-	uv run --extra api --extra cpu python server.py
+	ENVIRONMENT=dev uv run --extra api --extra cpu python server.py
 
 build:
 	docker build -t mindthemath/concrete-api .
