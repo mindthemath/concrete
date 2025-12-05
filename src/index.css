@@ -6,22 +6,57 @@
 
 body {
   margin: 0;
-  font-family: Arial, Helvetica, sans-serif;
-  background-color: #ffffff;
-  color: #000000;
+  font-family: var(--theme-font, Arial, Helvetica, sans-serif);
+  background-color: var(--theme-bg, #ffffff);
+  color: var(--theme-text, #000000);
+  transition: background-color 0.2s ease, color 0.2s ease;
 }
 
 #root {
   min-height: 100vh;
 }
 
-/* Minimal helper classes for early-web look */
+/* Minimal helper classes for early-web look - now theme-aware */
 @layer components {
   .basic-input {
-    @apply w-full px-2 py-2 border border-gray-400 bg-white text-black text-base focus:outline-none focus:border-blue-600;
+    @apply w-full px-2 py-2 border text-base focus:outline-none;
+    background-color: var(--theme-input-bg);
+    border-color: var(--theme-input-border);
+    color: var(--theme-input-text);
+  }
+  .basic-input:focus {
+    border-color: var(--theme-input-focus);
+  }
+  .basic-input::placeholder {
+    color: var(--theme-input-text);
+    opacity: 0.6;
   }
   .basic-button {
-    @apply px-4 py-2 bg-gray-200 border border-gray-500 text-black hover:bg-gray-300 cursor-pointer;
+    @apply px-4 py-2 border cursor-pointer;
+    background-color: var(--theme-button-bg);
+    border-color: var(--theme-button-border);
+    color: var(--theme-button-text);
+    transition: background-color 0.2s ease;
+  }
+  .basic-button:hover:not(:disabled) {
+    background-color: var(--theme-button-hover);
+  }
+  .basic-button:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+  }
+  .theme-select {
+    @apply border;
+    background-color: var(--theme-input-bg);
+    border-color: var(--theme-input-border);
+    color: var(--theme-input-text);
+  }
+  .theme-select:hover {
+    border-color: var(--theme-input-focus);
+  }
+  .theme-select:focus {
+    outline: none;
+    border-color: var(--theme-input-focus);
   }
 }
 

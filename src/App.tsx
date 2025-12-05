@@ -4,6 +4,8 @@ import OutputPanel from './components/OutputPanel'
 import { Region, ApiResponse, CustomMortar } from './types'
 import regionData from '../data/region.json'
 import concreteDb from '../data/concrete.json'
+import { useTheme } from './themes/ThemeContext'
+import type { ThemeId } from './themes/types'
 
 interface RegionDataEntry {
   name: string
@@ -29,6 +31,7 @@ const SAMPLE_REGIONS: Region[] = Object.keys(regionData).map((key) => ({
 }))
 
 function App() {
+  const { themeId, setTheme } = useTheme()
   const [result, setResult] = useState<ApiResponse | null>(null)
   const [loading, setLoading] = useState(false)
   const [error, setError] = useState<string | null>(null)
@@ -129,25 +132,32 @@ function App() {
   }
 
   return (
-    <div className="min-h-screen bg-white text-black">
+    <div className="min-h-screen" style={{ backgroundColor: 'var(--theme-bg)', color: 'var(--theme-text)' }}>
       <div className="mx-auto px-4 py-6 max-w-[1100px]">
-        <header className="mb-6 border-b border-gray-500 pb-3">
+        <header className="mb-6 pb-3" style={{ borderBottom: '1px solid var(--theme-header-border)' }}>
           <div className="flex items-center justify-between">
-            <h1 className="text-3xl font-normal tracking-normal">
+            <h1 className="text-3xl font-normal tracking-normal" style={{ color: 'var(--theme-header-title)' }}>
               Concrete Strength Predictor
             </h1>
             <div className="relative">
               <select
-                className="basic-input appearance-none pr-8 pl-3 py-1.5 text-sm cursor-pointer bg-white border-gray-400 hover:border-gray-600 focus:border-blue-600"
-                defaultValue="simple-light"
+                className="theme-select appearance-none pr-8 pl-3 py-1.5 text-sm cursor-pointer"
+                value={themeId === 'construction' ? 'simple-light' : themeId}
+                onChange={(e) => {
+                  const newTheme = e.target.value as ThemeId
+                  if (newTheme === 'simple-light' || newTheme === 'simple-dark' || newTheme === 'neutral') {
+                    setTheme(newTheme)
+                  }
+                }}
               >
                 <option value="simple-light">SimpleLight</option>
                 <option value="simple-dark">SimpleDark</option>
-                <option value="construction">Construction</option>
+                <option value="neutral">Neutral</option>
+                <option value="construction" disabled>Construction (Coming Soon)</option>
               </select>
-              <div className="absolute right-2 top-1/2 -translate-y-1/2 pointer-events-none">
+              <div className="absolute right-2 top-1/2 -translate-y-1/2 pointer-events-none" style={{ color: 'var(--theme-input-text)' }}>
                 <svg
-                  className="w-4 h-4 text-gray-600"
+                  className="w-4 h-4"
                   fill="none"
                   stroke="currentColor"
                   viewBox="0 0 24 24"
@@ -181,7 +191,7 @@ function App() {
           />
         </div>
 
-        <footer className="mt-10 text-center text-gray-700 text-sm border-t border-gray-500 pt-4">
+        <footer className="mt-10 text-center text-sm pt-4" style={{ borderTop: '1px solid var(--theme-footer-border)', color: 'var(--theme-footer-text)' }}>
           <p>Mind the Math, LLC | November 2025</p>
           <p className="mt-1 text-xs">For demonstration purposes only | Based on 96 experimental samples</p>
         </footer>
