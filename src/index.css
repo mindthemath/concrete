@@ -15,26 +15,30 @@ body {
 
 /* Theme-specific background classes */
 .theme-bg-notebook {
-  background-color: #1a1a1a;
+  background-color: #0a0a0a;
   background-image: 
-    /* White speckles - bigger sizes for visibility */
-    radial-gradient(circle at 15% 25%, rgba(255, 255, 255, 0.9) 2.5px, transparent 2.5px),
-    radial-gradient(circle at 45% 15%, rgba(255, 255, 255, 0.8) 2px, transparent 2px),
-    radial-gradient(circle at 75% 30%, rgba(255, 255, 255, 0.9) 3px, transparent 3px),
-    radial-gradient(circle at 25% 50%, rgba(255, 255, 255, 0.7) 2.2px, transparent 2.2px),
-    radial-gradient(circle at 60% 45%, rgba(255, 255, 255, 0.9) 2.5px, transparent 2.5px),
-    radial-gradient(circle at 85% 60%, rgba(255, 255, 255, 0.8) 2.8px, transparent 2.8px),
-    radial-gradient(circle at 35% 70%, rgba(255, 255, 255, 0.9) 2px, transparent 2px),
-    radial-gradient(circle at 70% 80%, rgba(255, 255, 255, 0.7) 2.5px, transparent 2.5px),
-    radial-gradient(circle at 20% 85%, rgba(255, 255, 255, 0.8) 2.3px, transparent 2.3px),
-    radial-gradient(circle at 55% 90%, rgba(255, 255, 255, 0.9) 3px, transparent 3px),
-    radial-gradient(circle at 90% 15%, rgba(255, 255, 255, 0.8) 2.4px, transparent 2.4px),
-    radial-gradient(circle at 10% 60%, rgba(255, 255, 255, 0.7) 2.6px, transparent 2.6px),
-    radial-gradient(circle at 50% 25%, rgba(255, 255, 255, 0.9) 2px, transparent 2px),
-    radial-gradient(circle at 80% 45%, rgba(255, 255, 255, 0.8) 3px, transparent 3px),
-    radial-gradient(circle at 30% 35%, rgba(255, 255, 255, 0.7) 2.2px, transparent 2.2px),
-    radial-gradient(circle at 65% 65%, rgba(255, 255, 255, 0.9) 2.5px, transparent 2.5px);
-  background-size: 200px 200px, 180px 180px, 220px 220px, 190px 190px, 210px 210px, 200px 200px, 185px 185px, 215px 215px, 195px 195px, 205px 205px, 180px 180px, 220px 220px, 200px 200px, 210px 210px, 190px 190px, 200px 200px;
+    /* Dense small speckles - sharp edges */
+    radial-gradient(circle at 8% 12%, white 0.8px, transparent 0.8px),
+    radial-gradient(circle at 23% 8%, white 1.2px, transparent 1.2px),
+    radial-gradient(circle at 42% 18%, white 0.6px, transparent 0.6px),
+    radial-gradient(circle at 67% 5%, white 1px, transparent 1px),
+    radial-gradient(circle at 89% 15%, white 0.9px, transparent 0.9px),
+    radial-gradient(circle at 15% 35%, white 1.1px, transparent 1.1px),
+    radial-gradient(circle at 31% 42%, white 0.7px, transparent 0.7px),
+    radial-gradient(circle at 56% 38%, white 1.3px, transparent 1.3px),
+    radial-gradient(circle at 78% 45%, white 0.8px, transparent 0.8px),
+    radial-gradient(circle at 92% 52%, white 1px, transparent 1px),
+    radial-gradient(circle at 12% 68%, white 0.9px, transparent 0.9px),
+    radial-gradient(circle at 28% 72%, white 1.2px, transparent 1.2px),
+    radial-gradient(circle at 48% 65%, white 0.7px, transparent 0.7px),
+    radial-gradient(circle at 63% 78%, white 1.1px, transparent 1.1px),
+    radial-gradient(circle at 85% 82%, white 0.8px, transparent 0.8px),
+    radial-gradient(circle at 5% 88%, white 1px, transparent 1px),
+    radial-gradient(circle at 37% 95%, white 0.9px, transparent 0.9px),
+    radial-gradient(circle at 72% 92%, white 1.2px, transparent 1.2px),
+    radial-gradient(circle at 95% 25%, white 0.6px, transparent 0.6px),
+    radial-gradient(circle at 18% 55%, white 1.1px, transparent 1.1px);
+  background-size: 50px 50px, 60px 60px, 45px 45px, 55px 55px, 65px 65px, 48px 48px, 58px 58px, 52px 52px, 62px 62px, 47px 47px, 57px 57px, 51px 51px, 61px 61px, 49px 49px, 59px 59px, 53px 53px, 63px 63px, 46px 46px, 56px 56px, 54px 54px;
 }
 
 /* Notebook paper style panels for Notebook theme */
