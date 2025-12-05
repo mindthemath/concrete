@@ -60,7 +60,7 @@ function App() {
       const headers: HeadersInit = {
         'Content-Type': 'application/json',
       }
-      
+
       // Note: API keys are not secure in static apps, so we rely on CORS restrictions
       // on the backend instead. For local development, you can add auth if needed.
 
@@ -112,13 +112,13 @@ function App() {
         setError(errorMessage)
 
         // Fallback to mock results for development
-      const mocked: ApiResponse = mockResults(
-        formData.desiredStrength,
-        formData.regionId,
-        formData.mortarMode,
-        formData.customMortars
-      )
-      setResult(mocked)
+        const mocked: ApiResponse = mockResults(
+          formData.desiredStrength,
+          formData.regionId,
+          formData.mortarMode,
+          formData.customMortars
+        )
+        setResult(mocked)
       }
     } finally {
       setLoading(false)
@@ -167,9 +167,9 @@ function App() {
           style={{ borderBottom: '1px solid var(--theme-header-border)' }}
         >
           <div className="flex items-center justify-between">
-            <h1 
-              className="text-2xl font-normal tracking-normal relative inline-block px-4 py-2" 
-              style={{ 
+            <h1
+              className="text-2xl font-normal tracking-normal relative inline-block px-4 py-2"
+              style={{
                 color: 'var(--theme-header-title)',
                 backgroundColor:
                   themeId === 'notebook'
@@ -254,7 +254,7 @@ function App() {
             color: 'var(--theme-footer-text)',
           }}
         >
-          <div 
+          <div
             className="inline-block px-4 py-2"
             style={{
               backgroundColor:
