@@ -14,7 +14,7 @@ from slowapi.middleware import SlowAPIMiddleware
 from slowapi.util import get_remote_address
 
 # Environment configurations
-PORT = int(os.environ.get("PORT", "9600"))
+PORT = int(os.environ.get("API_PORT", "9600"))
 LOG_LEVEL = os.environ.get("LOG_LEVEL", "INFO")
 NUM_API_SERVERS = int(os.environ.get("NUM_API_SERVERS", "1"))
 WORKERS_PER_DEVICE = int(os.environ.get("WORKERS_PER_DEVICE", "1"))

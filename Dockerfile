@@ -87,7 +87,7 @@ RUN rm -f /etc/nginx/sites-enabled/default && \
     location / { \
         try_files $uri $uri/ /index.html; \
     } \
-}' > /etc/nginx/conf.d/default.conf
+}' > /etc/nginx/conf.d/default.conf.template
 
 # Copy files required for backend API
 COPY backend/api/server.py ./
