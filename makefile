@@ -1,5 +1,8 @@
 dev:
-	bun run dev
+	./bin/bun run dev
 
 install:
-	bun install --frozen-lockfile
+	./bin/bun install --frozen-lockfile
+
+update:
+	./bin/bun update

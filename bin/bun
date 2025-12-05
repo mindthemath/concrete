@@ -1,0 +1,4 @@
+#!/bin/sh
+IMAGE_NAME=oven/bun:1.3.3
+COMMAND=bun
+docker run -ti --rm --network host -u $(id -u):$(id -g) -v $(pwd):/temp -w /temp $IMAGE_NAME $COMMAND "$@"
