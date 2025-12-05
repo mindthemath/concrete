@@ -137,11 +137,13 @@ function App() {
         <header className="mb-6 pb-3" style={{ borderBottom: '1px solid var(--theme-header-border)' }}>
           <div className="flex items-center justify-between">
             <h1 
-              className="text-3xl font-normal tracking-normal relative inline-block px-4 py-2" 
+              className="text-2xl font-normal tracking-normal relative inline-block px-4 py-2" 
               style={{ 
                 color: 'var(--theme-header-title)',
                 backgroundColor: themeId === 'notebook' ? '#000000' : 'transparent',
-                border: themeId === 'notebook' ? '1px solid #ffffff' : 'none'
+                border: themeId === 'notebook' ? '1px solid #ffffff' : 'none',
+                textTransform: themeId === 'notebook' ? 'uppercase' : 'none',
+                width: themeId === 'notebook' ? 'fit-content' : 'auto'
               }}
             >
               Concrete Strength Predictor
