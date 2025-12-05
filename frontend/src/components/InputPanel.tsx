@@ -106,10 +106,22 @@ const InputPanel: React.FC<InputPanelProps> = ({ regions, onSubmit, loading }) =
         return parsed
       }
 
+      const parseOptionalNumericField = (label: string, value: string, mortarIndex: number) => {
+        const trimmed = value.trim()
+        if (!trimmed) {
+          return 0
+        }
+        const parsed = Number(trimmed)
+        if (!Number.isFinite(parsed)) {
+          throw new Error(`${label} must be a number for custom mortar #${mortarIndex + 1}.`)
+        }
+        return parsed
+      }
+
       try {
         formattedCustomMortars = customMortars.map((mortar, index) => ({
           name: requireTextField('Name', mortar.name, index),
-          description: requireTextField('Description', mortar.description, index),
+          description: mortar.description.trim(),
           properties: {
             splitting_strength_mpa: parseNumericField(
               'Splitting strength (MPa)',
@@ -139,14 +151,14 @@ const InputPanel: React.FC<InputPanelProps> = ({ regions, onSubmit, loading }) =
             ),
           },
           meta: {
-            gwp: parseNumericField('GWP', mortar.meta.gwp, index),
-            product_name_long: requireTextField(
-              'Product name',
-              mortar.meta.product_name_long,
+            gwp: parseOptionalNumericField('GWP', mortar.meta.gwp, index),
+            product_name_long: mortar.meta.product_name_long.trim(),
+            manufacturer: requireTextField('Manufacturer', mortar.meta.manufacturer, index),
+            cost_per_pound: parseOptionalNumericField(
+              'Cost per pound',
+              mortar.meta.cost_per_pound,
               index
             ),
-            manufacturer: requireTextField('Manufacturer', mortar.meta.manufacturer, index),
-            cost_per_pound: parseNumericField('Cost per pound', mortar.meta.cost_per_pound, index),
           },
         }))
       } catch (err) {
@@ -176,6 +188,7 @@ const InputPanel: React.FC<InputPanelProps> = ({ regions, onSubmit, loading }) =
     field: 'name' | 'description',
     value: string
   ) => {
+    setValidationError(null)
     setCustomMortars(prev =>
       prev.map((mortar, i) => (i === index ? { ...mortar, [field]: value } : mortar))
     )
@@ -186,6 +199,7 @@ const InputPanel: React.FC<InputPanelProps> = ({ regions, onSubmit, loading }) =
     property: keyof CustomMortar['properties'],
     value: string
   ) => {
+    setValidationError(null)
     setCustomMortars(prev =>
       prev.map((mortar, i) =>
         i === index
@@ -200,6 +214,7 @@ const InputPanel: React.FC<InputPanelProps> = ({ regions, onSubmit, loading }) =
     metaField: keyof CustomMortar['meta'],
     value: string
   ) => {
+    setValidationError(null)
     setCustomMortars(prev =>
       prev.map((mortar, i) =>
         i === index ? { ...mortar, meta: { ...mortar.meta, [metaField]: value } } : mortar
@@ -207,7 +222,41 @@ const InputPanel: React.FC<InputPanelProps> = ({ regions, onSubmit, loading }) =
     )
   }
 
+  const isMortarComplete = (mortar: CustomMortarForm): boolean => {
+    // Check required text fields
+    if (!mortar.name.trim()) return false
+    if (!mortar.meta.manufacturer.trim()) return false
+
+    // Check required numeric fields
+    const requiredNumericFields = [
+      mortar.properties.splitting_strength_mpa,
+      mortar.properties.shrinkage_inches,
+      mortar.properties.flexural_strength_mpa,
+      mortar.properties.slump_inches,
+      mortar.properties.compressive_strength_mpa,
+      mortar.properties.poissons_ratio,
+    ]
+
+    for (const field of requiredNumericFields) {
+      const trimmed = field.trim()
+      if (!trimmed) return false
+      const parsed = Number(trimmed)
+      if (!Number.isFinite(parsed)) return false
+    }
+
+    return true
+  }
+
+  const canAddMortar = customMortars.every(mortar => isMortarComplete(mortar))
+
   const handleAddCustomMortar = () => {
+    if (!canAddMortar) {
+      setValidationError(
+        'Please complete all required fields in the current mortar(s) before adding another.'
+      )
+      return
+    }
+    setValidationError(null)
     setCustomMortars(prev => [...prev, createEmptyCustomMortar()])
   }
 
@@ -333,6 +382,7 @@ const InputPanel: React.FC<InputPanelProps> = ({ regions, onSubmit, loading }) =
                       onChange={e => handleCustomMortarFieldChange(index, 'name', e.target.value)}
                       className="basic-input"
                       placeholder="e.g., Custom Blend A"
+                      required
                       disabled={loading}
                     />
                   </div>
@@ -346,6 +396,7 @@ const InputPanel: React.FC<InputPanelProps> = ({ regions, onSubmit, loading }) =
                       }
                       className="basic-input"
                       placeholder="e.g., ABC Materials Co."
+                      required
                       disabled={loading}
                     />
                   </div>
@@ -415,6 +466,7 @@ const InputPanel: React.FC<InputPanelProps> = ({ regions, onSubmit, loading }) =
                         className="basic-input"
                         min="0"
                         step="0.1"
+                        required
                         disabled={loading}
                       />
                     </div>
@@ -438,6 +490,7 @@ const InputPanel: React.FC<InputPanelProps> = ({ regions, onSubmit, loading }) =
                         className="basic-input"
                         min="0"
                         step="0.001"
+                        required
                         disabled={loading}
                       />
                     </div>
@@ -461,6 +514,7 @@ const InputPanel: React.FC<InputPanelProps> = ({ regions, onSubmit, loading }) =
                         className="basic-input"
                         min="0"
                         step="0.1"
+                        required
                         disabled={loading}
                       />
                     </div>
@@ -480,6 +534,7 @@ const InputPanel: React.FC<InputPanelProps> = ({ regions, onSubmit, loading }) =
                         className="basic-input"
                         min="0"
                         step="0.1"
+                        required
                         disabled={loading}
                       />
                     </div>
@@ -503,6 +558,7 @@ const InputPanel: React.FC<InputPanelProps> = ({ regions, onSubmit, loading }) =
                         className="basic-input"
                         min="0"
                         step="0.1"
+                        required
                         disabled={loading}
                       />
                     </div>
@@ -523,6 +579,7 @@ const InputPanel: React.FC<InputPanelProps> = ({ regions, onSubmit, loading }) =
                         min="0"
                         max="0.5"
                         step="0.01"
+                        required
                         disabled={loading}
                       />
                     </div>
@@ -552,10 +609,18 @@ const InputPanel: React.FC<InputPanelProps> = ({ regions, onSubmit, loading }) =
               type="button"
               onClick={handleAddCustomMortar}
               className="basic-button w-full md:w-auto"
-              disabled={loading}
+              disabled={loading || !canAddMortar}
             >
               Add Another Mortar
             </button>
+            {!canAddMortar && customMortarCount > 0 && (
+              <div
+                className="text-xs mt-2"
+                style={{ color: 'var(--theme-panel-text)', opacity: 0.7 }}
+              >
+                Complete all required fields in the current mortar(s) to add another.
+              </div>
+            )}
           </div>
         )}
 
