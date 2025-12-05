@@ -9,10 +9,10 @@ requirements.txt: ../pyproject.toml
 dev:
 	ENVIRONMENT=dev uv run --extra api --extra cpu python server.py
 
-build: run
+build:
 	docker build -t mindthemath/concrete-api .
 
-run:
+run: build
 	docker run --rm -p 9600:9600 --name concrete-api mindthemath/concrete-api
 
 artifacts.tar.gz:
