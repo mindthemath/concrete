@@ -159,11 +159,11 @@ function App() {
                   }
                 }}
               >
-                <option value="simple-light">SimpleLight</option>
-                <option value="simple-dark">SimpleDark</option>
-                <option value="neutral">Neutral</option>
-                <option value="notebook">Notebook</option>
-                <option value="construction">Construction</option>
+                <option value="simple-light">light</option>
+                <option value="simple-dark">dark</option>
+                <option value="neutral">neutral</option>
+                <option value="notebook">notebook</option>
+                <option value="construction">construction</option>
               </select>
               <div className="absolute right-2 top-1/2 -translate-y-1/2 pointer-events-none" style={{ color: 'var(--theme-input-text)' }}>
                 <svg
