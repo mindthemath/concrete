@@ -2,6 +2,7 @@ import React from 'react'
 import { ApiResponse, CustomMortar } from '../types'
 import mortarDb from '../../data/mortar.json'
 import rockDb from '../../data/rock.json'
+import { useTheme } from '../themes/ThemeContext'
 
 interface MortarDbEntry {
   name: string
@@ -50,6 +51,9 @@ interface OutputPanelProps {
 }
 
 const OutputPanel: React.FC<OutputPanelProps> = ({ result, loading, error, mortarMode, customMortars }) => {
+  const { themeId } = useTheme()
+  const isConstruction = themeId === 'construction'
+  
   // Placeholder/mock data for demonstration
   const mockResult: ApiResponse = {
     predictions: [
@@ -130,11 +134,11 @@ const OutputPanel: React.FC<OutputPanelProps> = ({ result, loading, error, morta
         {displayResult.predictions.map((prediction, index) => (
           <div
             key={`${prediction.rock_id}-${index}`}
-            className="border p-3"
+            className={`border p-3 ${isConstruction ? 'theme-panel-construction' : ''}`}
             style={{ borderColor: 'var(--theme-panel-border)' }}
           >
-            <div className="flex flex-col md:flex-row justify-between items-start mb-3 pb-2 border-b" style={{ borderColor: 'var(--theme-panel-border)' }}>
-              <div className="mb-2 md:mb-0">
+            <div className="flex justify-between items-start mb-3 pb-2 border-b gap-4" style={{ borderColor: 'var(--theme-panel-border)' }}>
+              <div className="flex-1 min-w-0">
                 {(() => {
                   const rockName = (rockDb as RockDb)[prediction.rock_id]?.name || `Rock ${prediction.rock_id}`
                   const mortarName = (mortarDb as MortarDb)[prediction.mortar_id]?.name || prediction.mortar_id
@@ -147,8 +151,8 @@ const OutputPanel: React.FC<OutputPanelProps> = ({ result, loading, error, morta
                   )
                 })()}
               </div>
-              <div className="text-right mb-1">
-                <div className="inline-block border px-3 py-2" style={{ borderColor: 'var(--theme-panel-border)' }}>
+              <div className="flex-shrink-0">
+                <div className="border px-3 py-2" style={{ borderColor: 'var(--theme-panel-border)' }}>
                   <span className="block text-2xl">
                     {prediction.predicted_compressive_strength_mpa.toFixed(1)}
                   </span>
