@@ -28,7 +28,7 @@ jobs:
 
       - name: Install Dependencies
         working-directory: frontend
-        run: bun install --frozen-lockfile
+        run: bun install --frozen-lockfile --production
 
       - name: Create .env file
         working-directory: frontend
