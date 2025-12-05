@@ -14,6 +14,8 @@ function App() {
   const [result, setResult] = useState<ApiResponse | null>(null)
   const [loading, setLoading] = useState(false)
   const [error, setError] = useState<string | null>(null)
+  const [mortarMode, setMortarMode] = useState<'default' | 'custom'>('default')
+  const [customMortars, setCustomMortars] = useState<CustomMortar[]>([])
 
   const handleSubmit = async (formData: {
     desiredStrength: number
@@ -25,6 +27,8 @@ function App() {
     setLoading(true)
     setError(null)
     setResult(null)
+    setMortarMode(formData.mortarMode)
+    setCustomMortars(formData.customMortars)
 
     try {
       // Replace with actual API endpoint
@@ -58,10 +62,7 @@ function App() {
       const data: ApiResponse = await response.json()
       setResult({
         ...data,
-        target_strength_mpa: formData.desiredStrength,
-        tolerance_mpa: formData.threshold,
         mocked: false,
-        mortar_mode: formData.mortarMode,
       })
     } catch (err) {
       // Network/404: show a mock so we can see the flow
@@ -86,6 +87,9 @@ function App() {
     mortarMode: 'default' | 'custom',
     customMortars: CustomMortar[]
   ): ApiResponse {
+    // Parameters kept for API compatibility, not used in mock filtering
+    void mortarMode
+    void customMortars
     const minStrength = target - tol
     const availableRocks: string[] = (regionData as any)[regionId]?.available_rocks || []
     const entries = Object.values(concreteDb as any) as Array<{
@@ -137,6 +141,8 @@ function App() {
             result={result}
             loading={loading}
             error={error}
+            mortarMode={mortarMode}
+            customMortars={customMortars}
           />
         </div>
 

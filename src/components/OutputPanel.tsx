@@ -1,16 +1,17 @@
 import React from 'react'
-import { ApiResponse } from '../types'
+import { ApiResponse, CustomMortar } from '../types'
 import mortarDb from '../../data/mortar.json'
 import rockDb from '../../data/rock.json'
-import regionDb from '../../data/region.json'
 
 interface OutputPanelProps {
   result: ApiResponse | null
   loading: boolean
   error: string | null
+  mortarMode: 'default' | 'custom'
+  customMortars: CustomMortar[]
 }
 
-const OutputPanel: React.FC<OutputPanelProps> = ({ result, loading, error }) => {
+const OutputPanel: React.FC<OutputPanelProps> = ({ result, loading, error, mortarMode, customMortars }) => {
   // Placeholder/mock data for demonstration
   const mockResult: ApiResponse = {
     predictions: [
@@ -27,7 +28,6 @@ const OutputPanel: React.FC<OutputPanelProps> = ({ result, loading, error }) => 
         mortar_id: 'M001',
       }
     ],
-    eligible_rocks: 2,
     status: 'success'
   }
 
@@ -127,11 +127,11 @@ const OutputPanel: React.FC<OutputPanelProps> = ({ result, loading, error }) => 
                 let mortarMeta: any = null
                 let mortarName: string | null = null
 
-                if (displayResult?.mortar_mode === 'custom' && Array.isArray(displayResult.custom_mortars)) {
+                if (mortarMode === 'custom' && Array.isArray(customMortars)) {
                   const idx = Number(mortarIdRaw)
-                  if (!Number.isNaN(idx) && displayResult.custom_mortars[idx]) {
-                    mortarMeta = displayResult.custom_mortars[idx].meta
-                    mortarName = displayResult.custom_mortars[idx].name
+                  if (!Number.isNaN(idx) && customMortars[idx]) {
+                    mortarMeta = customMortars[idx].meta
+                    mortarName = customMortars[idx].name
                   }
                 }
 
