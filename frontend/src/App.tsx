@@ -285,7 +285,7 @@ function App() {
           >
             <p>Mind the Math, LLC | December 2025</p>
             <p className="mt-1 text-xs">
-              For demonstration purposes only | Based on 96 experimental samples
+              For demonstration purposes only | Based on 84 experimental samples
             </p>
           </div>
         </footer>
