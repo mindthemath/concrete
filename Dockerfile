@@ -26,7 +26,7 @@ FROM python:3.13-slim AS release
 
 # install nginx
 RUN apt-get update && \
-    apt-get install -y --no-install-recommends nginx && \
+    apt-get install -y --no-install-recommends nginx gettext-base && \
     rm -rf /var/lib/apt/lists/*
 
 # create nginx directories and copy static files
@@ -41,7 +41,7 @@ RUN pip install --no-cache-dir -r requirements.txt
 # nginx configuration for SPA with API proxy
 RUN rm -f /etc/nginx/sites-enabled/default && \
     echo 'server { \
-    listen 3030; \
+    listen ${PORT}; \
     server_name _; \
     root /usr/share/nginx/html; \
     index index.html; \
@@ -100,5 +100,6 @@ COPY frontend/data ./data
 
 # ENV DATA_DIR=/app/data
 
+# Port is configurable via PORT env var (Cloud Run sets this automatically)
 EXPOSE 3030/tcp
 CMD ["/entrypoint.sh"]

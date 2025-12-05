@@ -1,6 +1,11 @@
 #!/bin/bash
 set -e
 
+# Set default PORT if not set (for local development)
+export PORT=${PORT:-3030}
+# Generate nginx config from template with PORT substitution
+envsubst '${PORT}' < /etc/nginx/conf.d/default.conf.template > /etc/nginx/conf.d/default.conf
+
 # Link nginx logs to stdout/stderr
 # ln -sf /dev/stdout /var/log/nginx/access.log
 # ln -sf /dev/stderr /var/log/nginx/error.log
