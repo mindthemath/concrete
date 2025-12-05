@@ -141,8 +141,7 @@ function App() {
               style={{ 
                 color: 'var(--theme-header-title)',
                 backgroundColor: themeId === 'notebook' ? '#000000' : 'transparent',
-                border: themeId === 'notebook' ? '1px solid #ffffff' : 'none',
-                textTransform: themeId === 'notebook' ? 'uppercase' : 'none'
+                border: themeId === 'notebook' ? '1px solid #ffffff' : 'none'
               }}
             >
               Concrete Strength Predictor
