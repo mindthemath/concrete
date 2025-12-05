@@ -1,0 +1,37 @@
+name: Deploy Static Site
+
+on:
+  push:
+    branches:
+      - main
+  # schedule:
+  #  - cron: '0 18 * * *'  # Run at 12:00 PM Denver time (18:00 UTC)
+  workflow_dispatch:
+
+jobs:
+  build-and-deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Install Dependencies
+        run: ./bin/bun install --frozen-lockfile
+
+      - name: Build Static Site
+        run: ./bin/bun run build
+        env:
+          BASE_PATH: /concrete
+          STATIC_BUILD: true
+
+      - name: Add .nojekyll file
+        run: touch dist/.nojekyll
+
+      - name: Deploy to GitHub Pages
+        uses: JamesIves/github-pages-deploy-action@v4
+        with:
+          folder: dist
+          branch: gh-pages
+          clean: true
+          single-commit: true
+          # dry-run: true
