@@ -15,7 +15,7 @@ export const notebookTheme: Theme = {
     backgroundColor: '#1a1a1a', // Black background like composition notebook
     // Background image handled via CSS class .theme-bg-notebook
     color: '#ffffff',
-    fontFamily: '"Comic Sans MS", "Bradley Hand", cursive', // Handwritten feel
+    fontFamily: ' "Comic Sans MS", "Kalam", cursive', // Clean handwritten feel
   },
   
   components: {
