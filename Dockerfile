@@ -20,18 +20,28 @@ COPY . .
 ENV NODE_ENV=production
 RUN bun run build
 
-# final stage: serve static files with nginx
-FROM nginx:alpine AS release
+# final stage: Python base with nginx for static files + API backend
+FROM python:3.13-slim AS release
 
-# copy built static files
+# install nginx
+RUN apt-get update && \
+    apt-get install -y --no-install-recommends nginx && \
+    rm -rf /var/lib/apt/lists/*
+
+# create nginx directories and copy static files
+RUN mkdir -p /usr/share/nginx/html
 COPY --from=build /usr/src/app/dist /usr/share/nginx/html
 
 # nginx configuration for SPA (all routes serve index.html)
-RUN echo 'server { \
+# TODO: add /api/ proxy_pass location when backend is ready
+RUN rm -f /etc/nginx/sites-enabled/default && \
+    echo 'server { \
     listen 3000; \
     server_name _; \
     root /usr/share/nginx/html; \
     index index.html; \
+    access_log /dev/stdout; \
+    error_log /dev/stderr; \
     location / { \
         try_files $uri $uri/ /index.html; \
     } \
