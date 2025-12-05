@@ -182,7 +182,7 @@ function App() {
         </div>
 
         <footer className="mt-10 text-center text-gray-700 text-sm border-t border-gray-500 pt-4">
-          <p>Mind the Math, LLC | November 2025</p>
+          <p>Mind the Math, LLC | December 2025</p>
           <p className="mt-1 text-xs">For demonstration purposes only | Based on 96 experimental samples</p>
         </footer>
       </div>
