@@ -6,3 +6,9 @@ install:
 
 update:
 	./bin/bun update
+
+build:
+	./bin/bun run build
+
+lint:
+	./bin/bun run lint
