@@ -130,26 +130,6 @@
       "manufacturer": "Mock Manufacturer D",
       "cost_per_pound": 0.21
     }
-  },
-
-  "M008": {
-    "name": "TBD Experimental Binder",
-    "description": "Reserved slot for potential 8th binder (e.g., 100% Fly Ash or replicate control).",
-    "properties": {
-      "splitting_strength_mpa": null,
-      "shrinkage_inches": null,
-      "flexural_strength_mpa": null,
-      "slump_inches": null,
-      "compressive_strength_mpa": null,
-      "poissons_ratio": null
-    },
-    "meta": {
-      "gwp": null,
-      "product_name_long": "Unassigned Binder Slot",
-      "manufacturer": null,
-      "cost_per_pound": null,
-      "status": "unconfirmed"
-    }
   }
 }
 

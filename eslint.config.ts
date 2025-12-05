@@ -7,7 +7,7 @@ import pluginReactRefresh from "eslint-plugin-react-refresh";
 import css from "@eslint/css";
 
 export default [
-  { ignores: ["dist", "node_modules", "*.config.js", "*.config.ts"] },
+  { ignores: ["dist", "node_modules", "*.config.js", "*.config.ts", "**/*.css"] },
   js.configs.recommended,
   ...tseslint.configs.recommended,
   {
@@ -54,16 +54,6 @@ export default [
       react: {
         version: "detect",
       },
-    },
-  },
-  {
-    files: ["**/*.css"],
-    plugins: {
-      css,
-    },
-    language: "css/css",
-    rules: {
-      ...css.configs.recommended.rules,
     },
   },
 ];

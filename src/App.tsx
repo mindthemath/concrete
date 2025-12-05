@@ -5,9 +5,27 @@ import { Region, ApiResponse, CustomMortar } from './types'
 import regionData from '../data/region.json'
 import concreteDb from '../data/concrete.json'
 
+interface RegionDataEntry {
+  name: string
+  description?: string
+  available_rocks?: string[]
+  primary_rock?: string
+  climate?: string
+}
+
+interface ConcreteDbEntry {
+  mortar_id: string
+  rock_id: string
+  rock_ratio: number
+  concrete_compressive_strength_mpa: number
+}
+
+type RegionData = Record<string, RegionDataEntry>
+type ConcreteDb = Record<string, ConcreteDbEntry>
+
 const SAMPLE_REGIONS: Region[] = Object.keys(regionData).map((key) => ({
   id: key,
-  name: (regionData as any)[key].name,
+  name: (regionData as RegionData)[key].name,
 }))
 
 function App() {
@@ -64,7 +82,7 @@ function App() {
         ...data,
         mocked: false,
       })
-    } catch (err) {
+    } catch {
       // Network/404: show a mock so we can see the flow
       const mocked: ApiResponse = mockResults(
         formData.desiredStrength,
@@ -91,13 +109,8 @@ function App() {
     void mortarMode
     void customMortars
     const minStrength = target - tol
-    const availableRocks: string[] = (regionData as any)[regionId]?.available_rocks || []
-    const entries = Object.values(concreteDb as any) as Array<{
-      mortar_id: string
-      rock_id: string
-      rock_ratio: number
-      concrete_compressive_strength_mpa: number
-    }>
+    const availableRocks: string[] = (regionData as RegionData)[regionId]?.available_rocks || []
+    const entries = Object.values(concreteDb as ConcreteDb) as ConcreteDbEntry[]
 
     const filtered = entries
       .filter(

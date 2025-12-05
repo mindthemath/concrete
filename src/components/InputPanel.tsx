@@ -450,7 +450,7 @@ const InputPanel: React.FC<InputPanelProps> = ({ regions, onSubmit, loading }) =
                       />
                     </div>
                     <div>
-                      <label className="block text-xs text-gray-700">Poisson's Ratio</label>
+                      <label className="block text-xs text-gray-700">Poisson&apos;s Ratio</label>
                       <input
                         type="number"
                         value={mortar.properties.poissons_ratio}

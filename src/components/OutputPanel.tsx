@@ -3,6 +3,44 @@ import { ApiResponse, CustomMortar } from '../types'
 import mortarDb from '../../data/mortar.json'
 import rockDb from '../../data/rock.json'
 
+interface MortarDbEntry {
+  name: string
+  description?: string
+  properties?: {
+    splitting_strength_mpa: number
+    shrinkage_inches: number
+    flexural_strength_mpa: number
+    slump_inches: number
+    compressive_strength_mpa: number
+    poissons_ratio: number
+  }
+  meta?: {
+    gwp: number | null
+    product_name_long: string
+    manufacturer: string | null
+    cost_per_pound: number | null
+  } | null
+}
+
+interface RockDbEntry {
+  name: string
+  description?: string
+  properties?: {
+    compressive_strength_mpa: number
+    size_inches: number
+    density_lb_ft3: number
+    specific_gravity: number
+  }
+  meta?: {
+    source?: string
+    type?: string
+    common_uses?: string[]
+  }
+}
+
+type MortarDb = Record<string, MortarDbEntry>
+type RockDb = Record<string, RockDbEntry>
+
 interface OutputPanelProps {
   result: ApiResponse | null
   loading: boolean
@@ -97,8 +135,8 @@ const OutputPanel: React.FC<OutputPanelProps> = ({ result, loading, error, morta
             <div className="flex flex-col md:flex-row justify-between items-start mb-3 pb-2 border-b border-gray-400">
               <div className="mb-2 md:mb-0">
                 {(() => {
-                  const rockName = (rockDb as any)[prediction.rock_id]?.name || `Rock ${prediction.rock_id}`
-                  const mortarName = (mortarDb as any)[prediction.mortar_id]?.name || prediction.mortar_id
+                  const rockName = (rockDb as RockDb)[prediction.rock_id]?.name || `Rock ${prediction.rock_id}`
+                  const mortarName = (mortarDb as MortarDb)[prediction.mortar_id]?.name || prediction.mortar_id
                   return (
                     <>
                       <h3 className="text-lg">
@@ -124,7 +162,7 @@ const OutputPanel: React.FC<OutputPanelProps> = ({ result, loading, error, morta
               {(() => {
                 const mortarIdRaw = String(prediction.mortar_id)
                 // If mortar id is an integer index and custom mortars present, use that
-                let mortarMeta: any = null
+                let mortarMeta: CustomMortar['meta'] | MortarDbEntry['meta'] | null = null
                 let mortarName: string | null = null
 
                 if (mortarMode === 'custom' && Array.isArray(customMortars)) {
@@ -136,9 +174,9 @@ const OutputPanel: React.FC<OutputPanelProps> = ({ result, loading, error, morta
                 }
 
                 // Fallback to database lookup
-                if (!mortarMeta && (mortarDb as any)[mortarIdRaw]) {
-                  const db = (mortarDb as any)[mortarIdRaw]
-                  mortarMeta = db.meta
+                if (!mortarMeta && (mortarDb as MortarDb)[mortarIdRaw]) {
+                  const db = (mortarDb as MortarDb)[mortarIdRaw]
+                  mortarMeta = db.meta || null
                   mortarName = db.meta?.product_name_long || db.name
                 }
 
@@ -158,15 +196,15 @@ const OutputPanel: React.FC<OutputPanelProps> = ({ result, loading, error, morta
                         </tr>
                         <tr className="border-t">
                           <td className="text-xs font-bold pr-3 py-1">Manufacturer</td>
-                          <td className="text-gray-800 py-1">{mortarMeta.manufacturer}</td>
+                          <td className="text-gray-800 py-1">{mortarMeta.manufacturer ?? 'N/A'}</td>
                         </tr>
                         <tr className="border-t">
                           <td className="text-xs font-bold pr-3 py-1">GWP</td>
-                          <td className="text-gray-800 py-1">{mortarMeta.gwp}</td>
+                          <td className="text-gray-800 py-1">{mortarMeta.gwp ?? 'N/A'}</td>
                         </tr>
                         <tr className="border-t">
                           <td className="text-xs font-bold pr-3 py-1">Cost / lb</td>
-                          <td className="text-gray-800 py-1">{mortarMeta.cost_per_pound}</td>
+                          <td className="text-gray-800 py-1">{mortarMeta.cost_per_pound ?? 'N/A'}</td>
                         </tr>
                       </tbody>
                     </table>
