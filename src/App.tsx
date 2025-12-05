@@ -132,8 +132,8 @@ function App() {
   }
 
   return (
-    <div className="min-h-screen" style={{ backgroundColor: 'var(--theme-bg)', color: 'var(--theme-text)' }}>
-      <div className="mx-auto px-4 py-6 max-w-[1100px]">
+    <div className="min-h-screen">
+      <div className="mx-auto px-4 py-6 max-w-[1100px]" style={{ color: 'var(--theme-text)' }}>
         <header className="mb-6 pb-3" style={{ borderBottom: '1px solid var(--theme-header-border)' }}>
           <div className="flex items-center justify-between">
             <h1 className="text-3xl font-normal tracking-normal" style={{ color: 'var(--theme-header-title)' }}>
@@ -142,10 +142,10 @@ function App() {
             <div className="relative">
               <select
                 className="theme-select appearance-none pr-8 pl-3 py-1.5 text-sm cursor-pointer"
-                value={themeId === 'construction' ? 'simple-light' : themeId}
+                value={themeId}
                 onChange={(e) => {
                   const newTheme = e.target.value as ThemeId
-                  if (newTheme === 'simple-light' || newTheme === 'simple-dark' || newTheme === 'neutral') {
+                  if (newTheme === 'simple-light' || newTheme === 'simple-dark' || newTheme === 'neutral' || newTheme === 'construction') {
                     setTheme(newTheme)
                   }
                 }}
@@ -153,7 +153,7 @@ function App() {
                 <option value="simple-light">SimpleLight</option>
                 <option value="simple-dark">SimpleDark</option>
                 <option value="neutral">Neutral</option>
-                <option value="construction" disabled>Construction (Coming Soon)</option>
+                <option value="construction">Construction</option>
               </select>
               <div className="absolute right-2 top-1/2 -translate-y-1/2 pointer-events-none" style={{ color: 'var(--theme-input-text)' }}>
                 <svg

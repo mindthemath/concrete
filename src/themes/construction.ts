@@ -3,47 +3,59 @@ import { Theme } from './types'
 /**
  * Construction Theme
  * 
- * Placeholder for a construction/industrial-themed design.
- * This will have a different visual style while maintaining
- * the same element structure and layout.
+ * Industrial construction-themed design with early 00's vibes.
+ * Features high contrast, safety yellow/orange, and skeuomorphic elements.
  */
 export const constructionTheme: Theme = {
   id: 'construction',
   name: 'Construction',
-  description: 'Industrial construction-themed design',
+  description: 'Industrial construction-themed design (Early 00s Style)',
   
   root: {
-    backgroundColor: '#fef3c7', // yellow-100 (placeholder)
-    color: '#78350f', // yellow-900 (placeholder)
-    fontFamily: 'Arial, Helvetica, sans-serif',
+    backgroundColor: '#a8a8a0', // Darker base for cinder block
+    // Background image handled via CSS class .theme-bg-construction
+    color: '#1a1a1a',
+    fontFamily: '"Verdana", "Geneva", sans-serif',
   },
   
   components: {
     header: {
-      borderColor: '#d97706', // amber-600 (placeholder)
-      titleColor: '#78350f', // yellow-900 (placeholder)
+      borderColor: '#000000',
+      titleColor: '#000000',
+      borderWidth: '0 0 3px 0',
+      borderStyle: 'solid',
     },
     input: {
       backgroundColor: '#ffffff',
-      borderColor: '#d97706', // amber-600 (placeholder)
-      textColor: '#78350f', // yellow-900 (placeholder)
-      focusBorderColor: '#b45309', // amber-700 (placeholder)
+      borderColor: '#8c8c8c',
+      textColor: '#000000',
+      focusBorderColor: '#ff9900', // Safety orange
+      borderStyle: 'inset',
+      borderWidth: '2px',
     },
     button: {
-      backgroundColor: '#fbbf24', // amber-400 (placeholder)
-      borderColor: '#d97706', // amber-600 (placeholder)
-      textColor: '#78350f', // yellow-900 (placeholder)
-      hoverBackgroundColor: '#f59e0b', // amber-500 (placeholder)
+      backgroundColor: 'linear-gradient(to bottom, #ffd700 0%, #e6c200 100%)', // Safety yellow gradient
+      borderColor: '#998100',
+      textColor: '#000000',
+      hoverBackgroundColor: 'linear-gradient(to bottom, #ffeb3b 0%, #ffd700 100%)',
+      borderStyle: 'outset',
+      borderWidth: '2px',
+      shadow: '1px 1px 0px #000000',
+      activeShadow: 'inset 1px 1px 2px rgba(0,0,0,0.4)',
+      transform: 'uppercase',
+      fontWeight: 'bold',
     },
     panel: {
-      backgroundColor: '#fffbeb', // amber-50 (placeholder)
-      borderColor: '#d97706', // amber-600 (placeholder)
-      textColor: '#78350f', // yellow-900 (placeholder)
+      backgroundColor: '#f0f0e8',
+      borderColor: '#aaaaaa',
+      textColor: '#000000',
+      borderStyle: 'outset',
+      borderWidth: '2px',
+      shadow: '2px 2px 4px rgba(0,0,0,0.2)',
     },
     footer: {
-      borderColor: '#d97706', // amber-600 (placeholder)
-      textColor: '#92400e', // yellow-800 (placeholder)
+      borderColor: '#555555',
+      textColor: '#444444',
     },
   },
 }
-
