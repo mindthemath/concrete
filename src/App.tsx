@@ -140,10 +140,10 @@ function App() {
               className="text-2xl font-normal tracking-normal relative inline-block px-4 py-2" 
               style={{ 
                 color: 'var(--theme-header-title)',
-                backgroundColor: themeId === 'notebook' ? '#000000' : 'transparent',
-                border: themeId === 'notebook' ? '1px solid #ffffff' : 'none',
-                textTransform: themeId === 'notebook' ? 'uppercase' : 'none',
-                width: themeId === 'notebook' ? 'fit-content' : 'auto'
+                backgroundColor: themeId === 'notebook' ? '#000000' : (themeId === 'construction' ? 'var(--theme-header-bg)' : 'transparent'),
+                border: themeId === 'notebook' ? '1px solid #ffffff' : (themeId === 'construction' ? '2px solid #000000' : 'none'),
+                textTransform: (themeId === 'notebook' || themeId === 'construction') ? 'uppercase' : 'none',
+                width: (themeId === 'notebook' || themeId === 'construction') ? 'fit-content' : 'auto'
               }}
             >
               Concrete Strength Predictor
@@ -154,7 +154,7 @@ function App() {
                 value={themeId}
                 onChange={(e) => {
                   const newTheme = e.target.value as ThemeId
-                  if (newTheme === 'simple-light' || newTheme === 'simple-dark' || newTheme === 'neutral' || newTheme === 'notebook') {
+                  if (['simple-light', 'simple-dark', 'neutral', 'notebook', 'construction'].includes(newTheme)) {
                     setTheme(newTheme)
                   }
                 }}
@@ -163,6 +163,7 @@ function App() {
                 <option value="simple-dark">SimpleDark</option>
                 <option value="neutral">Neutral</option>
                 <option value="notebook">Notebook</option>
+                <option value="construction">Construction</option>
               </select>
               <div className="absolute right-2 top-1/2 -translate-y-1/2 pointer-events-none" style={{ color: 'var(--theme-input-text)' }}>
                 <svg
@@ -204,8 +205,8 @@ function App() {
           <div 
             className="inline-block px-4 py-2"
             style={{
-              backgroundColor: themeId === 'notebook' ? '#000000' : 'transparent',
-              border: themeId === 'notebook' ? '1px solid #ffffff' : 'none'
+              backgroundColor: themeId === 'notebook' ? '#000000' : (themeId === 'construction' ? '#000000' : 'transparent'),
+              border: themeId === 'notebook' ? '1px solid #ffffff' : (themeId === 'construction' ? '2px solid #fbbf24' : 'none')
             }}
           >
             <p>Mind the Math, LLC | December 2025</p>

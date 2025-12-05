@@ -10,12 +10,14 @@ import { simpleLightTheme } from './simpleLight'
 import { simpleDarkTheme } from './simpleDark'
 import { neutralTheme } from './neutral'
 import { notebookTheme } from './notebook'
+import { constructionTheme } from './construction'
 
 export const themes: Record<ThemeId, Theme> = {
   'simple-light': simpleLightTheme,
   'simple-dark': simpleDarkTheme,
   'neutral': neutralTheme,
   'notebook': notebookTheme,
+  'construction': constructionTheme,
 }
 
 export const defaultThemeId: ThemeId = 'neutral'

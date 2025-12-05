@@ -53,11 +53,16 @@ interface OutputPanelProps {
 const OutputPanel: React.FC<OutputPanelProps> = ({ result, loading, error, mortarMode, customMortars }) => {
   const { themeId } = useTheme()
   const isNotebook = themeId === 'notebook'
+  const isConstruction = themeId === 'construction'
   
   // Get the appropriate accent color for the metadata border based on theme
   const getMetadataAccentColor = () => {
     if (isNotebook) {
       return 'linear-gradient(to right, rgba(255, 255, 0, 0.7) 0%, rgba(255, 255, 0, 0.7) 6px, transparent 6px)'
+    }
+    if (isConstruction) {
+       // Hazard stripe left border effect
+       return 'linear-gradient(to right, #fbbf24 0%, #fbbf24 3px, #000000 3px, #000000 6px, transparent 6px)'
     }
     switch (themeId) {
       case 'simple-light':
@@ -151,6 +156,15 @@ const OutputPanel: React.FC<OutputPanelProps> = ({ result, loading, error, morta
               width: '100%',
               backgroundColor: 'rgba(255, 255, 0, 0.7)',
               transform: 'skewX(-2deg)',
+              zIndex: 0,
+            }}
+          />
+        )}
+        {isConstruction && (
+          <span 
+            className="absolute -bottom-1 left-0 w-full h-1 pointer-events-none"
+            style={{
+              backgroundImage: 'repeating-linear-gradient(45deg, #fbbf24, #fbbf24 5px, #000000 5px, #000000 10px)',
               zIndex: 0,
             }}
           />

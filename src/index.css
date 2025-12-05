@@ -46,6 +46,19 @@ body {
   background-size: 73px 67px, 89px 81px, 61px 71px, 97px 59px, 53px 93px, 79px 77px, 103px 87px, 67px 101px, 91px 63px, 77px 97px, 107px 73px, 83px 109px, 59px 79px, 101px 61px, 71px 89px, 93px 83px, 87px 107px, 63px 71px, 97px 53px, 81px 103px, 73px 91px, 109px 67px, 61px 97px, 89px 79px, 103px 59px;
 }
 
+/* Construction site style background */
+.theme-bg-construction {
+  background-color: #262626;
+  background-image: 
+    repeating-linear-gradient(
+      45deg,
+      #333333,
+      #333333 10px,
+      #262626 10px,
+      #262626 20px
+    );
+}
+
 /* Notebook paper style panels for Notebook theme */
 .theme-panel-notebook {
   background-color: #ffffff !important;
