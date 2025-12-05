@@ -54,6 +54,23 @@ const OutputPanel: React.FC<OutputPanelProps> = ({ result, loading, error, morta
   const { themeId } = useTheme()
   const isConstruction = themeId === 'construction'
   
+  // Get the appropriate accent color for the metadata border based on theme
+  const getMetadataAccentColor = () => {
+    if (isConstruction) {
+      return 'linear-gradient(to right, rgba(255, 255, 0, 0.7) 0%, rgba(255, 255, 0, 0.7) 6px, transparent 6px)'
+    }
+    switch (themeId) {
+      case 'simple-light':
+        return 'linear-gradient(to right, rgba(185, 28, 28, 0.6) 0%, rgba(185, 28, 28, 0.6) 4px, transparent 4px)' // dark red
+      case 'simple-dark':
+        return 'linear-gradient(to right, rgba(59, 130, 246, 0.6) 0%, rgba(59, 130, 246, 0.6) 4px, transparent 4px)' // blue
+      case 'neutral':
+        return 'linear-gradient(to right, rgba(22, 163, 74, 0.6) 0%, rgba(22, 163, 74, 0.6) 4px, transparent 4px)' // green
+      default:
+        return 'linear-gradient(to right, rgba(22, 163, 74, 0.6) 0%, rgba(22, 163, 74, 0.6) 4px, transparent 4px)'
+    }
+  }
+  
   // Placeholder/mock data for demonstration
   const mockResult: ApiResponse = {
     predictions: [
@@ -125,9 +142,19 @@ const OutputPanel: React.FC<OutputPanelProps> = ({ result, loading, error, morta
 
   return (
     <section className="border p-4" style={{ borderColor: 'var(--theme-panel-border)', backgroundColor: 'var(--theme-panel-bg)', color: 'var(--theme-panel-text)' }}>
-      <h2 className="text-xl mb-4">
-      Predicted Mix Designs 
-      {displayResult?.mocked ? ' (Mocked)' : ''}
+      <h2 className="text-xl mb-4 relative inline-block">
+        <span className="relative z-10">Predicted Mix Designs{displayResult?.mocked ? ' (Mocked)' : ''}</span>
+        {isConstruction && (
+          <span 
+            className="absolute left-0 top-0 bottom-0 pointer-events-none"
+            style={{
+              width: '100%',
+              backgroundColor: 'rgba(255, 255, 0, 0.7)',
+              transform: 'skewX(-2deg)',
+              zIndex: 0,
+            }}
+          />
+        )}
       </h2>
 
       <div className="space-y-4">
@@ -162,7 +189,7 @@ const OutputPanel: React.FC<OutputPanelProps> = ({ result, loading, error, morta
             </div>
 
             <div className="pl-3 my-2 relative" style={{ 
-              background: 'linear-gradient(to right, rgba(255, 255, 0, 0.7) 0%, rgba(255, 255, 0, 0.7) 6px, transparent 6px)'
+              background: getMetadataAccentColor()
             }}>
 
               {/* Mortar meta table */}
