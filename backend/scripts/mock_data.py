@@ -3,8 +3,8 @@ import random
 from pathlib import Path
 
 # Load data
-mortar_data = json.loads(Path("../../data/mortar.json").read_text())
-rock_data = json.loads(Path("../../data/rock.json").read_text())
+mortar_data = json.loads(Path("../../frontend/data/mortar.json").read_text())
+rock_data = json.loads(Path("../../frontend/data/rock.json").read_text())
 
 
 # Function to calculate Hirsch model with noise addition
@@ -42,10 +42,10 @@ for mortar_id in mortar_ids:
             }
 
 # Write out the synthetic data
-output_path = Path("../../data/concrete.json")
+output_path = Path("../../frontend/data/concrete.json")
 output_path.write_text(json.dumps(concrete_synthetic, indent=4))
 
-print("Synthetic data generated and saved to ../../data/concrete.json")
+print("Synthetic data generated and saved to ../../frontend/data/concrete.json")
 
 # print out the range of the values
 print(

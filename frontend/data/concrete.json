@@ -2,577 +2,505 @@
     "M001-RK001-3": {
         "mortar_id": "M001",
         "rock_id": "RK001",
-        "rock_ratio": 0.4,
-        "concrete_compressive_strength_mpa": 92.19
+        "rock_ratio": 0.3,
+        "concrete_compressive_strength_mpa": 98.72
     },
     "M001-RK001-4": {
         "mortar_id": "M001",
         "rock_id": "RK001",
-        "rock_ratio": 0.5,
-        "concrete_compressive_strength_mpa": 104.32
+        "rock_ratio": 0.4,
+        "concrete_compressive_strength_mpa": 110.44
     },
     "M001-RK001-5": {
         "mortar_id": "M001",
         "rock_id": "RK001",
-        "rock_ratio": 0.6,
-        "concrete_compressive_strength_mpa": 128.58
+        "rock_ratio": 0.5,
+        "concrete_compressive_strength_mpa": 128.27
     },
     "M001-RK002-3": {
         "mortar_id": "M001",
         "rock_id": "RK002",
-        "rock_ratio": 0.4,
-        "concrete_compressive_strength_mpa": 60.28
+        "rock_ratio": 0.3,
+        "concrete_compressive_strength_mpa": 62.42
     },
     "M001-RK002-4": {
         "mortar_id": "M001",
         "rock_id": "RK002",
-        "rock_ratio": 0.5,
-        "concrete_compressive_strength_mpa": 70.42
+        "rock_ratio": 0.4,
+        "concrete_compressive_strength_mpa": 74.75
     },
     "M001-RK002-5": {
         "mortar_id": "M001",
         "rock_id": "RK002",
-        "rock_ratio": 0.6,
-        "concrete_compressive_strength_mpa": 82.27
+        "rock_ratio": 0.5,
+        "concrete_compressive_strength_mpa": 82.11
     },
     "M001-RK003-3": {
         "mortar_id": "M001",
         "rock_id": "RK003",
-        "rock_ratio": 0.4,
-        "concrete_compressive_strength_mpa": 107.0
+        "rock_ratio": 0.3,
+        "concrete_compressive_strength_mpa": 112.66
     },
     "M001-RK003-4": {
         "mortar_id": "M001",
         "rock_id": "RK003",
-        "rock_ratio": 0.5,
-        "concrete_compressive_strength_mpa": 133.36
+        "rock_ratio": 0.4,
+        "concrete_compressive_strength_mpa": 138.61
     },
     "M001-RK003-5": {
         "mortar_id": "M001",
         "rock_id": "RK003",
-        "rock_ratio": 0.6,
-        "concrete_compressive_strength_mpa": 156.65
+        "rock_ratio": 0.5,
+        "concrete_compressive_strength_mpa": 156.36
     },
     "M001-RK004-3": {
         "mortar_id": "M001",
         "rock_id": "RK004",
-        "rock_ratio": 0.4,
-        "concrete_compressive_strength_mpa": 87.99
+        "rock_ratio": 0.3,
+        "concrete_compressive_strength_mpa": 88.33
     },
     "M001-RK004-4": {
         "mortar_id": "M001",
         "rock_id": "RK004",
-        "rock_ratio": 0.5,
-        "concrete_compressive_strength_mpa": 99.85
+        "rock_ratio": 0.4,
+        "concrete_compressive_strength_mpa": 98.6
     },
     "M001-RK004-5": {
         "mortar_id": "M001",
         "rock_id": "RK004",
-        "rock_ratio": 0.6,
-        "concrete_compressive_strength_mpa": 112.98
+        "rock_ratio": 0.5,
+        "concrete_compressive_strength_mpa": 121.02
     },
     "M002-RK001-3": {
         "mortar_id": "M002",
         "rock_id": "RK001",
-        "rock_ratio": 0.4,
-        "concrete_compressive_strength_mpa": 89.83
+        "rock_ratio": 0.3,
+        "concrete_compressive_strength_mpa": 94.64
     },
     "M002-RK001-4": {
         "mortar_id": "M002",
         "rock_id": "RK001",
-        "rock_ratio": 0.5,
-        "concrete_compressive_strength_mpa": 112.96
+        "rock_ratio": 0.4,
+        "concrete_compressive_strength_mpa": 112.86
     },
     "M002-RK001-5": {
         "mortar_id": "M002",
         "rock_id": "RK001",
-        "rock_ratio": 0.6,
-        "concrete_compressive_strength_mpa": 126.02
+        "rock_ratio": 0.5,
+        "concrete_compressive_strength_mpa": 130.86
     },
     "M002-RK002-3": {
         "mortar_id": "M002",
         "rock_id": "RK002",
-        "rock_ratio": 0.4,
-        "concrete_compressive_strength_mpa": 65.15
+        "rock_ratio": 0.3,
+        "concrete_compressive_strength_mpa": 64.94
     },
     "M002-RK002-4": {
         "mortar_id": "M002",
         "rock_id": "RK002",
-        "rock_ratio": 0.5,
-        "concrete_compressive_strength_mpa": 75.87
+        "rock_ratio": 0.4,
+        "concrete_compressive_strength_mpa": 68.97
     },
     "M002-RK002-5": {
         "mortar_id": "M002",
         "rock_id": "RK002",
-        "rock_ratio": 0.6,
-        "concrete_compressive_strength_mpa": 83.44
+        "rock_ratio": 0.5,
+        "concrete_compressive_strength_mpa": 83.77
     },
     "M002-RK003-3": {
         "mortar_id": "M002",
         "rock_id": "RK003",
-        "rock_ratio": 0.4,
-        "concrete_compressive_strength_mpa": 110.64
+        "rock_ratio": 0.3,
+        "concrete_compressive_strength_mpa": 112.52
     },
     "M002-RK003-4": {
         "mortar_id": "M002",
         "rock_id": "RK003",
-        "rock_ratio": 0.5,
-        "concrete_compressive_strength_mpa": 136.01
+        "rock_ratio": 0.4,
+        "concrete_compressive_strength_mpa": 133.9
     },
     "M002-RK003-5": {
         "mortar_id": "M002",
         "rock_id": "RK003",
-        "rock_ratio": 0.6,
-        "concrete_compressive_strength_mpa": 158.96
+        "rock_ratio": 0.5,
+        "concrete_compressive_strength_mpa": 155.84
     },
     "M002-RK004-3": {
         "mortar_id": "M002",
         "rock_id": "RK004",
-        "rock_ratio": 0.4,
-        "concrete_compressive_strength_mpa": 87.5
+        "rock_ratio": 0.3,
+        "concrete_compressive_strength_mpa": 86.94
     },
     "M002-RK004-4": {
         "mortar_id": "M002",
         "rock_id": "RK004",
-        "rock_ratio": 0.5,
-        "concrete_compressive_strength_mpa": 103.09
+        "rock_ratio": 0.4,
+        "concrete_compressive_strength_mpa": 97.95
     },
     "M002-RK004-5": {
         "mortar_id": "M002",
         "rock_id": "RK004",
-        "rock_ratio": 0.6,
-        "concrete_compressive_strength_mpa": 118.82
+        "rock_ratio": 0.5,
+        "concrete_compressive_strength_mpa": 114.51
     },
     "M003-RK001-3": {
         "mortar_id": "M003",
         "rock_id": "RK001",
-        "rock_ratio": 0.4,
-        "concrete_compressive_strength_mpa": 94.64
+        "rock_ratio": 0.3,
+        "concrete_compressive_strength_mpa": 92.77
     },
     "M003-RK001-4": {
         "mortar_id": "M003",
         "rock_id": "RK001",
-        "rock_ratio": 0.5,
-        "concrete_compressive_strength_mpa": 113.63
+        "rock_ratio": 0.4,
+        "concrete_compressive_strength_mpa": 112.44
     },
     "M003-RK001-5": {
         "mortar_id": "M003",
         "rock_id": "RK001",
-        "rock_ratio": 0.6,
-        "concrete_compressive_strength_mpa": 132.05
+        "rock_ratio": 0.5,
+        "concrete_compressive_strength_mpa": 134.77
     },
     "M003-RK002-3": {
         "mortar_id": "M003",
         "rock_id": "RK002",
-        "rock_ratio": 0.4,
-        "concrete_compressive_strength_mpa": 62.04
+        "rock_ratio": 0.3,
+        "concrete_compressive_strength_mpa": 62.72
     },
     "M003-RK002-4": {
         "mortar_id": "M003",
         "rock_id": "RK002",
-        "rock_ratio": 0.5,
-        "concrete_compressive_strength_mpa": 73.06
+        "rock_ratio": 0.4,
+        "concrete_compressive_strength_mpa": 72.18
     },
     "M003-RK002-5": {
         "mortar_id": "M003",
         "rock_id": "RK002",
-        "rock_ratio": 0.6,
-        "concrete_compressive_strength_mpa": 82.08
+        "rock_ratio": 0.5,
+        "concrete_compressive_strength_mpa": 80.35
     },
     "M003-RK003-3": {
         "mortar_id": "M003",
         "rock_id": "RK003",
-        "rock_ratio": 0.4,
-        "concrete_compressive_strength_mpa": 105.15
+        "rock_ratio": 0.3,
+        "concrete_compressive_strength_mpa": 110.01
     },
     "M003-RK003-4": {
         "mortar_id": "M003",
         "rock_id": "RK003",
-        "rock_ratio": 0.5,
-        "concrete_compressive_strength_mpa": 135.68
+        "rock_ratio": 0.4,
+        "concrete_compressive_strength_mpa": 135.95
     },
     "M003-RK003-5": {
         "mortar_id": "M003",
         "rock_id": "RK003",
-        "rock_ratio": 0.6,
-        "concrete_compressive_strength_mpa": 155.04
+        "rock_ratio": 0.5,
+        "concrete_compressive_strength_mpa": 157.96
     },
     "M003-RK004-3": {
         "mortar_id": "M003",
         "rock_id": "RK004",
-        "rock_ratio": 0.4,
-        "concrete_compressive_strength_mpa": 82.58
+        "rock_ratio": 0.3,
+        "concrete_compressive_strength_mpa": 84.96
     },
     "M003-RK004-4": {
         "mortar_id": "M003",
         "rock_id": "RK004",
-        "rock_ratio": 0.5,
-        "concrete_compressive_strength_mpa": 103.89
+        "rock_ratio": 0.4,
+        "concrete_compressive_strength_mpa": 97.49
     },
     "M003-RK004-5": {
         "mortar_id": "M003",
         "rock_id": "RK004",
-        "rock_ratio": 0.6,
-        "concrete_compressive_strength_mpa": 117.03
+        "rock_ratio": 0.5,
+        "concrete_compressive_strength_mpa": 117.84
     },
     "M004-RK001-3": {
         "mortar_id": "M004",
         "rock_id": "RK001",
-        "rock_ratio": 0.4,
-        "concrete_compressive_strength_mpa": 87.58
+        "rock_ratio": 0.3,
+        "concrete_compressive_strength_mpa": 92.32
     },
     "M004-RK001-4": {
         "mortar_id": "M004",
         "rock_id": "RK001",
-        "rock_ratio": 0.5,
-        "concrete_compressive_strength_mpa": 110.55
+        "rock_ratio": 0.4,
+        "concrete_compressive_strength_mpa": 115.89
     },
     "M004-RK001-5": {
         "mortar_id": "M004",
         "rock_id": "RK001",
-        "rock_ratio": 0.6,
-        "concrete_compressive_strength_mpa": 126.71
+        "rock_ratio": 0.5,
+        "concrete_compressive_strength_mpa": 127.6
     },
     "M004-RK002-3": {
         "mortar_id": "M004",
         "rock_id": "RK002",
-        "rock_ratio": 0.4,
-        "concrete_compressive_strength_mpa": 59.51
+        "rock_ratio": 0.3,
+        "concrete_compressive_strength_mpa": 66.04
     },
     "M004-RK002-4": {
         "mortar_id": "M004",
         "rock_id": "RK002",
-        "rock_ratio": 0.5,
-        "concrete_compressive_strength_mpa": 66.42
+        "rock_ratio": 0.4,
+        "concrete_compressive_strength_mpa": 72.3
     },
     "M004-RK002-5": {
         "mortar_id": "M004",
         "rock_id": "RK002",
-        "rock_ratio": 0.6,
-        "concrete_compressive_strength_mpa": 81.53
+        "rock_ratio": 0.5,
+        "concrete_compressive_strength_mpa": 81.87
     },
     "M004-RK003-3": {
         "mortar_id": "M004",
         "rock_id": "RK003",
-        "rock_ratio": 0.4,
-        "concrete_compressive_strength_mpa": 108.16
+        "rock_ratio": 0.3,
+        "concrete_compressive_strength_mpa": 117.68
     },
     "M004-RK003-4": {
         "mortar_id": "M004",
         "rock_id": "RK003",
-        "rock_ratio": 0.5,
-        "concrete_compressive_strength_mpa": 131.14
+        "rock_ratio": 0.4,
+        "concrete_compressive_strength_mpa": 142.89
     },
     "M004-RK003-5": {
         "mortar_id": "M004",
         "rock_id": "RK003",
-        "rock_ratio": 0.6,
-        "concrete_compressive_strength_mpa": 154.14
+        "rock_ratio": 0.5,
+        "concrete_compressive_strength_mpa": 157.23
     },
     "M004-RK004-3": {
         "mortar_id": "M004",
         "rock_id": "RK004",
-        "rock_ratio": 0.4,
-        "concrete_compressive_strength_mpa": 84.95
+        "rock_ratio": 0.3,
+        "concrete_compressive_strength_mpa": 82.42
     },
     "M004-RK004-4": {
         "mortar_id": "M004",
         "rock_id": "RK004",
-        "rock_ratio": 0.5,
-        "concrete_compressive_strength_mpa": 99.18
+        "rock_ratio": 0.4,
+        "concrete_compressive_strength_mpa": 102.67
     },
     "M004-RK004-5": {
         "mortar_id": "M004",
         "rock_id": "RK004",
-        "rock_ratio": 0.6,
-        "concrete_compressive_strength_mpa": 114.41
+        "rock_ratio": 0.5,
+        "concrete_compressive_strength_mpa": 127.91
     },
     "M005-RK001-3": {
         "mortar_id": "M005",
         "rock_id": "RK001",
-        "rock_ratio": 0.4,
-        "concrete_compressive_strength_mpa": 92.32
+        "rock_ratio": 0.3,
+        "concrete_compressive_strength_mpa": 90.4
     },
     "M005-RK001-4": {
         "mortar_id": "M005",
         "rock_id": "RK001",
-        "rock_ratio": 0.5,
-        "concrete_compressive_strength_mpa": 106.77
+        "rock_ratio": 0.4,
+        "concrete_compressive_strength_mpa": 106.97
     },
     "M005-RK001-5": {
         "mortar_id": "M005",
         "rock_id": "RK001",
-        "rock_ratio": 0.6,
-        "concrete_compressive_strength_mpa": 129.38
+        "rock_ratio": 0.5,
+        "concrete_compressive_strength_mpa": 132.85
     },
     "M005-RK002-3": {
         "mortar_id": "M005",
         "rock_id": "RK002",
-        "rock_ratio": 0.4,
-        "concrete_compressive_strength_mpa": 65.9
+        "rock_ratio": 0.3,
+        "concrete_compressive_strength_mpa": 64.02
     },
     "M005-RK002-4": {
         "mortar_id": "M005",
         "rock_id": "RK002",
-        "rock_ratio": 0.5,
-        "concrete_compressive_strength_mpa": 71.2
+        "rock_ratio": 0.4,
+        "concrete_compressive_strength_mpa": 75.99
     },
     "M005-RK002-5": {
         "mortar_id": "M005",
         "rock_id": "RK002",
-        "rock_ratio": 0.6,
-        "concrete_compressive_strength_mpa": 81.23
+        "rock_ratio": 0.5,
+        "concrete_compressive_strength_mpa": 78.38
     },
     "M005-RK003-3": {
         "mortar_id": "M005",
         "rock_id": "RK003",
-        "rock_ratio": 0.4,
-        "concrete_compressive_strength_mpa": 107.45
+        "rock_ratio": 0.3,
+        "concrete_compressive_strength_mpa": 117.13
     },
     "M005-RK003-4": {
         "mortar_id": "M005",
         "rock_id": "RK003",
-        "rock_ratio": 0.5,
-        "concrete_compressive_strength_mpa": 134.6
+        "rock_ratio": 0.4,
+        "concrete_compressive_strength_mpa": 138.44
     },
     "M005-RK003-5": {
         "mortar_id": "M005",
         "rock_id": "RK003",
-        "rock_ratio": 0.6,
-        "concrete_compressive_strength_mpa": 156.1
+        "rock_ratio": 0.5,
+        "concrete_compressive_strength_mpa": 154.38
     },
     "M005-RK004-3": {
         "mortar_id": "M005",
         "rock_id": "RK004",
-        "rock_ratio": 0.4,
-        "concrete_compressive_strength_mpa": 84.32
+        "rock_ratio": 0.3,
+        "concrete_compressive_strength_mpa": 88.59
     },
     "M005-RK004-4": {
         "mortar_id": "M005",
         "rock_id": "RK004",
-        "rock_ratio": 0.5,
-        "concrete_compressive_strength_mpa": 99.89
+        "rock_ratio": 0.4,
+        "concrete_compressive_strength_mpa": 102.15
     },
     "M005-RK004-5": {
         "mortar_id": "M005",
         "rock_id": "RK004",
-        "rock_ratio": 0.6,
-        "concrete_compressive_strength_mpa": 116.11
+        "rock_ratio": 0.5,
+        "concrete_compressive_strength_mpa": 122.47
     },
     "M006-RK001-3": {
         "mortar_id": "M006",
         "rock_id": "RK001",
-        "rock_ratio": 0.4,
-        "concrete_compressive_strength_mpa": 89.08
+        "rock_ratio": 0.3,
+        "concrete_compressive_strength_mpa": 88.37
     },
     "M006-RK001-4": {
         "mortar_id": "M006",
         "rock_id": "RK001",
-        "rock_ratio": 0.5,
-        "concrete_compressive_strength_mpa": 112.39
+        "rock_ratio": 0.4,
+        "concrete_compressive_strength_mpa": 112.15
     },
     "M006-RK001-5": {
         "mortar_id": "M006",
         "rock_id": "RK001",
-        "rock_ratio": 0.6,
-        "concrete_compressive_strength_mpa": 127.45
+        "rock_ratio": 0.5,
+        "concrete_compressive_strength_mpa": 127.34
     },
     "M006-RK002-3": {
         "mortar_id": "M006",
         "rock_id": "RK002",
-        "rock_ratio": 0.4,
-        "concrete_compressive_strength_mpa": 62.78
+        "rock_ratio": 0.3,
+        "concrete_compressive_strength_mpa": 60.9
     },
     "M006-RK002-4": {
         "mortar_id": "M006",
         "rock_id": "RK002",
-        "rock_ratio": 0.5,
-        "concrete_compressive_strength_mpa": 69.7
+        "rock_ratio": 0.4,
+        "concrete_compressive_strength_mpa": 72.77
     },
     "M006-RK002-5": {
         "mortar_id": "M006",
         "rock_id": "RK002",
-        "rock_ratio": 0.6,
-        "concrete_compressive_strength_mpa": 81.32
+        "rock_ratio": 0.5,
+        "concrete_compressive_strength_mpa": 80.55
     },
     "M006-RK003-3": {
         "mortar_id": "M006",
         "rock_id": "RK003",
-        "rock_ratio": 0.4,
-        "concrete_compressive_strength_mpa": 107.37
+        "rock_ratio": 0.3,
+        "concrete_compressive_strength_mpa": 107.53
     },
     "M006-RK003-4": {
         "mortar_id": "M006",
         "rock_id": "RK003",
-        "rock_ratio": 0.5,
-        "concrete_compressive_strength_mpa": 135.36
+        "rock_ratio": 0.4,
+        "concrete_compressive_strength_mpa": 140.13
     },
     "M006-RK003-5": {
         "mortar_id": "M006",
         "rock_id": "RK003",
-        "rock_ratio": 0.6,
-        "concrete_compressive_strength_mpa": 154.19
+        "rock_ratio": 0.5,
+        "concrete_compressive_strength_mpa": 158.29
     },
     "M006-RK004-3": {
         "mortar_id": "M006",
         "rock_id": "RK004",
-        "rock_ratio": 0.4,
-        "concrete_compressive_strength_mpa": 84.86
+        "rock_ratio": 0.3,
+        "concrete_compressive_strength_mpa": 82.71
     },
     "M006-RK004-4": {
         "mortar_id": "M006",
         "rock_id": "RK004",
-        "rock_ratio": 0.5,
-        "concrete_compressive_strength_mpa": 102.22
+        "rock_ratio": 0.4,
+        "concrete_compressive_strength_mpa": 100.26
     },
     "M006-RK004-5": {
         "mortar_id": "M006",
         "rock_id": "RK004",
-        "rock_ratio": 0.6,
-        "concrete_compressive_strength_mpa": 114.38
+        "rock_ratio": 0.5,
+        "concrete_compressive_strength_mpa": 112.6
     },
     "M007-RK001-3": {
         "mortar_id": "M007",
         "rock_id": "RK001",
-        "rock_ratio": 0.4,
-        "concrete_compressive_strength_mpa": 100.71
+        "rock_ratio": 0.3,
+        "concrete_compressive_strength_mpa": 85.73
     },
     "M007-RK001-4": {
         "mortar_id": "M007",
         "rock_id": "RK001",
-        "rock_ratio": 0.5,
-        "concrete_compressive_strength_mpa": 116.61
+        "rock_ratio": 0.4,
+        "concrete_compressive_strength_mpa": 107.82
     },
     "M007-RK001-5": {
         "mortar_id": "M007",
         "rock_id": "RK001",
-        "rock_ratio": 0.6,
-        "concrete_compressive_strength_mpa": 133.55
+        "rock_ratio": 0.5,
+        "concrete_compressive_strength_mpa": 124.93
     },
     "M007-RK002-3": {
         "mortar_id": "M007",
         "rock_id": "RK002",
-        "rock_ratio": 0.4,
-        "concrete_compressive_strength_mpa": 64.59
+        "rock_ratio": 0.3,
+        "concrete_compressive_strength_mpa": 59.17
     },
     "M007-RK002-4": {
         "mortar_id": "M007",
         "rock_id": "RK002",
-        "rock_ratio": 0.5,
-        "concrete_compressive_strength_mpa": 76.77
+        "rock_ratio": 0.4,
+        "concrete_compressive_strength_mpa": 74.52
     },
     "M007-RK002-5": {
         "mortar_id": "M007",
         "rock_id": "RK002",
-        "rock_ratio": 0.6,
-        "concrete_compressive_strength_mpa": 84.94
+        "rock_ratio": 0.5,
+        "concrete_compressive_strength_mpa": 78.59
     },
     "M007-RK003-3": {
         "mortar_id": "M007",
         "rock_id": "RK003",
-        "rock_ratio": 0.4,
-        "concrete_compressive_strength_mpa": 115.38
+        "rock_ratio": 0.3,
+        "concrete_compressive_strength_mpa": 109.82
     },
     "M007-RK003-4": {
         "mortar_id": "M007",
         "rock_id": "RK003",
-        "rock_ratio": 0.5,
-        "concrete_compressive_strength_mpa": 139.65
+        "rock_ratio": 0.4,
+        "concrete_compressive_strength_mpa": 130.67
     },
     "M007-RK003-5": {
         "mortar_id": "M007",
         "rock_id": "RK003",
-        "rock_ratio": 0.6,
-        "concrete_compressive_strength_mpa": 156.59
+        "rock_ratio": 0.5,
+        "concrete_compressive_strength_mpa": 153.91
     },
     "M007-RK004-3": {
         "mortar_id": "M007",
         "rock_id": "RK004",
-        "rock_ratio": 0.4,
-        "concrete_compressive_strength_mpa": 89.56
+        "rock_ratio": 0.3,
+        "concrete_compressive_strength_mpa": 83.14
     },
     "M007-RK004-4": {
         "mortar_id": "M007",
         "rock_id": "RK004",
-        "rock_ratio": 0.5,
-        "concrete_compressive_strength_mpa": 105.15
+        "rock_ratio": 0.4,
+        "concrete_compressive_strength_mpa": 99.38
     },
     "M007-RK004-5": {
         "mortar_id": "M007",
         "rock_id": "RK004",
-        "rock_ratio": 0.6,
-        "concrete_compressive_strength_mpa": 121.84
-    },
-    "M008-RK001-3": {
-        "mortar_id": "M008",
-        "rock_id": "RK001",
-        "rock_ratio": 0.4,
-        "concrete_compressive_strength_mpa": 87.87
-    },
-    "M008-RK001-4": {
-        "mortar_id": "M008",
-        "rock_id": "RK001",
         "rock_ratio": 0.5,
-        "concrete_compressive_strength_mpa": 106.66
-    },
-    "M008-RK001-5": {
-        "mortar_id": "M008",
-        "rock_id": "RK001",
-        "rock_ratio": 0.6,
-        "concrete_compressive_strength_mpa": 121.99
-    },
-    "M008-RK002-3": {
-        "mortar_id": "M008",
-        "rock_id": "RK002",
-        "rock_ratio": 0.4,
-        "concrete_compressive_strength_mpa": 59.74
-    },
-    "M008-RK002-4": {
-        "mortar_id": "M008",
-        "rock_id": "RK002",
-        "rock_ratio": 0.5,
-        "concrete_compressive_strength_mpa": 68.66
-    },
-    "M008-RK002-5": {
-        "mortar_id": "M008",
-        "rock_id": "RK002",
-        "rock_ratio": 0.6,
-        "concrete_compressive_strength_mpa": 76.17
-    },
-    "M008-RK003-3": {
-        "mortar_id": "M008",
-        "rock_id": "RK003",
-        "rock_ratio": 0.4,
-        "concrete_compressive_strength_mpa": 106.91
-    },
-    "M008-RK003-4": {
-        "mortar_id": "M008",
-        "rock_id": "RK003",
-        "rock_ratio": 0.5,
-        "concrete_compressive_strength_mpa": 132.59
-    },
-    "M008-RK003-5": {
-        "mortar_id": "M008",
-        "rock_id": "RK003",
-        "rock_ratio": 0.6,
-        "concrete_compressive_strength_mpa": 152.59
-    },
-    "M008-RK004-3": {
-        "mortar_id": "M008",
-        "rock_id": "RK004",
-        "rock_ratio": 0.4,
-        "concrete_compressive_strength_mpa": 79.73
-    },
-    "M008-RK004-4": {
-        "mortar_id": "M008",
-        "rock_id": "RK004",
-        "rock_ratio": 0.5,
-        "concrete_compressive_strength_mpa": 94.8
-    },
-    "M008-RK004-5": {
-        "mortar_id": "M008",
-        "rock_id": "RK004",
-        "rock_ratio": 0.6,
-        "concrete_compressive_strength_mpa": 109.16
+        "concrete_compressive_strength_mpa": 111.69
     }
 }
