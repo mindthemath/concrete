@@ -4,6 +4,12 @@ on:
   push:
     branches:
       - main
+    paths-ignore:
+      - backend/**
+      - README.md
+      - Dockerfile
+      - .dockerignore
+      - .gitignore
   # schedule:
   #  - cron: '0 18 * * *'  # Run at 12:00 PM Denver time (18:00 UTC)
   workflow_dispatch:
