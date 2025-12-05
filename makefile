@@ -18,3 +18,7 @@ docker-build:
 
 docker-run:
 	docker run --rm -p 3030:3000 mindthemath/concrete-app
+
+clean:
+	rm -rf dist/
+
