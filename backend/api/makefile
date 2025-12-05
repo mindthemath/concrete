@@ -14,3 +14,13 @@ build: run
 
 run:
 	docker run --rm -p 9600:9600 --name concrete-api mindthemath/concrete-api
+
+artifacts.tar.gz:
+	cd ../scripts && tar -czvf ../api/artifacts.tar.gz \
+	physics_nn.onnx physics_nn.onnx.data \
+	scalers/scaler_x.joblib scalers/scaler_y.joblib
+
+data: artifacts.tar.gz
+
+clean:
+	rm -f artifacts.tar.gz
