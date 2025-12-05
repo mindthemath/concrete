@@ -43,7 +43,7 @@ interface InputPanelProps {
 }
 
 const InputPanel: React.FC<InputPanelProps> = ({ regions, onSubmit, loading }) => {
-  const [desiredStrength, setDesiredStrength] = useState<string>('30')
+  const [desiredStrength, setDesiredStrength] = useState<string>('50')
   const [regionId, setRegionId] = useState<string>(regions[0]?.id || '')
   const [mortarMode, setMortarMode] = useState<MortarMode>('default')
   const [customMortars, setCustomMortars] = useState<CustomMortarForm[]>([])
