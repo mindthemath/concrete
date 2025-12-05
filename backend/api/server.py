@@ -8,6 +8,10 @@ from typing import Any, Dict, List
 import litserve as ls
 from fastapi.middleware.cors import CORSMiddleware
 from pydantic import BaseModel, Field
+from slowapi import Limiter, _rate_limit_exceeded_handler
+from slowapi.errors import RateLimitExceeded
+from slowapi.middleware import SlowAPIMiddleware
+from slowapi.util import get_remote_address
 
 # Environment configurations
 PORT = int(os.environ.get("PORT", "9600"))
@@ -197,24 +201,39 @@ if __name__ == "__main__":
         track_requests=True,
         workers_per_device=WORKERS_PER_DEVICE,
     )
-    
+
     # Add CORS middleware to handle OPTIONS preflight requests
     # litserve uses FastAPI under the hood, so we can access the app
     try:
         app = server.app  # Access the underlying FastAPI app
+
+        # Rate limiting setup
+        # We use default_limits and SlowAPIMiddleware to enforce limits globally
+        # without needing to decorate specific routes (since litserve hides them)
+        limiter = Limiter(key_func=get_remote_address, default_limits=["20/minute"])
+        app.state.limiter = limiter
+        app.add_exception_handler(RateLimitExceeded, _rate_limit_exceeded_handler)
+        app.add_middleware(SlowAPIMiddleware)
+
+        logger.info("Rate limiter added: 20 requests/minute per IP")
+
         app.add_middleware(
             CORSMiddleware,
-            allow_origins=["*"] if os.environ.get("ENVIRONMENT") == "dev" else ["https://mindthemath.github.io/concrete/"],  # In production, specify actual origins
+            allow_origins=(
+                ["*"]
+                if os.environ.get("ENVIRONMENT") == "dev"
+                else ["https://mindthemath.github.io"]
+            ),
             allow_credentials=True,
             allow_methods=["*"],
             allow_headers=["*"],
         )
         logger.info("CORS middleware added successfully")
     except AttributeError:
-        logger.warning("Could not access FastAPI app directly. CORS may not work properly.")
-        # Alternative: Try to add middleware after server is created but before run
-        # This might require checking litserve's internal structure
-    
+        logger.warning(
+            "Could not access FastAPI app directly. CORS/RateLimit may not work properly."
+        )
+
     server.run(
         port=PORT,
         host="0.0.0.0",

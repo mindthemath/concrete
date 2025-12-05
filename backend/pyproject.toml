@@ -10,7 +10,6 @@ dependencies = [
 
 [dependency-groups]
 dev = [
-    "lightning>=2.5.5",
     "matplotlib>=3.9.4",
     "pandas>=2.3.3",
 ]
@@ -25,9 +24,11 @@ cu128 = [
 ]
 api = [
     "litserve>=0.2.16",
+    "slowapi>=0.1.9",
 ]
 train = [
     "gpytorch>=1.13",
+    "lightning>=2.5.5",
     "pytorch-lightning>=2.5.5",
 ]
 
