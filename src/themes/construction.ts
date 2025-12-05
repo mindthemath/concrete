@@ -40,8 +40,7 @@ export const constructionTheme: Theme = {
       textColor: '#000000',
       hoverBackgroundColor: 'linear-gradient(180deg, #fbbf24 0%, #d97706 100%)',
       borderStyle: 'solid',
-      borderWidth: '2px',
-      borderBottomWidth: '4px', // 3D effect
+      borderWidth: '2px 2px 4px 2px', // 3D effect: thicker bottom border
       shadow: '0 2px 0 #78350f',
       activeShadow: 'inset 0 2px 4px rgba(0,0,0,0.3)',
       transform: 'uppercase',
