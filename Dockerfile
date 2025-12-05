@@ -18,6 +18,7 @@ COPY frontend .
 
 # build the static site
 ENV NODE_ENV=production
+ENV VITE_API_ENDPOINT=/predict
 RUN bun run build
 
 # final stage: Python base with nginx for static files + API backend
@@ -40,15 +41,45 @@ RUN pip install --no-cache-dir -r requirements.txt
 # nginx configuration for SPA with API proxy
 RUN rm -f /etc/nginx/sites-enabled/default && \
     echo 'server { \
-    listen 3000; \
+    listen 3030; \
     server_name _; \
     root /usr/share/nginx/html; \
     index index.html; \
     access_log /dev/stdout; \
     error_log /dev/stderr; \
-    location /api/ { \
-        proxy_pass http://localhost:9600/; \
+    location /predict { \
+        proxy_pass http://localhost:9600/predict; \
         proxy_set_header Host $host; \
+        proxy_set_header X-Real-IP $remote_addr; \
+        proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for; \
+        proxy_set_header X-Forwarded-Proto $scheme; \
+    } \
+    location ~ ^/docs(/.*)?$ { \
+        proxy_pass http://localhost:9600/docs$1; \
+        proxy_set_header Host $http_host; \
+        proxy_set_header X-Real-IP $remote_addr; \
+        proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for; \
+        proxy_set_header X-Forwarded-Proto $scheme; \
+        proxy_redirect http://localhost:9600/ http://$http_host/; \
+        proxy_redirect http://$http_host:9600/ http://$http_host/; \
+    } \
+    location /openapi.json { \
+        proxy_pass http://localhost:9600/openapi.json; \
+        proxy_set_header Host $http_host; \
+        proxy_set_header X-Real-IP $remote_addr; \
+        proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for; \
+        proxy_set_header X-Forwarded-Proto $scheme; \
+    } \
+    location /health { \
+        proxy_pass http://localhost:9600/health; \
+        proxy_set_header Host $http_host; \
+        proxy_set_header X-Real-IP $remote_addr; \
+        proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for; \
+        proxy_set_header X-Forwarded-Proto $scheme; \
+    } \
+    location /info { \
+        proxy_pass http://localhost:9600/info; \
+        proxy_set_header Host $http_host; \
         proxy_set_header X-Real-IP $remote_addr; \
         proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for; \
         proxy_set_header X-Forwarded-Proto $scheme; \
@@ -69,5 +100,5 @@ COPY frontend/data ./data
 
 # ENV DATA_DIR=/app/data
 
-EXPOSE 3000/tcp
+EXPOSE 3030/tcp
 CMD ["/entrypoint.sh"]
