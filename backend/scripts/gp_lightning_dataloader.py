@@ -31,8 +31,8 @@ def make_dataloaders_with_split(
     df: pd.DataFrame, val_size=0.2, seed=42, scalers_path="./scalers"
 ):
     df_proc = df.copy()
-    df_proc["hirsch"] = df_proc.apply(hirsch_row, axis=1)
-    df_proc["residual"] = df_proc["y_strength_mpa"] - df_proc["hirsch"]
+    df_proc["physics_base"] = df_proc.apply(base_physics_model, axis=1)
+    df_proc["residual"] = df_proc["y_strength_mpa"] - df_proc["physics_base"]
 
     X = df_proc[FEATURE_COLS].values
     y = df_proc["residual"].values
@@ -97,6 +97,12 @@ def load_df(data_dir="data"):
             }
         )
     return pd.DataFrame(rows)
+
+
+def base_physics_model(row):
+    """Calculate the physics-based baseline prediction."""
+    # Currently using Hirsch model, but this can be swapped for any physics model
+    return hirsch_row(row)
 
 
 def hirsch_row(row, eta=0.1):
@@ -286,18 +292,18 @@ class PhysicsGPR(L.LightningModule):
 #     return dl, df, scaler_x, scaler_y
 
 
-def combine_hirsch_with_residual(df_infer: pd.DataFrame, model: PhysicsGPR):
+def combine_physics_with_residual(df_infer: pd.DataFrame, model: PhysicsGPR):
     df = df_infer.copy()
-    df["hirsch"] = df.apply(hirsch_row, axis=1)
+    df["physics_base"] = df.apply(base_physics_model, axis=1)
     X = df[FEATURE_COLS].values
     Xs = torch.tensor(
         model.scaler_x.transform(X), dtype=torch.float32, device=model.device
     )
     mean_res, std_res = model.predict_residual(Xs)
-    df["pred_mpa"] = df["hirsch"].values + mean_res
+    df["pred_mpa"] = df["physics_base"].values + mean_res
     df["pred_lo_mpa"] = df["pred_mpa"] - std_res
     df["pred_hi_mpa"] = df["pred_mpa"] + std_res
-    return df[["hirsch", "pred_mpa", "pred_lo_mpa", "pred_hi_mpa", "residual"]]
+    return df[["physics_base", "pred_mpa", "pred_lo_mpa", "pred_hi_mpa", "residual"]]
 
 
 class PhysicsNN(L.LightningModule):

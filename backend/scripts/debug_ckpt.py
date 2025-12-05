@@ -8,7 +8,7 @@ from gp_lightning_dataloader import (
     FEATURE_COLS,
     PhysicsGPR,
     PhysicsNN,
-    combine_hirsch_with_residual,
+    combine_physics_with_residual,
     load_df,
     load_scalers,
     make_dataloaders_with_split,
@@ -17,7 +17,7 @@ from gp_lightning_dataloader import (
 with open("best_ckpt_path.txt", "r") as f:
     ckpt_path = f.read()
 
-df = load_df("../../data")
+df = load_df("../../frontend/data")
 dl_train, dl_val, df_proc, _, _, idx_train, idx_val = make_dataloaders_with_split(
     df, val_size=0.2, seed=42
 )
@@ -41,7 +41,7 @@ model = model_class.load_from_checkpoint(ckpt_path, scaler_x=sx, scaler_y=sy)
 model.eval()
 # get validation samples: dl_val is a DataLoader
 start_time = time.time()
-preds = combine_hirsch_with_residual(df_proc, model)
+preds = combine_physics_with_residual(df_proc, model)
 end_time = time.time()
 inference_time = end_time - start_time
 avg_time = inference_time / df_proc.shape[0]
@@ -65,6 +65,7 @@ plt.scatter(
     c="black",
     alpha=0.5 / 4,
     s=80,
+    label="Training samples",
 )
 plt.scatter(
     preds_with_truth["y_strength_mpa"].iloc[idx_val],
@@ -72,6 +73,7 @@ plt.scatter(
     c="red",
     alpha=0.5,
     s=150,
+    label="Validation samples",
 )
 # scatter the true values against the residuals for all samples, plot in xkcd:forest-green
 # plt.scatter(
@@ -95,6 +97,7 @@ plt.ylabel("Predicted Strength (MPa)")
 plt.title("True vs Predicted Strength")
 # aspect ratio 1:1
 # plt.gca().set_aspect(0.5, adjustable='box')
+plt.legend()
 plt.savefig("true_vs_predicted.png")
 # plt.show()
 

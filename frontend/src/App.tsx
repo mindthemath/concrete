@@ -32,7 +32,7 @@ const SAMPLE_REGIONS: Region[] = Object.keys(regionData).map(key => ({
 
 // Environment variables with Vite prefix
 // Note: API_KEY is not used in production - backend is protected via CORS restrictions
-const API_ENDPOINT = import.meta.env.VITE_API_ENDPOINT || 'http://0.0.0.0:9600/predict'
+const API_ENDPOINT = import.meta.env.VITE_API_ENDPOINT || 'http://localhost:9600/predict'
 const API_TIMEOUT = Number(import.meta.env.VITE_API_TIMEOUT) || 5000 // Default 5 seconds
 
 function App() {
@@ -91,7 +91,6 @@ function App() {
       const data: ApiResponse = await response.json()
       setResult({
         ...data,
-        mocked: false,
       })
     } catch (err) {
       // For timeout and network errors, silently fallback to mock results
@@ -285,7 +284,7 @@ function App() {
           >
             <p>Mind the Math, LLC | December 2025</p>
             <p className="mt-1 text-xs">
-              For demonstration purposes only | Based on 96 experimental samples
+              For demonstration purposes only | Based on 84 experimental samples
             </p>
           </div>
         </footer>

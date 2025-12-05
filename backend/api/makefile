@@ -9,8 +9,18 @@ requirements.txt: ../pyproject.toml
 dev:
 	ENVIRONMENT=dev uv run --extra api --extra cpu python server.py
 
-build: run
-	docker build -t mindthemath/concrete-api .
+build:
+	docker build -f Dockerfile -t mindthemath/concrete-api ../..
 
-run:
-	docker run --rm -p 9600:9600 --name concrete-api mindthemath/concrete-api
+run: build
+	docker run --rm -p 9600:9600 --name concrete-api -e ENVIRONMENT=dev mindthemath/concrete-api
+
+artifacts.tar.gz:
+	cd ../scripts && tar -czvf ../api/artifacts.tar.gz \
+	physics_nn.onnx physics_nn.onnx.data \
+	scalers/scaler_x.joblib scalers/scaler_y.joblib
+
+data: artifacts.tar.gz
+
+clean:
+	rm -f artifacts.tar.gz

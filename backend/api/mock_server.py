@@ -1,6 +1,7 @@
 import json
 import logging
 import os
+import random
 from pathlib import Path
 from typing import Any, Dict, List
 
@@ -64,7 +65,7 @@ class InputRequest(BaseModel):
 
 
 def load_data_files(data_dir: str = DATA_DIR) -> Dict[str, Any]:
-    """Load region, rock, mortar, and concrete data files."""
+    """Load region, rock, and mortar data files."""
     p = Path(data_dir)
     if not p.exists():
         raise FileNotFoundError(f"Data directory not found: {p}")
@@ -72,49 +73,48 @@ def load_data_files(data_dir: str = DATA_DIR) -> Dict[str, Any]:
         "regions": json.loads((p / "region.json").read_text()),
         "rocks": json.loads((p / "rock.json").read_text()),
         "mortars": json.loads((p / "mortar.json").read_text()),
-        "concrete": json.loads((p / "concrete.json").read_text()),
     }
 
 
-def filter_concrete_samples(
+def generate_mock_predictions(
     region_id: str,
     desired_strength: float,
     available_rocks: List[str],
-    concrete_data: Dict[str, Any],
+    mortars: Dict[str, Any],
+    num_predictions: int = 5,
 ) -> List[Dict[str, Any]]:
-    """Filter concrete.json experimental samples that meet the strength requirements.
+    """Generate mock predictions that meet the desired strength requirement."""
+    predictions = []
+    mortar_ids = list(mortars.keys())
 
-    Returns samples where:
-    - rock_id is in available_rocks for the region
-    - concrete_compressive_strength_mpa >= desired_strength
-    - concrete_compressive_strength_mpa < desired_strength * 1.333
-    """
+    # Generate predictions with different rock/mortar combinations
     if not available_rocks:
-        return []
+        raise ValueError("No available rocks provided for predictions")
 
-    # Convert available_rocks to a set for O(1) lookup
-    available_rocks_set = set(available_rocks)
-    upper_bound = desired_strength * 1.333
+    for _ in range(num_predictions):
+        rock_id = random.choice(available_rocks)
+        mortar_id = random.choice(mortar_ids)
+        rock_ratio = round(random.uniform(0.3, 0.5), 2)
 
-    # Filter in a single pass
-    filtered = [
-        {
-            "rock_id": entry["rock_id"],
-            "mortar_id": entry["mortar_id"],
-            "rock_ratio": entry["rock_ratio"],
-            "predicted_compressive_strength_mpa": entry[
-                "concrete_compressive_strength_mpa"
-            ],
-        }
-        for entry in concrete_data.values()
-        if entry["rock_id"] in available_rocks_set
-        and entry["concrete_compressive_strength_mpa"] >= desired_strength
-        and entry["concrete_compressive_strength_mpa"] < upper_bound
-    ]
+        # Generate a predicted strength that meets or exceeds desired strength
+        # Add some variance to make it realistic
+        base_strength = desired_strength + random.uniform(0, 20)
+        predicted_strength = round(base_strength + random.uniform(-5, 10), 2)
+
+        predictions.append(
+            {
+                "rock_id": rock_id,
+                "mortar_id": mortar_id,
+                "rock_ratio": rock_ratio,
+                "predicted_compressive_strength_mpa": max(
+                    predicted_strength, desired_strength * 0.9
+                ),
+            }
+        )
 
     # Sort by predicted strength (ascending)
-    filtered.sort(key=lambda x: x["predicted_compressive_strength_mpa"])
-    return filtered
+    predictions.sort(key=lambda x: x["predicted_compressive_strength_mpa"])
+    return predictions
 
 
 class ConcretePredictionAPI(ls.LitAPI):
@@ -127,14 +127,14 @@ class ConcretePredictionAPI(ls.LitAPI):
         # Load data files
         try:
             self.data = load_data_files()
-            logger.info("Loaded region, rock, mortar, and concrete data files.")
+            logger.info("Loaded region, rock, and mortar data files.")
         except Exception as e:
             logger.error(f"Failed to load data files: {e}")
-            self.data = {"regions": {}, "rocks": {}, "mortars": {}, "concrete": {}}
+            self.data = {"regions": {}, "rocks": {}, "mortars": {}}
 
         # TODO: Load model here (e.g., PhysicsNN or PhysicsGPR)
         # self.model = ...
-        logger.info("ConcretePredictionAPI initialized.")
+        logger.info("ConcretePredictionAPI initialized (mock mode).")
 
     def decode_request(self, request: InputRequest) -> Dict[str, Any]:
         return request.model_dump()
@@ -158,24 +158,34 @@ class ConcretePredictionAPI(ls.LitAPI):
         if not available_rocks:
             available_rocks = list(self.data["rocks"].keys())
 
-        # Filter concrete.json experimental samples that meet the strength requirements
-        predictions = filter_concrete_samples(
+        # TODO: Use actual model for predictions
+        # For now, generate mock predictions
+        predictions = generate_mock_predictions(
             region_id=region_id,
             desired_strength=desired_strength,
             available_rocks=available_rocks,
-            concrete_data=self.data["concrete"],
+            mortars=self.data["mortars"],
+            num_predictions=min(10, len(available_rocks) * len(self.data["mortars"])),
         )
 
-        # Determine status based on results
-        if not predictions:
+        # Filter predictions that meet the desired strength
+        filtered_predictions = [
+            p
+            for p in predictions
+            if p["predicted_compressive_strength_mpa"] >= desired_strength
+        ]
+
+        # If no predictions meet the threshold, return the best ones anyway
+        if not filtered_predictions:
+            filtered_predictions = predictions[:3]
             status = "partial"
         else:
             status = "success"
 
         return {
-            "predictions": predictions,
+            "predictions": filtered_predictions,
             "status": status,
-            "mocked": False,  # frontend displays this
+            "mocked": True,  # Remove this when using real model
         }
 
 
@@ -211,21 +221,18 @@ if __name__ == "__main__":
             logger.info("CORS disabled")
             pass
         else:
-            allowed_origins = (
-                ["*"]
-                if os.environ.get("ENVIRONMENT") == "dev"
-                else ["https://mindthemath.github.io", "https://concrete.math.computer"]
-            )
             app.add_middleware(
                 CORSMiddleware,
-                allow_origins=allowed_origins,
+                allow_origins=(
+                    ["*"]
+                    if os.environ.get("ENVIRONMENT") == "dev"
+                    else ["https://mindthemath.github.io"]
+                ),
                 allow_credentials=True,
                 allow_methods=["*"],
                 allow_headers=["*"],
             )
-            logger.info(
-                f"CORS middleware added successfully with origins: {allowed_origins}"
-            )
+            logger.info("CORS middleware added successfully")
     except AttributeError:
         logger.warning(
             "Could not access FastAPI app directly. CORS/RateLimit may not work properly."
