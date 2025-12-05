@@ -8,7 +8,7 @@ from gp_lightning_dataloader import (
     FEATURE_COLS,
     PhysicsGPR,
     PhysicsNN,
-    combine_hirsch_with_residual,
+    combine_physics_with_residual,
     load_df,
     load_scalers,
     make_dataloaders_with_split,
@@ -41,7 +41,7 @@ model = model_class.load_from_checkpoint(ckpt_path, scaler_x=sx, scaler_y=sy)
 model.eval()
 # get validation samples: dl_val is a DataLoader
 start_time = time.time()
-preds = combine_hirsch_with_residual(df_proc, model)
+preds = combine_physics_with_residual(df_proc, model)
 end_time = time.time()
 inference_time = end_time - start_time
 avg_time = inference_time / df_proc.shape[0]

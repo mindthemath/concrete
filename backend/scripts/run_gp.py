@@ -7,7 +7,7 @@ from gp_lightning_dataloader import (
     FEATURE_COLS,
     PhysicsGPR,
     PhysicsNN,
-    combine_hirsch_with_residual,
+    combine_physics_with_residual,
     load_df,
     make_dataloaders_with_split,
 )
@@ -56,6 +56,6 @@ else:
     loaded = PhysicsNN.load_from_checkpoint(best_ckpt_path, scaler_x=sx, scaler_y=sy)
 
 loaded.eval()
-preds = combine_hirsch_with_residual(df_proc.iloc[idx_val].head(5), loaded)
+preds = combine_physics_with_residual(df_proc.iloc[idx_val].head(5), loaded)
 print("Sample predictions:")
 print(preds)

@@ -89,6 +89,21 @@ FEATURE_COLS = [
     "rock_ratio",
 ]
 
+
+# Define physics base model (Hirsch)
+def base_physics_model(
+    mortar_compressive_strength_mpa,
+    rock_compressive_strength_mpa,
+    rock_ratio,
+    eta=0.1,
+):
+    """Calculate the physics-based baseline prediction."""
+    fm = mortar_compressive_strength_mpa
+    fr = rock_compressive_strength_mpa
+    r = rock_ratio
+    return (1 - r) * fm + r * fr + eta * r * (1 - r) * (fr - fm)
+
+
 # Pick a few real examples from the data
 sample_keys = list(concrete_data.keys())[:3]  # First 3 examples
 print(f"\nUsing {len(sample_keys)} realistic examples from data:")
@@ -119,6 +134,10 @@ for key in sample_keys:
     ]
 
     realistic_inputs.append(features)
+
+    # Store for later use in final prediction loop
+    rec["mortar_props"] = mortar_props
+    rec["rock_props"] = rock_props
 
     print(f"\nExample: {key}")
     print(f"  Mortar: {mortar_id} ({mortar_data[mortar_id]['name']})")
@@ -164,16 +183,28 @@ print("-" * 80)
 
 for i, key in enumerate(sample_keys):
     rec = concrete_data[key]
+    rec_mortar_props = rec["mortar_props"]
+    rec_rock_props = rec["rock_props"]
     true_strength = rec["concrete_compressive_strength_mpa"]
     predicted_residual = output_unscaled[i]
 
     # Calculate predicted strength (residual + hirsch prediction)
-    # For simplicity, we'll just show the residual here
-    # In practice, you'd add: predicted_strength = hirsch_prediction + predicted_residual
-    print(f"{key:<20} {predicted_residual:>24.2f} MPa (residual)")
+    # Final prediction = Base Physics + Residual
+    # Extract params for base model
+    mortar_comp = rec_mortar_props["compressive_strength_mpa"]
+    rock_comp = rec_rock_props["compressive_strength_mpa"]
+    rock_ratio = rec["rock_ratio"]
 
-print("\n* Note: Predicted strength = Hirsch prediction + residual")
-print("  This script only shows the residual component.")
+    base_pred = base_physics_model(mortar_comp, rock_comp, rock_ratio)
+    final_pred = base_pred + predicted_residual
+
+    print(
+        f"{key:<20} {predicted_residual:>10.2f} MPa (residual) {base_pred:>10.2f} (base) {final_pred:>10.2f} (final) | True: {true_strength:.2f}"
+    )
+
+print(
+    "\n* Note: Final Predicted Strength = Base Physics Prediction + Predicted Residual"
+)
 print("\n✓ Inference test successful with realistic data!")
 
 # ============================================================================
@@ -292,3 +323,152 @@ except Exception as e:
     import traceback
 
     traceback.print_exc()
+
+# ============================================================================
+# Standalone ONNX Inference Example (Mock Data)
+# ============================================================================
+print("\n" + "=" * 80)
+print("Standalone ONNX Inference Example (Mock Data)")
+print("=" * 80)
+
+try:
+    import time
+
+    import onnxruntime as ort
+
+    # 1. Load the model
+    print(f"Loading {onnx_path}...")
+    session = ort.InferenceSession(onnx_path)
+
+    # 2. Prepare mock input
+    # Shape: (batch_size, input_dim)
+    # We use random numbers to simulate pre-scaled features
+    batch_size = 2
+    mock_input = np.random.randn(batch_size, input_dim).astype(np.float32)
+
+    print(f"\nMock Input (shape {mock_input.shape}):")
+    print(mock_input)
+
+    # 3. Run Inference
+    input_name = session.get_inputs()[0].name
+    output_name = session.get_outputs()[0].name
+
+    start_time = time.time()
+    result = session.run([output_name], {input_name: mock_input})[0]
+    latency = (time.time() - start_time) * 1000
+
+    print(f"\nInference Output (shape {result.shape}):")
+    print(result)
+    print(f"Latency: {latency:.3f} ms")
+
+    print("\nNOTE: This output is the scaled residual. In production:")
+    print("  1. Scale input features (scaler_x)")
+    print("  2. Run ONNX inference")
+    print("  3. Inverse transform output (scaler_y) -> predicted_residual")
+    print("  4. Final Prediction = Base_Physics_Model + Predicted_Residual")
+
+    # ============================================================================
+    # Demonstrate Production Inference Steps
+    # ============================================================================
+    print("\n" + "=" * 80)
+    print("Demonstrating Production Inference Steps")
+    print("=" * 80)
+
+    if scaler_x is None or scaler_y is None:
+        print("⚠ Skipping production demo - scalers not available")
+    else:
+        # Step 1: Create realistic mock input (unscaled features)
+        print("\nStep 1: Prepare realistic input features (unscaled)")
+        print("-" * 80)
+
+        # Create a mock example with realistic values
+        mock_features_unscaled = np.array(
+            [
+                [
+                    3.2,  # mortar_splitting_strength_mpa
+                    0.042,  # mortar_shrinkage_in
+                    4.8,  # mortar_flexural_strength_mpa
+                    4.1,  # mortar_slump_in
+                    28.5,  # mortar_compressive_strength_mpa
+                    0.18,  # mortar_poissons_ratio
+                    200.0,  # rock_compressive_strength_mpa
+                    0.75,  # rock_size_in
+                    165.4,  # rock_density_lb_ft3
+                    2.65,  # rock_specific_gravity
+                    0.4,  # rock_ratio
+                ],
+                [
+                    4.1,  # mortar_splitting_strength_mpa
+                    0.038,  # mortar_shrinkage_in
+                    5.2,  # mortar_flexural_strength_mpa
+                    3.8,  # mortar_slump_in
+                    35.0,  # mortar_compressive_strength_mpa
+                    0.20,  # mortar_poissons_ratio
+                    180.0,  # rock_compressive_strength_mpa
+                    0.5,  # rock_size_in
+                    160.0,  # rock_density_lb_ft3
+                    2.60,  # rock_specific_gravity
+                    0.35,  # rock_ratio
+                ],
+            ],
+            dtype=np.float32,
+        )
+
+        print(f"Input shape: {mock_features_unscaled.shape}")
+        print("Sample features (first row):")
+        for i, col in enumerate(FEATURE_COLS):
+            print(f"  {col}: {mock_features_unscaled[0, i]:.3f}")
+
+        # Step 2: Scale input features
+        print("\nStep 2: Scale input features using scaler_x")
+        print("-" * 80)
+        mock_features_scaled = scaler_x.transform(mock_features_unscaled)
+        print(f"Scaled input shape: {mock_features_scaled.shape}")
+        print(f"Scaled values (first row, first 3): {mock_features_scaled[0, :3]}")
+
+        # Step 3: Run ONNX inference
+        print("\nStep 3: Run ONNX inference")
+        print("-" * 80)
+        start_time = time.time()
+        onnx_output_scaled = session.run(
+            [output_name], {input_name: mock_features_scaled.astype(np.float32)}
+        )[0]
+        inference_time = (time.time() - start_time) * 1000
+        print(f"Inference output (scaled residual): {onnx_output_scaled.ravel()}")
+        print(f"Inference latency: {inference_time:.3f} ms")
+
+        # Step 4: Inverse transform output
+        print("\nStep 4: Inverse transform output using scaler_y")
+        print("-" * 80)
+        predicted_residual = scaler_y.inverse_transform(
+            onnx_output_scaled.reshape(-1, 1)
+        ).ravel()
+        print(f"Predicted residual (unscaled): {predicted_residual} MPa")
+
+        # Step 5: Calculate final prediction
+        print("\nStep 5: Calculate final prediction = Base Physics + Residual")
+        print("-" * 80)
+        for i in range(len(mock_features_unscaled)):
+            mortar_comp = mock_features_unscaled[
+                i, 4
+            ]  # mortar_compressive_strength_mpa
+            rock_comp = mock_features_unscaled[i, 6]  # rock_compressive_strength_mpa
+            rock_ratio = mock_features_unscaled[i, 10]  # rock_ratio
+
+            base_pred = base_physics_model(mortar_comp, rock_comp, rock_ratio)
+            final_pred = base_pred + predicted_residual[i]
+
+            print(f"\nExample {i+1}:")
+            print(f"  Base Physics Prediction: {base_pred:.2f} MPa")
+            print(f"  Predicted Residual:      {predicted_residual[i]:.2f} MPa")
+            print(f"  Final Prediction:        {final_pred:.2f} MPa")
+            print(
+                f"  (Base + Residual = {base_pred:.2f} + {predicted_residual[i]:.2f})"
+            )
+
+        print("\n✓ Production inference pipeline demonstrated successfully!")
+
+except ImportError:
+    print("onnxruntime not installed.")
+except Exception as e:
+    print(f"Error in standalone example: {e}")
