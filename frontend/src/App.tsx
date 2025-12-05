@@ -91,7 +91,6 @@ function App() {
       const data: ApiResponse = await response.json()
       setResult({
         ...data,
-        mocked: false,
       })
     } catch (err) {
       // For timeout and network errors, silently fallback to mock results
