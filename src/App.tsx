@@ -131,10 +131,38 @@ function App() {
   return (
     <div className="min-h-screen bg-white text-black">
       <div className="mx-auto px-4 py-6 max-w-[1100px]">
-        <header className="mb-6 border-b border-gray-500">
-          <h1 className="text-3xl font-normal tracking-normal pb-3">
-            Concrete Strength Predictor
-          </h1>
+        <header className="mb-6 border-b border-gray-500 pb-3">
+          <div className="flex items-center justify-between">
+            <h1 className="text-3xl font-normal tracking-normal">
+              Concrete Strength Predictor
+            </h1>
+            <div className="relative">
+              <select
+                className="basic-input appearance-none pr-8 pl-3 py-1.5 text-sm cursor-pointer bg-white border-gray-400 hover:border-gray-600 focus:border-blue-600"
+                defaultValue="simple-light"
+              >
+                <option value="simple-light">SimpleLight</option>
+                <option value="simple-dark">SimpleDark</option>
+                <option value="construction">Construction</option>
+              </select>
+              <div className="absolute right-2 top-1/2 -translate-y-1/2 pointer-events-none">
+                <svg
+                  className="w-4 h-4 text-gray-600"
+                  fill="none"
+                  stroke="currentColor"
+                  viewBox="0 0 24 24"
+                  xmlns="http://www.w3.org/2000/svg"
+                >
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    strokeWidth={2}
+                    d="M19 9l-7 7-7-7"
+                  />
+                </svg>
+              </div>
+            </div>
+          </div>
         </header>
 
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
