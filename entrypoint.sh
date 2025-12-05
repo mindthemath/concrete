@@ -2,8 +2,8 @@
 set -e
 
 # Link nginx logs to stdout/stderr
-ln -sf /dev/stdout /var/log/nginx/access.log
-ln -sf /dev/stderr /var/log/nginx/error.log
+# ln -sf /dev/stdout /var/log/nginx/access.log
+# ln -sf /dev/stderr /var/log/nginx/error.log
 
 # Function to handle shutdown
 cleanup() {
