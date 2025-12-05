@@ -2,7 +2,7 @@ import { Theme } from './types'
 
 /**
  * SimpleDark Theme
- * 
+ *
  * Dark mode version of SimpleLight - same clean, minimal aesthetic
  * with true black background and white text, maintaining simplicity.
  */
@@ -10,13 +10,13 @@ export const simpleDarkTheme: Theme = {
   id: 'simple-dark',
   name: 'SimpleDark',
   description: 'Dark mode version of SimpleLight theme',
-  
+
   root: {
     backgroundColor: '#000000', // true black
     color: '#ffffff', // white
     fontFamily: 'Arial, Helvetica, sans-serif',
   },
-  
+
   components: {
     header: {
       borderColor: '#6b7280', // gray-500 (same as light mode)
@@ -45,4 +45,3 @@ export const simpleDarkTheme: Theme = {
     },
   },
 }
-

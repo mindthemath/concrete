@@ -2,7 +2,7 @@ import { Theme } from './types'
 
 /**
  * Notebook Theme
- * 
+ *
  * Classic composition notebook design with black speckled background,
  * ruled paper panels, and handwritten font.
  */
@@ -10,14 +10,14 @@ export const notebookTheme: Theme = {
   id: 'notebook',
   name: 'Notebook',
   description: 'Classic composition notebook design',
-  
+
   root: {
     backgroundColor: '#1a1a1a', // Black background like composition notebook
     // Background image handled via CSS class .theme-bg-notebook
     color: '#ffffff',
     fontFamily: ' "Comic Sans MS", "Kalam", cursive', // Clean handwritten feel
   },
-  
+
   components: {
     header: {
       borderColor: '#ffffff',
@@ -59,4 +59,3 @@ export const notebookTheme: Theme = {
     },
   },
 }
-

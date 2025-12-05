@@ -2,7 +2,7 @@ import { Theme } from './types'
 
 /**
  * SimpleLight Theme
- * 
+ *
  * The current default theme - clean, minimal, light mode styling.
  * This represents the existing "early web" aesthetic.
  */
@@ -10,13 +10,13 @@ export const simpleLightTheme: Theme = {
   id: 'simple-light',
   name: 'SimpleLight',
   description: 'Clean, minimal light theme with early web aesthetic',
-  
+
   root: {
     backgroundColor: '#ffffff',
     color: '#000000',
     fontFamily: 'Arial, Helvetica, sans-serif',
   },
-  
+
   components: {
     header: {
       borderColor: '#6b7280', // gray-500
@@ -45,4 +45,3 @@ export const simpleLightTheme: Theme = {
     },
   },
 }
-

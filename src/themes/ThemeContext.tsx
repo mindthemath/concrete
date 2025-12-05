@@ -25,7 +25,14 @@ export function ThemeProvider({ children }: ThemeProviderProps) {
   const [themeId, setThemeIdState] = useState<ThemeId>(() => {
     // Load from localStorage or use default
     const saved = localStorage.getItem('theme')
-    if (saved && (saved === 'simple-light' || saved === 'simple-dark' || saved === 'neutral' || saved === 'notebook' || saved === 'construction')) {
+    if (
+      saved &&
+      (saved === 'simple-light' ||
+        saved === 'simple-dark' ||
+        saved === 'neutral' ||
+        saved === 'notebook' ||
+        saved === 'construction')
+    ) {
       return saved as ThemeId
     }
     return defaultThemeId
@@ -63,7 +70,7 @@ export function ThemeProvider({ children }: ThemeProviderProps) {
     root.style.setProperty('--theme-header-bg', components.header.backgroundColor || 'transparent')
     root.style.setProperty('--theme-header-border-width', components.header.borderWidth || '1px')
     root.style.setProperty('--theme-header-border-style', components.header.borderStyle || 'solid')
-    
+
     root.style.setProperty('--theme-input-bg', components.input.backgroundColor)
     root.style.setProperty('--theme-input-border', components.input.borderColor)
     root.style.setProperty('--theme-input-text', components.input.textColor)
@@ -71,7 +78,7 @@ export function ThemeProvider({ children }: ThemeProviderProps) {
     root.style.setProperty('--theme-input-border-width', components.input.borderWidth || '1px')
     root.style.setProperty('--theme-input-border-style', components.input.borderStyle || 'solid')
     root.style.setProperty('--theme-input-shadow', components.input.shadow || 'none')
-    
+
     root.style.setProperty('--theme-button-bg', components.button.backgroundColor)
     root.style.setProperty('--theme-button-border', components.button.borderColor)
     root.style.setProperty('--theme-button-text', components.button.textColor)
@@ -82,14 +89,14 @@ export function ThemeProvider({ children }: ThemeProviderProps) {
     root.style.setProperty('--theme-button-active-shadow', components.button.activeShadow || 'none')
     root.style.setProperty('--theme-button-transform', components.button.transform || 'none')
     root.style.setProperty('--theme-button-weight', components.button.fontWeight || 'normal')
-    
+
     root.style.setProperty('--theme-panel-bg', components.panel.backgroundColor)
     root.style.setProperty('--theme-panel-border', components.panel.borderColor)
     root.style.setProperty('--theme-panel-text', components.panel.textColor)
     root.style.setProperty('--theme-panel-border-width', components.panel.borderWidth || '1px')
     root.style.setProperty('--theme-panel-border-style', components.panel.borderStyle || 'solid')
     root.style.setProperty('--theme-panel-shadow', components.panel.shadow || 'none')
-    
+
     root.style.setProperty('--theme-footer-border', components.footer.borderColor)
     root.style.setProperty('--theme-footer-text', components.footer.textColor)
 
@@ -102,9 +109,6 @@ export function ThemeProvider({ children }: ThemeProviderProps) {
   }, [theme])
 
   return (
-    <ThemeContext.Provider value={{ theme, themeId, setTheme }}>
-      {children}
-    </ThemeContext.Provider>
+    <ThemeContext.Provider value={{ theme, themeId, setTheme }}>{children}</ThemeContext.Provider>
   )
 }
-

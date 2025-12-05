@@ -2,7 +2,7 @@ import { Theme } from './types'
 
 /**
  * Construction Theme
- * 
+ *
  * Industrial design inspired by construction tools, heavy machinery,
  * and safety signage. High contrast, rugged, and durable feel.
  */
@@ -10,13 +10,13 @@ export const constructionTheme: Theme = {
   id: 'construction',
   name: 'Construction',
   description: 'Industrial heavy-duty design',
-  
+
   root: {
     backgroundColor: '#2d2d2d', // Dark industrial grey
     color: '#ffffff',
     fontFamily: '"Chakra Petch", "Rajdhani", "Roboto Mono", monospace', // Industrial technical font
   },
-  
+
   components: {
     header: {
       backgroundColor: '#fbbf24', // Amber/Yellow
@@ -60,4 +60,3 @@ export const constructionTheme: Theme = {
     },
   },
 }
-

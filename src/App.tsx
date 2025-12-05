@@ -25,7 +25,7 @@ interface ConcreteDbEntry {
 type RegionData = Record<string, RegionDataEntry>
 type ConcreteDb = Record<string, ConcreteDbEntry>
 
-const SAMPLE_REGIONS: Region[] = Object.keys(regionData).map((key) => ({
+const SAMPLE_REGIONS: Region[] = Object.keys(regionData).map(key => ({
   id: key,
   name: (regionData as RegionData)[key].name,
 }))
@@ -85,7 +85,9 @@ function App() {
 
       if (!response.ok) {
         const errorText = await response.text()
-        throw new Error(`API request failed: ${response.status} ${response.statusText} - ${errorText}`)
+        throw new Error(
+          `API request failed: ${response.status} ${response.statusText} - ${errorText}`
+        )
       }
 
       const data: ApiResponse = await response.json()
@@ -139,13 +141,13 @@ function App() {
 
     const filtered = entries
       .filter(
-        (e) =>
+        e =>
           e.concrete_compressive_strength_mpa >= target &&
           (availableRocks.length === 0 || availableRocks.includes(e.rock_id))
       )
       .sort((a, b) => a.concrete_compressive_strength_mpa - b.concrete_compressive_strength_mpa)
 
-    const predictions = filtered.map((e) => ({
+    const predictions = filtered.map(e => ({
       rock_id: e.rock_id,
       predicted_compressive_strength_mpa: Number(e.concrete_compressive_strength_mpa.toFixed(1)),
       rock_ratio: e.rock_ratio,
@@ -162,16 +164,31 @@ function App() {
   return (
     <div className="min-h-screen">
       <div className="mx-auto px-4 py-6 max-w-[1100px]" style={{ color: 'var(--theme-text)' }}>
-        <header className="mb-6 pb-3" style={{ borderBottom: '1px solid var(--theme-header-border)' }}>
+        <header
+          className="mb-6 pb-3"
+          style={{ borderBottom: '1px solid var(--theme-header-border)' }}
+        >
           <div className="flex items-center justify-between">
             <h1
               className="text-2xl font-normal tracking-normal relative inline-block px-4 py-2"
               style={{
                 color: 'var(--theme-header-title)',
-                backgroundColor: themeId === 'notebook' ? '#000000' : (themeId === 'construction' ? 'var(--theme-header-bg)' : 'transparent'),
-                border: themeId === 'notebook' ? '1px solid #ffffff' : (themeId === 'construction' ? '2px solid #000000' : 'none'),
-                textTransform: (themeId === 'notebook' || themeId === 'construction') ? 'uppercase' : 'none',
-                width: (themeId === 'notebook' || themeId === 'construction') ? 'fit-content' : 'auto'
+                backgroundColor:
+                  themeId === 'notebook'
+                    ? '#000000'
+                    : themeId === 'construction'
+                      ? 'var(--theme-header-bg)'
+                      : 'transparent',
+                border:
+                  themeId === 'notebook'
+                    ? '1px solid #ffffff'
+                    : themeId === 'construction'
+                      ? '2px solid #000000'
+                      : 'none',
+                textTransform:
+                  themeId === 'notebook' || themeId === 'construction' ? 'uppercase' : 'none',
+                width:
+                  themeId === 'notebook' || themeId === 'construction' ? 'fit-content' : 'auto',
               }}
             >
               Concrete Strength Predictor
@@ -180,9 +197,13 @@ function App() {
               <select
                 className="theme-select appearance-none pr-8 pl-3 py-1.5 text-sm cursor-pointer"
                 value={themeId}
-                onChange={(e) => {
+                onChange={e => {
                   const newTheme = e.target.value as ThemeId
-                  if (['simple-light', 'simple-dark', 'neutral', 'notebook', 'construction'].includes(newTheme)) {
+                  if (
+                    ['simple-light', 'simple-dark', 'neutral', 'notebook', 'construction'].includes(
+                      newTheme
+                    )
+                  ) {
                     setTheme(newTheme)
                   }
                 }}
@@ -193,7 +214,10 @@ function App() {
                 <option value="notebook">notebook</option>
                 <option value="construction">construction</option>
               </select>
-              <div className="absolute right-2 top-1/2 -translate-y-1/2 pointer-events-none" style={{ color: 'var(--theme-input-text)' }}>
+              <div
+                className="absolute right-2 top-1/2 -translate-y-1/2 pointer-events-none"
+                style={{ color: 'var(--theme-input-text)' }}
+              >
                 <svg
                   className="w-4 h-4"
                   fill="none"
@@ -214,11 +238,7 @@ function App() {
         </header>
 
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-          <InputPanel
-            regions={SAMPLE_REGIONS}
-            onSubmit={handleSubmit}
-            loading={loading}
-          />
+          <InputPanel regions={SAMPLE_REGIONS} onSubmit={handleSubmit} loading={loading} />
 
           <OutputPanel
             result={result}
@@ -229,16 +249,34 @@ function App() {
           />
         </div>
 
-        <footer className="mt-10 text-center text-sm pt-4" style={{ borderTop: '1px solid var(--theme-footer-border)', color: 'var(--theme-footer-text)' }}>
+        <footer
+          className="mt-10 text-center text-sm pt-4"
+          style={{
+            borderTop: '1px solid var(--theme-footer-border)',
+            color: 'var(--theme-footer-text)',
+          }}
+        >
           <div
             className="inline-block px-4 py-2"
             style={{
-              backgroundColor: themeId === 'notebook' ? '#000000' : (themeId === 'construction' ? '#000000' : 'transparent'),
-              border: themeId === 'notebook' ? '1px solid #ffffff' : (themeId === 'construction' ? '2px solid #fbbf24' : 'none')
+              backgroundColor:
+                themeId === 'notebook'
+                  ? '#000000'
+                  : themeId === 'construction'
+                    ? '#000000'
+                    : 'transparent',
+              border:
+                themeId === 'notebook'
+                  ? '1px solid #ffffff'
+                  : themeId === 'construction'
+                    ? '2px solid #fbbf24'
+                    : 'none',
             }}
           >
             <p>Mind the Math, LLC | December 2025</p>
-            <p className="mt-1 text-xs">For demonstration purposes only | Based on 96 experimental samples</p>
+            <p className="mt-1 text-xs">
+              For demonstration purposes only | Based on 96 experimental samples
+            </p>
           </div>
         </footer>
       </div>

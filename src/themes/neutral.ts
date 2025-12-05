@@ -2,7 +2,7 @@ import { Theme } from './types'
 
 /**
  * Neutral Theme
- * 
+ *
  * Neutral gray theme - same clean, minimal aesthetic
  * with a medium gray background for a neutral appearance.
  */
@@ -10,13 +10,13 @@ export const neutralTheme: Theme = {
   id: 'neutral',
   name: 'Neutral',
   description: 'Neutral gray theme with minimal aesthetic',
-  
+
   root: {
     backgroundColor: '#e5e7eb', // gray-200
     color: '#000000', // black
     fontFamily: 'Arial, Helvetica, sans-serif',
   },
-  
+
   components: {
     header: {
       borderColor: '#6b7280', // gray-500 (same as other themes)
@@ -45,4 +45,3 @@ export const neutralTheme: Theme = {
     },
   },
 }
-

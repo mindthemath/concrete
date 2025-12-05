@@ -1,6 +1,6 @@
 /**
  * Theme system types and interfaces
- * 
+ *
  * Themes will define complete styling for the application,
  * including colors, typography, spacing, and component styles.
  */
@@ -11,7 +11,7 @@ export interface Theme {
   id: ThemeId
   name: string
   description: string
-  
+
   // Root-level styles
   root: {
     backgroundColor: string
@@ -19,7 +19,7 @@ export interface Theme {
     color: string
     fontFamily?: string
   }
-  
+
   // Component styles
   components: {
     header: {
@@ -64,7 +64,7 @@ export interface Theme {
       textColor: string
     }
   }
-  
+
   // Utility classes that will be applied via CSS variables or classes
   classes?: Record<string, string>
 }

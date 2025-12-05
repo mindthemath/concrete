@@ -11,6 +11,7 @@ build:
 	./bin/bun run build
 
 lint:
+	./bin/bun run format
 	./bin/bun run lint
 
 docker-build:

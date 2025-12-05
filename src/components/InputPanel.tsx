@@ -52,7 +52,7 @@ const InputPanel: React.FC<InputPanelProps> = ({ regions, onSubmit, loading }) =
   const customMortarCount = customMortars.length
 
   useEffect(() => {
-    if (regions.length > 0 && !regions.some((region) => region.id === regionId)) {
+    if (regions.length > 0 && !regions.some(region => region.id === regionId)) {
       setRegionId(regions[0].id)
     }
   }, [regions, regionId])
@@ -133,7 +133,7 @@ const InputPanel: React.FC<InputPanelProps> = ({ regions, onSubmit, loading }) =
               index
             ),
             poissons_ratio: parseNumericField(
-              'Poisson\'s ratio',
+              "Poisson's ratio",
               mortar.properties.poissons_ratio,
               index
             ),
@@ -146,11 +146,7 @@ const InputPanel: React.FC<InputPanelProps> = ({ regions, onSubmit, loading }) =
               index
             ),
             manufacturer: requireTextField('Manufacturer', mortar.meta.manufacturer, index),
-            cost_per_pound: parseNumericField(
-              'Cost per pound',
-              mortar.meta.cost_per_pound,
-              index
-            ),
+            cost_per_pound: parseNumericField('Cost per pound', mortar.meta.cost_per_pound, index),
           },
         }))
       } catch (err) {
@@ -180,7 +176,7 @@ const InputPanel: React.FC<InputPanelProps> = ({ regions, onSubmit, loading }) =
     field: 'name' | 'description',
     value: string
   ) => {
-    setCustomMortars((prev) =>
+    setCustomMortars(prev =>
       prev.map((mortar, i) => (i === index ? { ...mortar, [field]: value } : mortar))
     )
   }
@@ -190,7 +186,7 @@ const InputPanel: React.FC<InputPanelProps> = ({ regions, onSubmit, loading }) =
     property: keyof CustomMortar['properties'],
     value: string
   ) => {
-    setCustomMortars((prev) =>
+    setCustomMortars(prev =>
       prev.map((mortar, i) =>
         i === index
           ? { ...mortar, properties: { ...mortar.properties, [property]: value } }
@@ -204,7 +200,7 @@ const InputPanel: React.FC<InputPanelProps> = ({ regions, onSubmit, loading }) =
     metaField: keyof CustomMortar['meta'],
     value: string
   ) => {
-    setCustomMortars((prev) =>
+    setCustomMortars(prev =>
       prev.map((mortar, i) =>
         i === index ? { ...mortar, meta: { ...mortar.meta, [metaField]: value } } : mortar
       )
@@ -212,15 +208,22 @@ const InputPanel: React.FC<InputPanelProps> = ({ regions, onSubmit, loading }) =
   }
 
   const handleAddCustomMortar = () => {
-    setCustomMortars((prev) => [...prev, createEmptyCustomMortar()])
+    setCustomMortars(prev => [...prev, createEmptyCustomMortar()])
   }
 
   const handleRemoveCustomMortar = (key: string) => {
-    setCustomMortars((prev) => prev.filter((mortar) => mortar.key !== key))
+    setCustomMortars(prev => prev.filter(mortar => mortar.key !== key))
   }
 
   return (
-    <section className="border p-4" style={{ borderColor: 'var(--theme-panel-border)', backgroundColor: 'var(--theme-panel-bg)', color: 'var(--theme-panel-text)' }}>
+    <section
+      className="border p-4"
+      style={{
+        borderColor: 'var(--theme-panel-border)',
+        backgroundColor: 'var(--theme-panel-bg)',
+        color: 'var(--theme-panel-text)',
+      }}
+    >
       <h2 className="text-xl mb-4">Input Parameters</h2>
       <form onSubmit={handleSubmit} className="space-y-6">
         <div className="space-y-2">
@@ -228,7 +231,7 @@ const InputPanel: React.FC<InputPanelProps> = ({ regions, onSubmit, loading }) =
           <input
             type="number"
             value={desiredStrength}
-            onChange={(e) => setDesiredStrength(e.target.value)}
+            onChange={e => setDesiredStrength(e.target.value)}
             min="10"
             max="100"
             step="0.1"
@@ -247,7 +250,7 @@ const InputPanel: React.FC<InputPanelProps> = ({ regions, onSubmit, loading }) =
             <label className="block text-sm">Mortar Selection</label>
             <select
               value={mortarMode}
-              onChange={(e) => handleMortarModeChange(e.target.value as MortarMode)}
+              onChange={e => handleMortarModeChange(e.target.value as MortarMode)}
               className="basic-input"
               disabled={loading}
             >
@@ -263,31 +266,52 @@ const InputPanel: React.FC<InputPanelProps> = ({ regions, onSubmit, loading }) =
             <label className="block text-sm">Region Selection</label>
             <select
               value={regionId}
-              onChange={(e) => setRegionId(e.target.value)}
+              onChange={e => setRegionId(e.target.value)}
               className="basic-input"
               required
               disabled={loading}
             >
-              {regions.map((region) => (
+              {regions.map(region => (
                 <option key={region.id} value={region.id}>
                   {region.name}
                 </option>
               ))}
             </select>
-            <div className="text-xs" style={{ color: 'var(--theme-panel-text)', opacity: 0.7 }}>Regional rock availability database</div>
+            <div className="text-xs" style={{ color: 'var(--theme-panel-text)', opacity: 0.7 }}>
+              Regional rock availability database
+            </div>
           </div>
         </div>
 
         {mortarMode === 'custom' && (
-          <div className="space-y-4 border p-4" style={{ borderColor: 'var(--theme-panel-border)', backgroundColor: 'var(--theme-panel-bg)', opacity: 0.95 }}>
+          <div
+            className="space-y-4 border p-4"
+            style={{
+              borderColor: 'var(--theme-panel-border)',
+              backgroundColor: 'var(--theme-panel-bg)',
+              opacity: 0.95,
+            }}
+          >
             <p className="text-sm" style={{ color: 'var(--theme-panel-text)' }}>
               Provide properties for each mortar formulation to include in the analysis.
             </p>
 
             {customMortars.map((mortar, index) => (
-              <div key={mortar.key} className="space-y-4 border p-4" style={{ borderColor: 'var(--theme-panel-border)', backgroundColor: 'var(--theme-panel-bg)' }}>
+              <div
+                key={mortar.key}
+                className="space-y-4 border p-4"
+                style={{
+                  borderColor: 'var(--theme-panel-border)',
+                  backgroundColor: 'var(--theme-panel-bg)',
+                }}
+              >
                 <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-2">
-                  <h3 className="text-base font-medium" style={{ color: 'var(--theme-panel-text)' }}>Custom Mortar {index + 1}</h3>
+                  <h3
+                    className="text-base font-medium"
+                    style={{ color: 'var(--theme-panel-text)' }}
+                  >
+                    Custom Mortar {index + 1}
+                  </h3>
                   {customMortarCount > 1 && (
                     <button
                       type="button"
@@ -306,7 +330,7 @@ const InputPanel: React.FC<InputPanelProps> = ({ regions, onSubmit, loading }) =
                     <input
                       type="text"
                       value={mortar.name}
-                      onChange={(e) => handleCustomMortarFieldChange(index, 'name', e.target.value)}
+                      onChange={e => handleCustomMortarFieldChange(index, 'name', e.target.value)}
                       className="basic-input"
                       placeholder="e.g., Custom Blend A"
                       disabled={loading}
@@ -317,7 +341,7 @@ const InputPanel: React.FC<InputPanelProps> = ({ regions, onSubmit, loading }) =
                     <input
                       type="text"
                       value={mortar.meta.manufacturer}
-                      onChange={(e) =>
+                      onChange={e =>
                         handleCustomMortarMetaChange(index, 'manufacturer', e.target.value)
                       }
                       className="basic-input"
@@ -330,7 +354,7 @@ const InputPanel: React.FC<InputPanelProps> = ({ regions, onSubmit, loading }) =
                     <input
                       type="text"
                       value={mortar.meta.product_name_long}
-                      onChange={(e) =>
+                      onChange={e =>
                         handleCustomMortarMetaChange(index, 'product_name_long', e.target.value)
                       }
                       className="basic-input"
@@ -343,7 +367,7 @@ const InputPanel: React.FC<InputPanelProps> = ({ regions, onSubmit, loading }) =
                     <input
                       type="number"
                       value={mortar.meta.gwp}
-                      onChange={(e) => handleCustomMortarMetaChange(index, 'gwp', e.target.value)}
+                      onChange={e => handleCustomMortarMetaChange(index, 'gwp', e.target.value)}
                       className="basic-input"
                       min="0"
                       step="0.01"
@@ -357,7 +381,9 @@ const InputPanel: React.FC<InputPanelProps> = ({ regions, onSubmit, loading }) =
                   <label className="block text-sm">Product Description</label>
                   <textarea
                     value={mortar.description}
-                    onChange={(e) => handleCustomMortarFieldChange(index, 'description', e.target.value)}
+                    onChange={e =>
+                      handleCustomMortarFieldChange(index, 'description', e.target.value)
+                    }
                     className="basic-input min-h-[80px]"
                     placeholder="Notes on curing time, setting behavior, etc."
                     disabled={loading}
@@ -365,15 +391,26 @@ const InputPanel: React.FC<InputPanelProps> = ({ regions, onSubmit, loading }) =
                 </div>
 
                 <div>
-                  <h4 className="text-sm font-medium" style={{ color: 'var(--theme-panel-text)' }}>Mechanical Properties</h4>
+                  <h4 className="text-sm font-medium" style={{ color: 'var(--theme-panel-text)' }}>
+                    Mechanical Properties
+                  </h4>
                   <div className="mt-2 grid grid-cols-1 md:grid-cols-3 gap-3">
                     <div>
-                      <label className="block text-xs" style={{ color: 'var(--theme-panel-text)', opacity: 0.8 }}>Splitting Strength (MPa)</label>
+                      <label
+                        className="block text-xs"
+                        style={{ color: 'var(--theme-panel-text)', opacity: 0.8 }}
+                      >
+                        Splitting Strength (MPa)
+                      </label>
                       <input
                         type="number"
                         value={mortar.properties.splitting_strength_mpa}
-                        onChange={(e) =>
-                          handleCustomMortarPropertyChange(index, 'splitting_strength_mpa', e.target.value)
+                        onChange={e =>
+                          handleCustomMortarPropertyChange(
+                            index,
+                            'splitting_strength_mpa',
+                            e.target.value
+                          )
                         }
                         className="basic-input"
                         min="0"
@@ -382,12 +419,21 @@ const InputPanel: React.FC<InputPanelProps> = ({ regions, onSubmit, loading }) =
                       />
                     </div>
                     <div>
-                      <label className="block text-xs" style={{ color: 'var(--theme-panel-text)', opacity: 0.8 }}>Shrinkage (in)</label>
+                      <label
+                        className="block text-xs"
+                        style={{ color: 'var(--theme-panel-text)', opacity: 0.8 }}
+                      >
+                        Shrinkage (in)
+                      </label>
                       <input
                         type="number"
                         value={mortar.properties.shrinkage_inches}
-                        onChange={(e) =>
-                          handleCustomMortarPropertyChange(index, 'shrinkage_inches', e.target.value)
+                        onChange={e =>
+                          handleCustomMortarPropertyChange(
+                            index,
+                            'shrinkage_inches',
+                            e.target.value
+                          )
                         }
                         className="basic-input"
                         min="0"
@@ -396,12 +442,21 @@ const InputPanel: React.FC<InputPanelProps> = ({ regions, onSubmit, loading }) =
                       />
                     </div>
                     <div>
-                      <label className="block text-xs" style={{ color: 'var(--theme-panel-text)', opacity: 0.8 }}>Flexural Strength (MPa)</label>
+                      <label
+                        className="block text-xs"
+                        style={{ color: 'var(--theme-panel-text)', opacity: 0.8 }}
+                      >
+                        Flexural Strength (MPa)
+                      </label>
                       <input
                         type="number"
                         value={mortar.properties.flexural_strength_mpa}
-                        onChange={(e) =>
-                          handleCustomMortarPropertyChange(index, 'flexural_strength_mpa', e.target.value)
+                        onChange={e =>
+                          handleCustomMortarPropertyChange(
+                            index,
+                            'flexural_strength_mpa',
+                            e.target.value
+                          )
                         }
                         className="basic-input"
                         min="0"
@@ -410,11 +465,16 @@ const InputPanel: React.FC<InputPanelProps> = ({ regions, onSubmit, loading }) =
                       />
                     </div>
                     <div>
-                      <label className="block text-xs" style={{ color: 'var(--theme-panel-text)', opacity: 0.8 }}>Slump (in)</label>
+                      <label
+                        className="block text-xs"
+                        style={{ color: 'var(--theme-panel-text)', opacity: 0.8 }}
+                      >
+                        Slump (in)
+                      </label>
                       <input
                         type="number"
                         value={mortar.properties.slump_inches}
-                        onChange={(e) =>
+                        onChange={e =>
                           handleCustomMortarPropertyChange(index, 'slump_inches', e.target.value)
                         }
                         className="basic-input"
@@ -424,12 +484,21 @@ const InputPanel: React.FC<InputPanelProps> = ({ regions, onSubmit, loading }) =
                       />
                     </div>
                     <div>
-                      <label className="block text-xs" style={{ color: 'var(--theme-panel-text)', opacity: 0.8 }}>Compressive Strength (MPa)</label>
+                      <label
+                        className="block text-xs"
+                        style={{ color: 'var(--theme-panel-text)', opacity: 0.8 }}
+                      >
+                        Compressive Strength (MPa)
+                      </label>
                       <input
                         type="number"
                         value={mortar.properties.compressive_strength_mpa}
-                        onChange={(e) =>
-                          handleCustomMortarPropertyChange(index, 'compressive_strength_mpa', e.target.value)
+                        onChange={e =>
+                          handleCustomMortarPropertyChange(
+                            index,
+                            'compressive_strength_mpa',
+                            e.target.value
+                          )
                         }
                         className="basic-input"
                         min="0"
@@ -438,11 +507,16 @@ const InputPanel: React.FC<InputPanelProps> = ({ regions, onSubmit, loading }) =
                       />
                     </div>
                     <div>
-                      <label className="block text-xs" style={{ color: 'var(--theme-panel-text)', opacity: 0.8 }}>Poisson&apos;s Ratio</label>
+                      <label
+                        className="block text-xs"
+                        style={{ color: 'var(--theme-panel-text)', opacity: 0.8 }}
+                      >
+                        Poisson&apos;s Ratio
+                      </label>
                       <input
                         type="number"
                         value={mortar.properties.poissons_ratio}
-                        onChange={(e) =>
+                        onChange={e =>
                           handleCustomMortarPropertyChange(index, 'poissons_ratio', e.target.value)
                         }
                         className="basic-input"
@@ -461,7 +535,7 @@ const InputPanel: React.FC<InputPanelProps> = ({ regions, onSubmit, loading }) =
                     <input
                       type="number"
                       value={mortar.meta.cost_per_pound}
-                      onChange={(e) =>
+                      onChange={e =>
                         handleCustomMortarMetaChange(index, 'cost_per_pound', e.target.value)
                       }
                       className="basic-input"
@@ -486,7 +560,10 @@ const InputPanel: React.FC<InputPanelProps> = ({ regions, onSubmit, loading }) =
         )}
 
         {validationError && (
-          <div className="border border-red-500 bg-red-50 text-sm text-red-700 px-3 py-2" style={{ borderColor: '#ef4444', backgroundColor: '#fef2f2', color: '#991b1b' }}>
+          <div
+            className="border border-red-500 bg-red-50 text-sm text-red-700 px-3 py-2"
+            style={{ borderColor: '#ef4444', backgroundColor: '#fef2f2', color: '#991b1b' }}
+          >
             {validationError}
           </div>
         )}
@@ -521,7 +598,14 @@ const InputPanel: React.FC<InputPanelProps> = ({ regions, onSubmit, loading }) =
               'Analyze Optimal Mix Design'
             )}
           </button>
-          <div className="text-center text-xs pt-2 border-t" style={{ color: 'var(--theme-panel-text)', opacity: 0.7, borderColor: 'var(--theme-panel-border)' }}>
+          <div
+            className="text-center text-xs pt-2 border-t"
+            style={{
+              color: 'var(--theme-panel-text)',
+              opacity: 0.7,
+              borderColor: 'var(--theme-panel-border)',
+            }}
+          >
             <p>Model will evaluate rocks available in the region against strength requirements</p>
           </div>
         </div>
