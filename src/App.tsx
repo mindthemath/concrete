@@ -31,8 +31,8 @@ const SAMPLE_REGIONS: Region[] = Object.keys(regionData).map(key => ({
 }))
 
 // Environment variables with Vite prefix
+// Note: API_KEY is not used in production - backend is protected via CORS restrictions
 const API_ENDPOINT = import.meta.env.VITE_API_ENDPOINT || 'http://localhost:9600/predict'
-const API_KEY = import.meta.env.VITE_API_KEY || ''
 const API_TIMEOUT = Number(import.meta.env.VITE_API_TIMEOUT) || 5000 // Default 5 seconds
 
 function App() {
@@ -60,11 +60,9 @@ function App() {
       const headers: HeadersInit = {
         'Content-Type': 'application/json',
       }
-
-      // Add Authorization header if API_KEY is provided
-      if (API_KEY) {
-        headers['Authorization'] = `Bearer ${API_KEY}`
-      }
+      
+      // Note: API keys are not secure in static apps, so we rely on CORS restrictions
+      // on the backend instead. For local development, you can add auth if needed.
 
       // Create AbortController for timeout
       const controller = new AbortController()
@@ -114,13 +112,13 @@ function App() {
         setError(errorMessage)
 
         // Fallback to mock results for development
-        const mocked: ApiResponse = mockResults(
-          formData.desiredStrength,
-          formData.regionId,
-          formData.mortarMode,
-          formData.customMortars
-        )
-        setResult(mocked)
+      const mocked: ApiResponse = mockResults(
+        formData.desiredStrength,
+        formData.regionId,
+        formData.mortarMode,
+        formData.customMortars
+      )
+      setResult(mocked)
       }
     } finally {
       setLoading(false)
@@ -169,9 +167,9 @@ function App() {
           style={{ borderBottom: '1px solid var(--theme-header-border)' }}
         >
           <div className="flex items-center justify-between">
-            <h1
-              className="text-2xl font-normal tracking-normal relative inline-block px-4 py-2"
-              style={{
+            <h1 
+              className="text-2xl font-normal tracking-normal relative inline-block px-4 py-2" 
+              style={{ 
                 color: 'var(--theme-header-title)',
                 backgroundColor:
                   themeId === 'notebook'
@@ -256,7 +254,7 @@ function App() {
             color: 'var(--theme-footer-text)',
           }}
         >
-          <div
+          <div 
             className="inline-block px-4 py-2"
             style={{
               backgroundColor:
