@@ -1,8 +1,8 @@
 dev:
-	uv run python run_gp.py
+	uv run  --extra train --extra cpu python run_gp.py
 
 debug:
-	uv run python -i debug_ckpt.py
+	uv run --extra train --extra cpu python -i debug_ckpt.py
 
 lint:
 	uvx black .
@@ -13,3 +13,6 @@ clean:
 
 mock:
 	uv run mock_data.py
+
+prep:
+	uv run --extra cpu --with onnxruntime --with onnxscript python prep_nn_ckpt.py

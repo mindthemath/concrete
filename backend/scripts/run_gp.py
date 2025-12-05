@@ -16,7 +16,7 @@ parser = argparse.ArgumentParser()
 parser.add_argument("--model", type=str, default="nn", choices=["gp", "nn"])
 args = parser.parse_args()
 
-df = load_df("../../data")
+df = load_df("../../frontend/data")
 dl_train, dl_val, df_proc, sx, sy, _, idx_val = make_dataloaders_with_split(
     df, val_size=0.2, seed=42
 )

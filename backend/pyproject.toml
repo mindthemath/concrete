@@ -10,6 +10,7 @@ dependencies = [
 
 [dependency-groups]
 dev = [
+    "joblib>=1.5.2",
     "matplotlib>=3.9.4",
     "pandas>=2.3.3",
 ]
@@ -24,6 +25,7 @@ cu128 = [
 ]
 api = [
     "litserve>=0.2.16",
+    "onnxruntime>=1.20.1",
     "slowapi>=0.1.9",
 ]
 train = [
