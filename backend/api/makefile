@@ -13,5 +13,4 @@ build: run
 	docker build -t mindthemath/concrete-api .
 
 run:
-	docker run --rm -p 9600:9600 mindthemath/concrete-api
-
+	docker run --rm -p 9600:9600 --name concrete-api mindthemath/concrete-api
