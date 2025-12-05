@@ -94,10 +94,22 @@ function App() {
         mocked: false,
       })
     } catch (err) {
-      // For timeout errors, just show mock results without error message
-      // For other errors, show error but still provide mock results as fallback
-      if (err instanceof Error && err.name === 'AbortError') {
-        // Timeout: silently fallback to mock results
+      // For timeout and network errors, silently fallback to mock results
+      // Only show errors for actual API errors (4xx/5xx responses)
+      const isTimeout = err instanceof Error && err.name === 'AbortError'
+      // Network errors (DNS failures, connection refused, etc.) typically throw TypeError
+      // with messages like "Failed to fetch" or are DOMException instances
+      const isNetworkError =
+        err instanceof TypeError ||
+        (err instanceof DOMException && err.name !== 'AbortError') ||
+        (err instanceof Error &&
+          (err.message.includes('Failed to fetch') ||
+            err.message.includes('fetch') ||
+            err.message.includes('network') ||
+            err.message.includes('ERR_')))
+
+      if (isTimeout || isNetworkError) {
+        // Timeout or network error: silently fallback to mock results
         const mocked: ApiResponse = mockResults(
           formData.desiredStrength,
           formData.regionId,
@@ -107,7 +119,7 @@ function App() {
         setResult(mocked)
         setError(null) // Clear any previous errors
       } else {
-        // Other errors: show error message but still provide mock results
+        // Other errors (like API 4xx/5xx): show error message but still provide mock results
         const errorMessage = err instanceof Error ? err.message : 'Unknown error occurred'
         setError(errorMessage)
 
