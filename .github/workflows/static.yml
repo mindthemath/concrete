@@ -21,9 +21,14 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4
 
+      - name: Setup Bun
+        uses: oven-sh/setup-bun@v1
+        with:
+          bun-version: 1.3.3
+
       - name: Install Dependencies
         working-directory: frontend
-        run: ./bin/bun install --frozen-lockfile
+        run: bun install --frozen-lockfile
 
       - name: Create .env file
         working-directory: frontend
@@ -35,7 +40,7 @@ jobs:
         working-directory: frontend
         run: |
           REPO_NAME=${GITHUB_REPOSITORY##*/}
-          ./bin/bun run build -- --base /${REPO_NAME}/
+          bun run build -- --base /${REPO_NAME}/
         env:
           STATIC_BUILD: true
           GITHUB_REPOSITORY: ${{ github.repository }}
