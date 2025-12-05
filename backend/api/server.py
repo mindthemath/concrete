@@ -19,15 +19,11 @@ LOG_LEVEL = os.environ.get("LOG_LEVEL", "INFO")
 NUM_API_SERVERS = int(os.environ.get("NUM_API_SERVERS", "1"))
 WORKERS_PER_DEVICE = int(os.environ.get("WORKERS_PER_DEVICE", "1"))
 
-# Resolve data directory: if not set, try relative to project root (two levels up from backend/api)
+# Resolve data directory: if not set, try relative to current directory
 if "DATA_DIR" in os.environ:
     DATA_DIR = os.environ.get("DATA_DIR")
 else:
-    # Default: assume we're in backend/api/ and data is at project root
-    # script_dir = Path(__file__).parent
-    # project_root = script_dir.parent.parent
-    # DATA_DIR = str(project_root / "data")
-    DATA_DIR = "./data"  # symlink?
+    DATA_DIR = "./data"  # can be symlink (dev) or real files (docker image - prod)
 
 logging.basicConfig(
     level=getattr(logging, LOG_LEVEL.upper()),
