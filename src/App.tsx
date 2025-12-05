@@ -30,6 +30,11 @@ const SAMPLE_REGIONS: Region[] = Object.keys(regionData).map((key) => ({
   name: (regionData as RegionData)[key].name,
 }))
 
+// Environment variables with Vite prefix
+const API_ENDPOINT = import.meta.env.VITE_API_ENDPOINT || 'http://localhost:9600/predict'
+const API_KEY = import.meta.env.VITE_API_KEY || ''
+const API_TIMEOUT = Number(import.meta.env.VITE_API_TIMEOUT) || 5000 // Default 5 seconds
+
 function App() {
   const { themeId, setTheme } = useTheme()
   const [result, setResult] = useState<ApiResponse | null>(null)
@@ -51,30 +56,36 @@ function App() {
     setCustomMortars(formData.customMortars)
 
     try {
-      // Replace with actual API endpoint
-      const response = await fetch('/api/predict', {
+      // Build headers
+      const headers: HeadersInit = {
+        'Content-Type': 'application/json',
+      }
+
+      // Add Authorization header if API_KEY is provided
+      if (API_KEY) {
+        headers['Authorization'] = `Bearer ${API_KEY}`
+      }
+
+      // Create AbortController for timeout
+      const controller = new AbortController()
+      const timeoutId = setTimeout(() => controller.abort(), API_TIMEOUT)
+
+      const response = await fetch(API_ENDPOINT, {
         method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
+        headers,
         body: JSON.stringify({
           desired_compressive_strength_mpa: formData.desiredStrength,
           region_id: formData.regionId,
-          mortar_mode: formData.mortarMode,
           custom_mortars: formData.customMortars,
         }),
+        signal: controller.signal,
       })
 
+      clearTimeout(timeoutId)
+
       if (!response.ok) {
-        // If API not available, produce a clearly-marked mock result
-        const mocked: ApiResponse = mockResults(
-          formData.desiredStrength,
-          formData.regionId,
-          formData.mortarMode,
-          formData.customMortars
-        )
-        setResult(mocked)
-        return
+        const errorText = await response.text()
+        throw new Error(`API request failed: ${response.status} ${response.statusText} - ${errorText}`)
       }
 
       const data: ApiResponse = await response.json()
@@ -82,16 +93,33 @@ function App() {
         ...data,
         mocked: false,
       })
-    } catch {
-      // Network/404: show a mock so we can see the flow
-      const mocked: ApiResponse = mockResults(
-        formData.desiredStrength,
-        formData.regionId,
-        formData.mortarMode,
-        formData.customMortars
-      )
-      setResult(mocked)
-      setError(null)
+    } catch (err) {
+      // For timeout errors, just show mock results without error message
+      // For other errors, show error but still provide mock results as fallback
+      if (err instanceof Error && err.name === 'AbortError') {
+        // Timeout: silently fallback to mock results
+        const mocked: ApiResponse = mockResults(
+          formData.desiredStrength,
+          formData.regionId,
+          formData.mortarMode,
+          formData.customMortars
+        )
+        setResult(mocked)
+        setError(null) // Clear any previous errors
+      } else {
+        // Other errors: show error message but still provide mock results
+        const errorMessage = err instanceof Error ? err.message : 'Unknown error occurred'
+        setError(errorMessage)
+
+        // Fallback to mock results for development
+        const mocked: ApiResponse = mockResults(
+          formData.desiredStrength,
+          formData.regionId,
+          formData.mortarMode,
+          formData.customMortars
+        )
+        setResult(mocked)
+      }
     } finally {
       setLoading(false)
     }
@@ -136,9 +164,9 @@ function App() {
       <div className="mx-auto px-4 py-6 max-w-[1100px]" style={{ color: 'var(--theme-text)' }}>
         <header className="mb-6 pb-3" style={{ borderBottom: '1px solid var(--theme-header-border)' }}>
           <div className="flex items-center justify-between">
-            <h1 
-              className="text-2xl font-normal tracking-normal relative inline-block px-4 py-2" 
-              style={{ 
+            <h1
+              className="text-2xl font-normal tracking-normal relative inline-block px-4 py-2"
+              style={{
                 color: 'var(--theme-header-title)',
                 backgroundColor: themeId === 'notebook' ? '#000000' : (themeId === 'construction' ? 'var(--theme-header-bg)' : 'transparent'),
                 border: themeId === 'notebook' ? '1px solid #ffffff' : (themeId === 'construction' ? '2px solid #000000' : 'none'),
@@ -202,7 +230,7 @@ function App() {
         </div>
 
         <footer className="mt-10 text-center text-sm pt-4" style={{ borderTop: '1px solid var(--theme-footer-border)', color: 'var(--theme-footer-text)' }}>
-          <div 
+          <div
             className="inline-block px-4 py-2"
             style={{
               backgroundColor: themeId === 'notebook' ? '#000000' : (themeId === 'construction' ? '#000000' : 'transparent'),
