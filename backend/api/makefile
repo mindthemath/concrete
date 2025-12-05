@@ -9,7 +9,7 @@ requirements.txt: ../pyproject.toml
 dev:
 	ENVIRONMENT=dev uv run --extra api --extra cpu python server.py
 
-build:
+build: run
 	docker build -t mindthemath/concrete-api .
 
 run:
