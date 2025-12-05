@@ -12,10 +12,10 @@ export const constructionTheme: Theme = {
   description: 'Industrial construction-themed design (Early 00s Style)',
   
   root: {
-    backgroundColor: '#a8a8a0', // Darker base for cinder block
+    backgroundColor: '#f9f6e8', // Creamier paper color
     // Background image handled via CSS class .theme-bg-construction
     color: '#1a1a1a',
-    fontFamily: '"Verdana", "Geneva", sans-serif',
+    fontFamily: '"Comic Sans MS", "Bradley Hand", cursive', // Handwritten feel
   },
   
   components: {
@@ -46,12 +46,12 @@ export const constructionTheme: Theme = {
       fontWeight: 'bold',
     },
     panel: {
-      backgroundColor: '#f0f0e8',
-      borderColor: '#aaaaaa',
+      backgroundColor: '#ffffff',
+      borderColor: '#e0e0e0',
       textColor: '#000000',
-      borderStyle: 'outset',
-      borderWidth: '2px',
-      shadow: '2px 2px 4px rgba(0,0,0,0.2)',
+      borderStyle: 'solid',
+      borderWidth: '1px',
+      shadow: '2px 2px 4px rgba(0,0,0,0.15)',
     },
     footer: {
       borderColor: '#555555',

@@ -15,22 +15,54 @@ body {
 
 /* Theme-specific background classes */
 .theme-bg-construction {
-  background-color: #a8a8a0;
+  background-color: #f9f6e8;
   background-image: 
+    /* Vertical grid lines */
     repeating-linear-gradient(
       90deg,
       transparent,
-      transparent 49px,
-      rgba(0,0,0,0.1) 50px
+      transparent 19px,
+      rgba(173, 216, 230, 0.3) 19px,
+      rgba(173, 216, 230, 0.3) 20px
     ),
+    /* Horizontal grid lines */
     repeating-linear-gradient(
       0deg,
       transparent,
-      transparent 24px,
-      rgba(0,0,0,0.1) 25px
+      transparent 19px,
+      rgba(173, 216, 230, 0.3) 19px,
+      rgba(173, 216, 230, 0.3) 20px
+    );
+}
+
+/* Notebook paper style panels for Construction theme */
+.theme-panel-construction {
+  background-color: #ffffff !important;
+  background-image: 
+    /* Red margin line aligned with green metadata line */
+    linear-gradient(
+      90deg,
+      transparent 0,
+      transparent 10px,
+      #d6787d 10px,
+      #d6787d 12px,
+      transparent 12px
     ),
-    radial-gradient(circle at 50% 50%, rgba(255,255,255,0.1) 1px, transparent 1px),
-    radial-gradient(circle at 20% 20%, rgba(0,0,0,0.1) 1px, transparent 1px);
+    /* Horizontal ruled lines - aligned with table rows */
+    repeating-linear-gradient(
+      0deg,
+      transparent,
+      transparent 28px,
+      rgba(173, 216, 230, 0.5) 28px,
+      rgba(173, 216, 230, 0.5) 29px
+    );
+  background-position: 0 0, 0 9px;
+  box-shadow: 
+    2px 2px 4px rgba(0,0,0,0.15),
+    inset 0 0 0 1px rgba(0,0,0,0.05) !important;
+  border: 1px solid #e0e0e0 !important;
+  border-style: solid !important;
+  position: relative;
 }
 
 #root {
