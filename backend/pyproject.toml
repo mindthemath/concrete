@@ -3,16 +3,16 @@ name = "concrete-strong"
 version = "0.0.1"
 description = "Concrete Strength Simulation"
 readme = "README.md"
-requires-python = ">=3.9"
+requires-python = ">=3.10"
 dependencies = [
-    "numpy>=2.0.2",
+    "numpy>=2.0.2,<3.0",
 ]
 
 [dependency-groups]
 dev = [
-    "joblib>=1.5.2",
-    "matplotlib>=3.9.4",
-    "pandas>=2.3.3",
+    "joblib>=1.5.2,<1.8",
+    "matplotlib>=3.9.4,<4.0",
+    "pandas>=2.3.3,<3.0",
 ]
 
 
@@ -24,14 +24,14 @@ cu128 = [
     "torch>=2.7.0,<3.0",
 ]
 api = [
-    "litserve>=0.2.16",
-    "onnxruntime>=1.20.1",
-    "slowapi>=0.1.9",
+    "litserve~=0.2.16",
+    "onnxruntime~=1.23.1",
+    "slowapi~=0.1.9",
 ]
 train = [
-    "gpytorch>=1.13",
-    "lightning>=2.5.5",
-    "pytorch-lightning>=2.5.5",
+    "gpytorch~=1.13",
+    "lightning~=2.6.0",
+    "pytorch-lightning~=2.6.0",
 ]
 
 [tool.uv]
