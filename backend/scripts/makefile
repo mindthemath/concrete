@@ -12,12 +12,12 @@ lint:
 	uvx isort --profile black .
 
 clean:
-	rm -rf checkpoints __pycache__ lightning_logs best_ckpt_path.txt
+	rm -rf checkpoints __pycache__ lightning_logs best_ckpt_path.txt *.onnx *.onnx.data
 
 mock:
 	uv run mock_data.py
 
-physics_nn.onnx: prep_nn_ckpt.py train_nn
+physics_nn.onnx: prep_nn_ckpt.py
 	uv run --extra cpu --with onnxruntime --with onnxscript python prep_nn_ckpt.py
 
 physics_gp.onnx: prep_gp_ckpt.py
