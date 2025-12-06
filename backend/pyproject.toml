@@ -18,10 +18,10 @@ dev = [
 
 [project.optional-dependencies]
 cpu = [
-    "torch>=2.7.0",
+    "torch>=2.7.0,<3.0",
 ]
 cu128 = [
-    "torch>=2.7.0",
+    "torch>=2.7.0,<3.0",
 ]
 api = [
     "litserve>=0.2.16",
