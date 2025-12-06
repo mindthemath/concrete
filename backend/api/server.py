@@ -156,15 +156,25 @@ class ConcretePredictionAPI(ls.LitAPI):
 
         available_rocks = region.get("available_rocks", [])
         if not available_rocks:
+            logger.warning(f"No available rocks for region {region_id}, defaulting to all rocks")
             available_rocks = list(self.data["rocks"].keys())
 
+        # if custom mortars are provided, we nede to simulate these using the model for the available rocks, and rock ratio in [0.4, 0.6]
+        simulations = []
+        if custom_mortars:
+            simulations = self.simulate_custom_mortars(custom_mortars, available_rocks)
+
+        # print(custom_mortars, available_rocks)
         # Filter concrete.json experimental samples that meet the strength requirements
-        predictions = filter_concrete_samples(
+        filtered_samples = filter_concrete_samples(
             region_id=region_id,
             desired_strength=desired_strength,
             available_rocks=available_rocks,
             concrete_data=self.data["concrete"],
         )
+
+        # combine filtered experiments and simulations
+        predictions = filtered_samples + simulations
 
         # Determine status based on results
         if not predictions:
@@ -178,6 +188,15 @@ class ConcretePredictionAPI(ls.LitAPI):
             "mocked": False,  # frontend displays this
         }
 
+    def simulate_custom_mortars(self, custom_mortars: List[CustomMortar|dict], available_rocks: List[str]) -> List[Dict[str, Any]]:
+        available_rock_info = {rock_id: self.data["rocks"].get(rock_id) for rock_id in available_rocks}
+        all_mortars = self.data["mortars"]
+
+        print(available_rock_info)
+        print(f"Number of custom mortars: {len(custom_mortars)}")
+        print(custom_mortars)
+        print(f"Type of all mortars: {type(all_mortars)}")
+        return []
 
 if __name__ == "__main__":
     api = ConcretePredictionAPI(max_batch_size=1, api_path="/predict")
