@@ -316,14 +316,14 @@ with torch.no_grad():
     print(f"  max |Δmean|:     {mean_diff.max().item():.6e}")
     print(f"  mean |Δmean|:    {mean_diff.mean().item():.6e}")
 
-dummy_input = torch.randn(1, train_x.shape[1])
+sample_input = torch.randn(1, train_x.shape[1])
 
 print(f"\nExporting model to ONNX format...")
 # Note: gpytorch models are dynamic by default but we can export the mean calculation.
 # Use the legacy (non-dynamo) exporter to avoid torch.export / FakeTensor
 torch.onnx.export(
     onnx_model,
-    dummy_input,
+    sample_input,
     onnx_path,
     export_params=True,
     opset_version=14,

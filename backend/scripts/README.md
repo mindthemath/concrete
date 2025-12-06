@@ -304,7 +304,7 @@ This module is small, deterministic, and uses only standard tensor operations, m
 - **Export**:
   - Uses `torch.onnx.export` with:
     - `model = onnx_model` (the `GPOnnxWrapper`),
-    - `dummy_input = torch.randn(1, input_dim)`,
+    - `sample_input = torch.randn(1, input_dim)`,
     - `opset_version=14`,
     - Dynamic batch dimension on input and output,
     - `dynamo=False` to force the legacy TorchScript-based ONNX exporter (avoids `torch.export` constraints).

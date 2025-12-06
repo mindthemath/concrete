@@ -210,12 +210,12 @@ print("=" * 80)
 
 # Export model to ONNX
 onnx_path = "physics_nn.onnx"
-dummy_input = torch.randn(1, input_dim)
+sample_input = torch.randn(1, input_dim)
 
 print(f"\nExporting model to ONNX format...")
 torch.onnx.export(
     vanilla_model,
-    dummy_input,
+    sample_input,
     onnx_path,
     export_params=True,
     opset_version=14,
@@ -226,6 +226,7 @@ torch.onnx.export(
         "input": {0: "batch_size"},
         "output": {0: "batch_size"},
     },
+    dynamo=True,
 )
 print(f"✓ Model exported to {onnx_path}")
 
