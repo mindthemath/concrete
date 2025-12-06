@@ -234,7 +234,7 @@ Exact GPs have internal state beyond standard module parameters (e.g. prediction
 
 ---
 
-## GP ONNX export (`prep_gp_ckpt.py`)
+## GP ONNX export (mean-only, `prep_gp_ckpt.py`)
 
 The GP export is more complex than the NN case due to GPyTorch’s lazy operators and data‑dependent control flow. The script implements a **two‑stage approach**:
 
@@ -335,11 +335,11 @@ This module is small, deterministic, and uses only standard tensor operations, m
     - Inverse‑transforming with `scaler_y`,
     - Adding the physics baseline to get final compressive strength.
 
-### GP ONNX caveats and guarantees
+### GP ONNX caveats and guarantees (mean-only export)
 
 - **Only the mean is exported**:
-  - The ONNX model returns only the **predictive mean of the residual** in scaled space.
-  - Predictive variances / covariances are not exported.
+  - The `physics_gp.onnx` model returns only the **predictive mean of the residual** in scaled space.
+  - Predictive variances / covariances are not exported; use the covariance-aware export (below) if you need uncertainties at inference time.
 
 - **Exact mean, approximate internals**:
   - While the runtime graph is a hand‑written kernel, it is parameterized directly by:
@@ -350,6 +350,124 @@ This module is small, deterministic, and uses only standard tensor operations, m
 - **Runtime dependencies**:
   - **Export-time**: requires PyTorch, GPyTorch, and `linear_operator` to rebuild the trained GP and compute `alpha`.
   - **Inference-time**: only requires `onnxruntime` and the scalers (`scaler_x`, `scaler_y`) on the host side; the ONNX graph itself contains only vanilla tensor operations.
+
+---
+
+## GP ONNX export with covariance (`prep_gp_cov_ckpt.py`)
+
+In some deployments you may want **uncertainty estimates** (per-sample variances) from the GP at inference time, and are willing to pay a modest runtime overhead. For this, there is an alternative export path:
+
+- Script: `prep_gp_cov_ckpt.py`
+- Output model: `physics_gp_cov.onnx`
+- ONNX outputs:
+  - `mean`: predictive mean of the residual in **scaled** space, shape `(batch, 1)`
+  - `variance`: predictive **observation variance** (including noise) in **scaled** space, shape `(batch, 1)`
+
+### How the covariance-aware wrapper works
+
+The script shares most of the reconstruction logic with `prep_gp_ckpt.py` (same `ExactResidualGP`, same `train_x`, `train_y`, same kernel parameters), but `GPOnnxWrapper` is extended:
+
+- **Constructor**:
+  - As before, it:
+    - Stores `train_x` as a buffer.
+    - Extracts ARD lengthscales, outputscale, and noise from the trained GPyTorch model.
+    - Builds the dense training covariance:
+      - `K_xx = gp.covar_module(train_x, train_x).evaluate().float()`
+    - Forms:
+      - `K_xx_noisy = K_xx + (noise + 1e-6) * I`
+      - `K_inv = (K_xx_noisy)^{-1}` (stored as a buffer)
+    - Computes:
+      - `alpha = K_inv @ train_y` and stores it as a buffer.
+
+- **Kernel**:
+  - Uses the same pure-tensor `_matern52_kernel` as the mean-only export, matching GPyTorch’s `MaternKernel` numerically.
+
+- **Forward**:
+  - Given scaled inputs `x`:
+    - Computes `K_xs = k(train_x, x)` via `_matern52_kernel`.
+    - Computes the mean:
+
+      $$
+      \mu(x_*) = K_{xs}^\top \alpha
+      $$
+
+      and returns it as a `(batch, 1)` tensor.
+
+    - Computes the **diagonal predictive covariance of the latent function**:
+
+      $$
+      \operatorname{cov}(f_*) = k_{ss} - K_{xs}^\top K_\text{inv} K_{xs}
+      $$
+
+      where:
+      - $k_{ss}$ is the prior variance at each test point (for Matern‑5/2, this is the learned outputscale),
+      - $K_\text{inv}$ is `(K_xx + noise * I)^{-1}`.
+
+    - Converts that into **observation variance** by adding the learned noise:
+
+      $$
+      \operatorname{var}(y_*) = \operatorname{cov}(f_*) + \sigma_n^2
+      $$
+
+    - Clamps the variance to be non-negative and returns it as a `(batch, 1)` tensor named `variance`.
+
+### Validation of mean and covariance
+
+`prep_gp_cov_ckpt.py` performs several checks:
+
+- **Kernel diagnostics**:
+  - As in the mean-only export, it compares `gp.covar_module(train_x, input_tensor)` vs `_matern52_kernel(train_x, input_tensor)` to ensure the hand-written kernel matches GPyTorch’s kernel numerically.
+
+- **Mean diagnostics (PyTorch-side)**:
+  - Compares the wrapper’s mean (PyTorch) vs `likelihood(gp(input_tensor)).mean` in scaled space, reporting max and mean absolute differences.
+
+- **ONNX vs GPyTorch (mean and std)**:
+  - Loads `physics_gp_cov.onnx` with `onnxruntime`.
+  - Runs the same scaled test inputs and gets:
+    - `mean` and `variance` from ONNX.
+  - Computes:
+    - `μ_pt`, `σ_pt` from GPyTorch’s `output_dist.mean` and `output_dist.variance` (scaled space),
+    - `μ_ox`, `σ_ox` from ONNX’s `mean` and `variance` (with `σ_ox = sqrt(max(variance, 0)))`.
+  - Prints a table for the test examples and reports:
+    - `max |Δμ|` and `max |Δσ|` in scaled space.
+  - The current implementation matches GPyTorch’s mean and std to within ~1e‑5 in scaled units.
+
+- **Performance benchmark**:
+  - Benchmarks 1000 iterations of:
+    - PyTorch `GPOnnxWrapper` (returning mean and var),
+    - ONNX Runtime (returning both outputs),
+  - Prints per-batch latencies and speedup. The covariance-aware model is slightly slower than the mean-only one, but still shows a ~3× ONNX speedup on the test batch.
+
+### Using the covariance output in production
+
+The `physics_gp_cov.onnx` model returns **scaled** mean and variance for the residual. To bring them back to original MPa units:
+
+- Let `s = scaler_y.scale_[0]` be the output scaling factor used during training.
+- If `μ_s` and `σ²_s` are the mean and variance in scaled space, the corresponding unscaled quantities are:
+
+$$
+\mu_\text{MPa} = \text{inverse\_transform}(\mu_s), \quad
+\sigma^2_\text{MPa} = s^2 \cdot \sigma^2_s.
+$$
+
+In practice:
+
+- You can continue to use `scaler_y.inverse_transform` to convert mean residuals from scaled space to MPa.
+- For variances ($\sigma^2_\text{MPa}$), multiply the ONNX `variance` output by `scaler_y.scale_[0] ** 2` to get variance in MPa², then take the square root if you prefer standard deviations.
+
+In all cases, the final strength prediction in MPa is:
+
+$$
+\text{final\_prediction} = \text{base\_physics\_prediction} + \mu_\text{MPa},
+$$
+
+and the uncertainty band (if desired) can be constructed as:
+
+$$
+\text{final\_prediction} \pm k \cdot \sigma_\text{MPa},
+$$
+
+for an appropriate choice of $k$ (e.g. 1, 1.96, 2, etc.).
 
 ---
 
@@ -369,6 +487,7 @@ This module is small, deterministic, and uses only standard tensor operations, m
   cd backend/scripts
   make train_gp        # trains PhysicsGPR, saves best checkpoint + best_ckpt_path.txt
   make prep_gp         # runs prep_gp_ckpt.py, exports physics_gp.onnx and verifies it
+  make prep_gp_cov     # runs prep_gp_cov_ckpt.py, exports physics_gp_cov.onnx (mean+variance) and verifies it
   ```
 
 - **Clean artifacts**:
@@ -378,11 +497,11 @@ This module is small, deterministic, and uses only standard tensor operations, m
   make clean           # removes checkpoints, logs, and best_ckpt_path.txt
   ```
 
-In all cases, the ONNX models (`physics_nn.onnx`, `physics_gp.onnx`) are **residual predictors only**. Production systems are expected to:
+In all cases, the ONNX models (`physics_nn.onnx`, `physics_gp.onnx`, `physics_gp_cov.onnx`) are **residual predictors only**. Production systems are expected to:
 
 1. Construct feature vectors in `FEATURE_COLS` order.
 2. Scale with `scaler_x`.
-3. Run the appropriate ONNX model to get a **scaled residual**.
-4. Inverse‑transform with `scaler_y` to get the residual in MPa.
+3. Run the appropriate ONNX model to get a **scaled residual** (and, optionally, a scaled variance for the GP).
+4. Inverse‑transform with `scaler_y` to get the residual (and variance) in MPa.
 5. Compute the physics baseline via `base_physics_model`.
-6. Add baseline + residual to obtain the final compressive strength prediction.
+6. Add baseline + residual to obtain the final compressive strength prediction (and, optionally, an uncertainty band).

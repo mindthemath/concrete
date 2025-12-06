@@ -23,8 +23,13 @@ physics_nn.onnx: prep_nn_ckpt.py train_nn
 physics_gp.onnx: prep_gp_ckpt.py
 	uv run --extra cpu --with onnxruntime --with onnxscript python prep_gp_ckpt.py
 
+physics_gp_cov.onnx: prep_gp_cov_ckpt.py
+	uv run --extra cpu --with onnxruntime --with onnxscript python prep_gp_cov_ckpt.py
+
 prep_nn: physics_nn.onnx
 
 prep_gp: physics_gp.onnx
+
+prep_gp_cov: physics_gp_cov.onnx
 
 .PHONY: physics_nn.onnx physics_gp.onnx
