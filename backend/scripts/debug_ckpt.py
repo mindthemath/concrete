@@ -92,7 +92,7 @@ plt.vlines(
 )
 plt.xlabel("True Strength (MPa)")
 plt.ylabel("Predicted Strength (MPa)")
-plt.title("True vs Predicted Strength")
+plt.title(f"True vs Predicted Strength for {model_class.__name__} model")
 # aspect ratio 1:1
 # plt.gca().set_aspect(0.5, adjustable='box')
 plt.legend()

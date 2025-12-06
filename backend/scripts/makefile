@@ -17,9 +17,14 @@ clean:
 mock:
 	uv run mock_data.py
 
-physics_nn.onnx: prep_nn_ckpt.py
+physics_nn.onnx: prep_nn_ckpt.py train_nn
 	uv run --extra cpu --with onnxruntime --with onnxscript python prep_nn_ckpt.py
 
-prep: physics_nn.onnx
+physics_gp.onnx: prep_gp_ckpt.py
+	uv run --extra cpu --with onnxruntime --with onnxscript python prep_gp_ckpt.py
 
-.PHONY: physics_nn.onnx
+prep_nn: physics_nn.onnx
+
+prep_gp: physics_gp.onnx
+
+.PHONY: physics_nn.onnx physics_gp.onnx
