@@ -17,7 +17,7 @@ clean:
 mock:
 	uv run mock_data.py
 
-physics_nn.onnx: prep_nn_ckpt.py run_gp.py
+physics_nn.onnx: prep_nn_ckpt.py
 	uv run --extra cpu --with onnxruntime --with onnxscript python prep_nn_ckpt.py
 
 prep: physics_nn.onnx

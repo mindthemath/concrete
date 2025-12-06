@@ -7,6 +7,8 @@ import numpy as np
 import torch
 import torch.nn as nn
 
+from physics_shared import base_physics_model
+
 # Load checkpoint
 with open("best_ckpt_path.txt", "r") as f:
     ckpt_path = f.read().strip()
@@ -88,20 +90,6 @@ FEATURE_COLS = [
     "rock_specific_gravity",
     "rock_ratio",
 ]
-
-
-# Define physics base model (Hirsch)
-def base_physics_model(
-    mortar_compressive_strength_mpa,
-    rock_compressive_strength_mpa,
-    rock_ratio,
-    eta=0.1,
-):
-    """Calculate the physics-based baseline prediction."""
-    fm = mortar_compressive_strength_mpa
-    fr = rock_compressive_strength_mpa
-    r = rock_ratio
-    return (1 - r) * fm + r * fr + eta * r * (1 - r) * (fr - fm)
 
 
 # Pick a few real examples from the data
@@ -195,7 +183,13 @@ for i, key in enumerate(sample_keys):
     rock_comp = rec_rock_props["compressive_strength_mpa"]
     rock_ratio = rec["rock_ratio"]
 
-    base_pred = base_physics_model(mortar_comp, rock_comp, rock_ratio)
+    base_pred = base_physics_model(
+        {
+            "mortar_compressive_strength_mpa": mortar_comp,
+            "rock_compressive_strength_mpa": rock_comp,
+            "rock_ratio": rock_ratio,
+        }
+    )
     final_pred = base_pred + predicted_residual
 
     print(
@@ -455,7 +449,13 @@ try:
             rock_comp = mock_features_unscaled[i, 6]  # rock_compressive_strength_mpa
             rock_ratio = mock_features_unscaled[i, 10]  # rock_ratio
 
-            base_pred = base_physics_model(mortar_comp, rock_comp, rock_ratio)
+            base_pred = base_physics_model(
+                {
+                    "mortar_compressive_strength_mpa": mortar_comp,
+                    "rock_compressive_strength_mpa": rock_comp,
+                    "rock_ratio": rock_ratio,
+                }
+            )
             final_pred = base_pred + predicted_residual[i]
 
             print(f"\nExample {i+1}:")
