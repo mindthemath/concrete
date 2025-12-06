@@ -3,14 +3,13 @@ import argparse
 import lightning as L
 from lightning.pytorch.callbacks import ModelCheckpoint
 
-from gp_lightning_dataloader import (
-    FEATURE_COLS,
-    PhysicsGPR,
-    PhysicsNN,
-    combine_physics_with_residual,
+from lightning_dataloader import (
     load_df,
     make_dataloaders_with_split,
 )
+from physics_gpr import PhysicsGPR
+from physics_nn import PhysicsNN
+from physics_shared import FEATURE_COLS, combine_physics_with_residual
 
 parser = argparse.ArgumentParser()
 parser.add_argument("--model", type=str, default="nn", choices=["gp", "nn"])

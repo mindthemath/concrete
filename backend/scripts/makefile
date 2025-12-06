@@ -1,5 +1,8 @@
-dev:
-	uv run  --extra train --extra cpu python run_gp.py
+train_nn:
+	uv run  --extra train --extra cpu python train.py --model nn
+
+train_gp:
+	uv run  --extra train --extra cpu python train.py --model gp
 
 debug:
 	uv run --extra train --extra cpu python -i debug_ckpt.py
@@ -9,7 +12,7 @@ lint:
 	uvx isort --profile black .
 
 clean:
-	rm -rf checkpoints __pycache__ lightning_logs
+	rm -rf checkpoints __pycache__ lightning_logs best_ckpt_path.txt
 
 mock:
 	uv run mock_data.py

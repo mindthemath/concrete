@@ -1,18 +1,16 @@
 import time
 
-import joblib
 import pandas as pd
 import torch
 
-from gp_lightning_dataloader import (
-    FEATURE_COLS,
-    PhysicsGPR,
-    PhysicsNN,
-    combine_physics_with_residual,
+from lightning_dataloader import (
     load_df,
     load_scalers,
     make_dataloaders_with_split,
 )
+from physics_gpr import PhysicsGPR
+from physics_nn import PhysicsNN
+from physics_shared import combine_physics_with_residual
 
 with open("best_ckpt_path.txt", "r") as f:
     ckpt_path = f.read()
