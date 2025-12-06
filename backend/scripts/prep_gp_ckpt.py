@@ -285,12 +285,36 @@ class GPOnnxWrapper(nn.Module):
         # Predictive mean: K_xs^T alpha
         # x: (batch, D)
         K_xs = self._matern52_kernel(self.train_x, x)  # (n_train, batch)
-        mean = K_xs.transpose(0, 1) @ self.alpha  # (batch,)
-        return mean.unsqueeze(-1)  # (batch, 1) to match previous shape
+        alpha = self.alpha.unsqueeze(-1)  # (n_train, 1)
+        mean = K_xs.transpose(0, 1) @ alpha  # (batch, 1)
+        return mean  # (batch, 1) to match previous shape
 
 
 onnx_model = GPOnnxWrapper(gp, likelihood, train_x, train_y)
 onnx_model.eval()
+
+# --------------------------------------------------------------------------
+# Diagnostic: compare our hand-written Matern 5/2 kernel against
+# GPyTorch's Matern kernel on the current realistic inputs.
+# This helps ensure K(xs, X) matches numerically.
+# --------------------------------------------------------------------------
+with torch.no_grad():
+    gp_K_xs = gp.covar_module(train_x, input_tensor).evaluate().float()
+    our_K_xs = onnx_model._matern52_kernel(train_x, input_tensor)
+    diff_K = (gp_K_xs - our_K_xs).abs()
+    print("\nKernel diagnostics (train_x vs realistic inputs):")
+    print(f"  gp_K_xs shape:   {gp_K_xs.shape}")
+    print(f"  our_K_xs shape:  {our_K_xs.shape}")
+    print(f"  max |ΔK_xs|:     {diff_K.max().item():.6e}")
+    print(f"  mean |ΔK_xs|:    {diff_K.mean().item():.6e}")
+
+    # Also compare predictive means in scaled space
+    wrapper_scaled = onnx_model(input_tensor).squeeze(-1)  # (N,)
+    gp_scaled = output_scaled.detach().squeeze(-1)
+    mean_diff = (wrapper_scaled - gp_scaled).abs()
+    print("\nPredictive mean diagnostics (scaled space):")
+    print(f"  max |Δmean|:     {mean_diff.max().item():.6e}")
+    print(f"  mean |Δmean|:    {mean_diff.mean().item():.6e}")
 
 dummy_input = torch.randn(1, train_x.shape[1])
 
