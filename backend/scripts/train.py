@@ -50,7 +50,9 @@ with open("best_ckpt_path.txt", "w") as f:
 
 # Load best and run inference
 if args.model == "gp":
-    loaded = PhysicsGPR.load_from_checkpoint(best_ckpt_path, scaler_x=sx, scaler_y=sy)
+    loaded = PhysicsGPR.load_from_checkpoint(
+        best_ckpt_path, scaler_x=sx, scaler_y=sy, weights_only=False
+    )
 else:
     loaded = PhysicsNN.load_from_checkpoint(best_ckpt_path, scaler_x=sx, scaler_y=sy)
 
