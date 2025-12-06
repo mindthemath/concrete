@@ -8,7 +8,7 @@ from lightning_dataloader import (
     load_scalers,
     make_dataloaders_with_split,
 )
-from physics_gpr import PhysicsGPR
+from physics_gp import PhysicsGPR
 from physics_nn import PhysicsNN
 from physics_shared import combine_physics_with_residual
 

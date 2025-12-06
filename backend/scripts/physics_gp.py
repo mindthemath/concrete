@@ -2,8 +2,6 @@ import gpytorch
 import lightning as L
 import torch
 
-from physics_shared import FEATURE_COLS, base_physics_model
-
 
 class ExactResidualGP(gpytorch.models.ExactGP):
     def __init__(self, train_x, train_y, likelihood):
